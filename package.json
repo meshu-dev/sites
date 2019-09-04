@@ -1,0 +1,15 @@
+{
+    "name": "portfolio",
+    "version": "1.0.0",
+    "description": "NodeJS API for portfolio",
+    "main": "./app/server",
+    "scripts": {
+        "start": "nodemon --watch public --watch ../server.js server.js"
+    },
+    "dependencies": {
+        "express": "^4.16.3"
+    },
+    "devDependencies": {
+        "nodemon": "^1.19.1"
+    }
+}
