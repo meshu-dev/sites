@@ -3,9 +3,8 @@ import BaseTemplate from './base.js'
 class ProjectView extends BaseTemplate
 {
     async render() {
-    	let blogId = window.location.pathname.replace('/projects/', ''),
-    		responseData = await this.getData('/projects/' + blogId),
-    		project = responseData.project[0]
+    	let projectId = window.location.pathname.replace('/projects/', ''),
+    		project = await this.getData('/projects/' + projectId)
 
 	    return `
 	    	<div id="page-header">

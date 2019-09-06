@@ -3,8 +3,7 @@ import BaseTemplate from './base.js'
 class Home extends BaseTemplate
 {
 	async getBlogs() {
-		let responseData = await this.getData('/blogs?sort=desc&limit=3'),
-			blogs = responseData.blogs
+		let blogs = await this.getData('/blogs?sort=desc&limit=3')
 
 		if (blogs && blogs.length > 0) {
 			let blogHtml = ''
@@ -21,8 +20,7 @@ class Home extends BaseTemplate
 		return `<div>No blogs available</div>`
 	}
 	async getProjects() {
-		let responseData = await this.getData('/projects?sort=desc&limit=3'),
-			projects = responseData.projects
+		let projects = await this.getData('/projects?sort=desc&limit=3')
 
 		if (projects && projects.length > 0) {
 			let projectHtml = ''
@@ -30,7 +28,7 @@ class Home extends BaseTemplate
 			projects.forEach((project) => {
 				projectHtml += this.getListItem(
 					project.title,
-					'/projects/' + project._id,
+					'/projects/' + project.id,
 					project.thumbUrl
 				)
 			})
