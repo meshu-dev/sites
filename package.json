@@ -7,7 +7,8 @@
         "start": "nodemon --watch public --watch ../server.js server.js"
     },
     "dependencies": {
-        "express": "^4.16.3"
+        "express": "^4.16.3",
+        "dotenv": "^8.1.0"
     },
     "devDependencies": {
         "nodemon": "^1.19.1"

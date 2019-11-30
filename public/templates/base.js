@@ -16,7 +16,7 @@ class BaseTemplate
 	}
 	async getProfile() {
 		let responseData = await this.getData('/profiles?name=Mesh')
-		return responseData.profiles[0]
+		return responseData[0]
 	}
 }
 

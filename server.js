@@ -2,7 +2,7 @@ const express    = require('express'),
 	  app        = express(),
 	  path       = require('path'),
 	  bodyParser = require('body-parser'),
-	  port       = 3000
+	  port       = process.env.APP_PORT || 3000
 
 // Parse JSON data in requests
 app.use(express.json())
