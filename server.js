@@ -1,8 +1,12 @@
 const express    = require('express'),
 	  app        = express(),
 	  path       = require('path'),
-	  bodyParser = require('body-parser'),
-	  port       = process.env.APP_PORT || 3000
+	  bodyParser = require('body-parser');
+
+// Load config params to process.env
+require('dotenv').config()
+
+const port = process.env.APP_PORT || 3000
 
 // Parse JSON data in requests
 app.use(express.json())
