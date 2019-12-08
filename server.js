@@ -4,9 +4,10 @@ const express    = require('express'),
 	  bodyParser = require('body-parser');
 
 // Load config params to process.env
-require('dotenv').config()
+require('dotenv').config();
 
-const port = process.env.APP_PORT || 3000
+const port = process.env.APP_PORT || 3000,
+	  apiUrl = process.env.APP_API_SITE;
 
 // Parse JSON data in requests
 app.use(express.json())
@@ -24,7 +25,10 @@ app.use('/', express.static(path.join(__dirname, 'public')))
 
 // Serve index.html to every GET page request
 app.get('*', (req, res, next) => {
-	res.status(200).sendFile(path.join(__dirname + '/public/index.html'))
+	res.status(200)
+	   .sendFile(
+	   		path.join(__dirname + '/public/index.html')
+	   	)
 })
 
 // Start server

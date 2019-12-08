@@ -4,14 +4,13 @@ class Router
 		this.routes = routes
 		this.preLoad = preLoad
 		this.postLoad = postLoad
+		
+		this.init()
 	}
 	init() {
 		let loadPage = () => {
 		    this.goToPage(window.location.href)
 		}
-
-		// Set page on page load
-		window.addEventListener('load', loadPage.bind(this))
 
 		// Set page when using browser forward and back buttons
 		window.onpopstate = loadPage.bind(this)

@@ -18,12 +18,24 @@ let postLoad = (pageContent) => {
 	document.getElementById('layout').style.display = 'block'
 }
 
-new Router({
-	    '/':             new Home(),
-	    '/about':        new About(),
-	    '/projects/:id': new ProjectView()
-	},
-	preLoad,
-	postLoad
-)
-.init()
+(async() => {
+	let response = await fetch('/data.json')
+	let siteData = await response.json()
+	let apiUrl = siteData['apiUrl']
+
+
+	let router = new Router({
+		    '/':             new Home(apiUrl),
+		    '/about':        new About(apiUrl),
+		    '/projects/:id': new ProjectView(apiUrl)
+		},
+		preLoad,
+		postLoad
+	)
+
+    if (document.readyState === 'complete') {
+        router.goToPage(window.location.href)
+    } else {
+    	window.addEventListener('load', router.goToPage(window.location.href))
+    }
+})()
