@@ -11,9 +11,11 @@ class BaseTemplate
 		}
 		this.#apiUrl = apiUrl
 	}
+	getApiUrl() {
+		return this.#apiUrl;
+	}
 	async getData(path) {
-
-		console.log('url: '+ this.#apiUrl + path);
+		console.log('GetData URL: '+ this.#apiUrl + path);
 
 		let response = await fetch(this.#apiUrl + path)
 		return await response.json()

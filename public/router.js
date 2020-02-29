@@ -17,9 +17,18 @@ class Router
 
 		// Set page for every a tag click
 		window.addEventListener('click', (event) => {
-			if (event.target.href) {
-				event.preventDefault()
-		    	this.goToPage(event.target.href, true)  
+			if (event.target.href.indexOf(window.location.host) === -1) {
+				let win = window.open(event.target.href, '_blank');
+				win.focus();
+
+				//window.location.href = event.target.href;
+			} else {
+				console.log('event.target.href', event.target.href);
+
+				if (event.target.href && event.target.href != 'javascript:void(0)') {
+					event.preventDefault();
+			    	this.goToPage(event.target.href, true);
+				}
 			}
 		})
 	}

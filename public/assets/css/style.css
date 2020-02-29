@@ -3,12 +3,69 @@
 body {
 	background-color: #F1F1F1;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	margin: 0 auto;
-	max-width: 1000px;
+	margin: 0;
+	color: #30312E;
 }
 
 header {
-	margin: 10px 0;
+	border-bottom: 1px solid #DDD;
+	background-color: #EAD44D;
+    margin-bottom: 1.5rem;
+    min-height: 60px;
+}
+
+h3 {
+	font-size: 16px;
+	text-decoration: underline;
+}
+
+nav {
+	padding: .5rem 1rem;
+	max-width: 1000px;
+	margin: 0 auto;
+	height: 45px;
+	display: flex;
+}
+
+#logo {
+	display: inline-block;
+	line-height: 45px;
+	color: #30312E;
+}
+
+#logo-text {
+	font-size: 1.5rem;
+    font-style: italic;
+}
+
+#navbarNav {
+    display: flex;
+    flex-basis: auto;
+}
+
+ul {
+	padding: 0;
+}
+
+nav ul {
+	align-items: center;
+    list-style: none;
+    display: flex;
+    height: 100%;
+    margin: auto;
+}
+
+nav li {
+	margin-left: 20px;
+}
+
+nav a {
+	color: #30312E;
+}
+
+main {
+	max-width: 1000px;
+	margin: 0 auto;
 }
 
 #back-button {
@@ -88,12 +145,46 @@ footer {
 	margin: 20px 0;
 }
 
+button {
+	border-radius: 3px;
+	padding: 5px 10px;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+/* Login */
+
+form {
+	border-radius: .25rem! important;
+	border: 1px solid #dee2e6 !important;
+	background-color: #FAFAFA;
+	margin: 0 auto;
+	width: 18rem;
+    padding: 1rem;
+}
+
+form input {
+	margin-bottom: 10px;
+	height: 20px;
+	width: 100%;
+}
+
+form div {
+	text-align: center;
+}
+
 /* Home */
 
 section {
 	border-bottom: 1px solid #DDD;
 	padding: 20px 0 40px;
 	min-height: 200px;
+}
+
+.site-row {
+	padding: 0 20px;
 }
 
 #profile-row {

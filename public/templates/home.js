@@ -2,96 +2,131 @@ import BaseTemplate from './base.js'
 
 class Home extends BaseTemplate
 {
-	async getBlogs() {
-		let blogs = await this.getData('/blogs?sort=desc&limit=3')
+	async getEnvironments() {
+		let response = await fetch(
+			this.getApiUrl() + '/environments',
+			{
+				method: 'GET',
+				headers: {
+					'Authorization': `Bearer ${localStorage.token}`,
+					'Content-Type': 'application/json'
+				}
+			}
+		);
+		let data = await response.json();
 
-		if (blogs && blogs.length > 0) {
-			let blogHtml = ''
-
-			blogs.forEach((blog) => {
-				blogHtml += this.getListItem(
-					blog.title,
-					blog.url,
-					blog.thumbUrl
-				)
-			})
-			return `<div class="home-list">`+ blogHtml +`</div>`
+		if (data['hydra:member']) {
+			return data['hydra:member'];
 		}
-		return `<div>No blogs available</div>`
+		return null;
 	}
-	async getProjects() {
-		let projects = await this.getData('/projects?sort=desc&limit=3')
+	async getSites() {
+		let response = await fetch(
+			this.getApiUrl() + '/sites',
+			{
+				method: 'GET',
+				headers: {
+					'Authorization': `Bearer ${localStorage.token}`,
+					'Content-Type': 'application/json'
+				}
+			}
+		);
+		let data = await response.json();
 
-		if (projects && projects.length > 0) {
-			let projectHtml = ''
-
-			projects.forEach((project) => {
-				projectHtml += this.getListItem(
-					project.title,
-					'/projects/' + project.id,
-					project.thumbUrl
-				)
-			})
-			return `<div class="home-list">`+ projectHtml +`</div>`
+		if (data['hydra:member']) {
+			return data['hydra:member'];
 		}
-		return `<div>No projects available</div>`
+		return null;
 	}
-	getListItem(title, pageUrl, thumbnailUrl) {
-		return `
-    		<div class="list-item">
-    			<a href="${pageUrl}">
-    				<img src="${thumbnailUrl}" />
-    			</a>
-    			<a href="${pageUrl}" class="list-item-title">${title}</a>
-    		</div>
-		`	
+	async getSitesByEnvironment() {
+		let sites = await this.getSites(),
+			sitesByEnv = [];
+
+		if (sites) {
+			for (let site of sites) {
+				let envUrl = site['environment'];
+
+				if (!sitesByEnv[envUrl]) {
+					sitesByEnv[envUrl] = [];
+				}
+				sitesByEnv[envUrl].push(site);
+			}
+
+			let environments = await this.getEnvironments();
+
+			if (environments) {
+				let envsWithSites = [];
+
+				for (let environment of environments) {
+					if (sitesByEnv[`/environments/${environment['id']}`]) {
+						let sites = sitesByEnv[`/environments/${environment['id']}`];
+
+						console.log('sitesByEnv', sitesByEnv);
+						console.log('sites', sites);
+						console.log('E ID', `environments/${environment['id']}`);
+
+						envsWithSites.push({
+							environment: environment,
+							sites: sites
+						});
+					}
+				}
+				return envsWithSites;
+			}
+		}
+		return null;
+	}
+	async getEnvironmentsHtml() {
+		let envsWithSites = await this.getSitesByEnvironment();
+
+		console.log('envsWithSites', envsWithSites);
+
+		if (envsWithSites) {
+			let html = '';
+
+			for (let envsWithSite of envsWithSites) {
+				let environment = envsWithSite['environment'],
+					sites = envsWithSite['sites'],
+					sitesHtml = this.getSitesHtml(sites);
+
+				console.log('envsWithSites', envsWithSites);
+				console.log('sites', sites);
+
+				html += `
+		    		<section>
+		    			<h2>${environment['name']}</h2>
+		    			<div>${sitesHtml}</div>
+		    		</section>
+				`;
+			}
+			return html;
+		}
+		return `<div>No environments available</div>`;
+	}
+	getSitesHtml(sites) {
+		if (sites) {
+			let html = '';
+
+			for (let site of sites) {
+				html += `
+		    		<div class='site-row'>
+		    			<h3>${site['name']}</h3>
+		    			<a href="${site['url']}" target="_blank">${site['url']}</a>
+		    		</div>
+				`;
+			}
+			return html;
+		}
+		return '';
 	}
 	async render() {
-		let profile = await this.getProfile()
-		let blogHtml = await this.getBlogs()
-		let projectHtml = await this.getProjects()
+		let environmentsHtml = await this.getEnvironmentsHtml();
 
 	    return `
-	    	<section id="profile-row">
-	    		<div id="profile-pic">
-	    			<img src="/assets/images/avatar.png" />
-	    		</div>
-		    	<div id="profile-info">
-		    		<h1>${profile.name}</h1>
-		    		<div>${profile.jobTitle}</div>
-					<ul id="profile-icons">
-						<li>
-							<a href="${profile.githubUrl}">
-								<img src="/assets/images/github-icon.png" />
-							</a>
-						</li>
-						<li>
-							<a href="${profile.linkedInUrl}">
-								<img src="/assets/images/linkedin-icon.png" />
-							</a>
-						</li>
-						<li>
-							<a href="${profile.email}">
-								<img src="/assets/images/email-icon.png" />
-							</a>
-						</li>
-						<li>
-							<a href="${profile.cvUrl}">
-								<img src="/assets/images/cv-icon.png" />
-							</a>
-						</li>
-					</ul>
-					<a href="/about" class="button">About Me</a>
-		    	</div>
-	    	</section>
-	    	<section id="blogs-row">
-		    	<h2>Latest Blogs</h2>
-		    	${blogHtml}
-	    	</section>
-	    	<section id="projects-row">
-		    	<h2>Projects</h2>
-		    	${projectHtml}
-	    	</section>
+	    	<div>
+	    		<h1>Dev sites</h1>
+	    		<div>${environmentsHtml}</div>
+	    	</div>
 	    `
 	}
 }
