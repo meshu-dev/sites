@@ -1,0 +1,6 @@
+.DS_Store
+public/assets/images
+public/data.json
+node_modules
+package-lock.json
+.env
