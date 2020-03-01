@@ -2,7 +2,7 @@ import BaseTemplate from './base.js'
 
 // window.auth.login("test9@gmail.com", "test1");
 
-class Auth extends BaseTemplate
+class Login extends BaseTemplate
 {
 	async login(email, password) {
 		let response = await fetch(
@@ -42,4 +42,4 @@ class Auth extends BaseTemplate
 	}
 }
 
-export default Auth
+export default Login

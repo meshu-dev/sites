@@ -2,8 +2,8 @@
 
 import Router from './router.js'
 
-import Auth        from './templates/auth.js'
-import Home        from './templates/home.js'
+import Login from './templates/login.js'
+import Home from './templates/home.js'
 
 let preLoad = () => {
 	document.getElementById('layout').style.display = 'none'
@@ -67,11 +67,11 @@ let authCheck = (auth) => {
 	let siteData = await response.json()
 	let apiUrl = siteData['apiUrl']
 
-	let auth = new Auth(apiUrl);
-	window.auth = auth;
+	let login = new Login(apiUrl);
+	window.auth = login;
 
 	let router = new Router({
-			'/login': auth,
+			'/login': login,
 		    '/': new Home(apiUrl)
 		},
 		preLoad,
