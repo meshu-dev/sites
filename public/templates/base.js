@@ -20,10 +20,6 @@ class BaseTemplate
 		let response = await fetch(this.#apiUrl + path)
 		return await response.json()
 	}
-	async getProfile() {
-		let responseData = await this.getData('/profiles?name=Mesh')
-		return responseData[0]
-	}
 }
 
 export default BaseTemplate

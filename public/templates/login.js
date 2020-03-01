@@ -25,10 +25,6 @@ class Login extends BaseTemplate
 			window.location.href = '/';
 		}
 	}
-	async logout() {
-		window.localStorage.removeItem('token');
-		window.location.href = '/login';
-	}
 	async render() {
 	    return `
 	    	<form>
