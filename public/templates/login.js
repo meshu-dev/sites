@@ -1,6 +1,6 @@
 import BaseTemplate from './base.js'
 
-// window.auth.login("test9@gmail.com", "test1");
+// window.login.login("test9@gmail.com", "test1");
 
 class Login extends BaseTemplate
 {

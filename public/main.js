@@ -2,6 +2,7 @@
 
 import Router from './router.js'
 
+import Auth from './auth.js'
 import Login from './templates/login.js'
 import Home from './templates/home.js'
 
@@ -17,58 +18,15 @@ let postLoad = (pageContent) => {
 	document.getElementById('layout').style.display = 'block'
 }
 
-let getTokenData = () => {
-	let token = window.localStorage.getItem('token'),
-		base64Url = token.split('.')[1],
-		jsonStr = window.atob(base64Url);
-
-	return JSON.parse(jsonStr);
-}
-
-let isTokenExpired = () => {
-	let tokenData = getTokenData();
-
-	if (tokenData && tokenData['exp']) {
-		let date = new Date(),
-			expiryTime = tokenData['exp'] * 1000;
-
-		console.log('isTokenExpired - Expiry time -', new Date(expiryTime), expiryTime);
-		console.log('isTokenExpired - Current time -', date, date.getTime());
-
-		if (date.getTime() >= expiryTime) {
-			return true;
-		}
-		return false;
-	}
-	return null;
-}
-
-let authCheck = (auth) => {
-	let token = window.localStorage.getItem('token'),
-		pageUrl = null;
-
-	if (token && isTokenExpired() === true) {
-		auth.logout();
-	}
-
-	if (!token) {
-		if (window.location.pathname != '/login') {
-			window.location.href = `${window.location.origin}/login`;
-		} else {
-			document.getElementById('nav-links').style.display = 'none';
-			pageUrl = `${window.location.origin}/login`;
-		}
-	}
-	return pageUrl;
-}
-
 (async() => {
 	let response = await fetch('/data.json')
 	let siteData = await response.json()
 	let apiUrl = siteData['apiUrl']
 
+	let auth = new Auth();
+
 	let login = new Login(apiUrl);
-	window.auth = login;
+	window.login = login;
 
 	let router = new Router({
 			'/login': login,
@@ -77,7 +35,7 @@ let authCheck = (auth) => {
 		preLoad,
 		postLoad
 	)
-	let pageUrl = authCheck(auth);
+	let pageUrl = auth.verify();
 
 	if (!pageUrl) {
 		pageUrl = window.location.href;
