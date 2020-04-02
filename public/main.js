@@ -41,6 +41,11 @@ let postLoad = (pageContent) => {
 		pageUrl = window.location.href;
 	}
 
+	let loginLink = document.getElementById('logout-link');
+	loginLink.onclick = function() {
+		auth.logout();
+	};
+
 	console.log('pageUrl', pageUrl);
 
     if (document.readyState === 'complete') {

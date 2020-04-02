@@ -18,6 +18,10 @@ class Auth
 		}
 		return pageUrl;
 	}
+	logout() {
+        window.localStorage.removeItem('token');
+        window.location.href = '/login';
+	}
 	getTokenData() {
 		let token = window.localStorage.getItem('token'),
 			base64Url = token.split('.')[1],
