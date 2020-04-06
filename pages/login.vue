@@ -2,48 +2,56 @@
   <section class="section">
     <div class="container">
       <div class="columns">
-        <div class="column is-4 is-offset-4">
-          <h2 class="title has-text-centered">Welcome back!</h2>
-
-          <Notification :message="error" v-if="error"/>
-
-          <form method="post" @submit.prevent="login">
-            <div class="field">
-              <label class="label">Email</label>
-              <div class="control">
-                <input
-                  type="email"
-                  class="input"
-                  name="email"
-                  v-model="email"
-                >
-              </div>
-            </div>
-            <div class="field">
-              <label class="label">Password</label>
-              <div class="control">
-                <input
-                  type="password"
-                  class="input"
-                  name="password"
-                  v-model="password"
-                >
-              </div>
-            </div>
-            <div class="control">
-              <button type="submit" class="button is-dark is-fullwidth">Log In</button>
-            </div>
-          </form>
-          <div class="has-text-centered" style="margin-top: 20px">
-            <p>
-              Don't have an account? <nuxt-link to="/register">Register</nuxt-link>
-            </p>
+        <div class="d-flex justify-content-center align-items-center">
+          <b-form method="post" @submit.prevent="login">
+            <h1>Login</h1>
+            <b-form-group
+              label-for="email-field">
+              <b-form-input
+                id="email-field"
+                v-model="email"
+                type="email"
+                required
+                placeholder="Enter email address"
+              ></b-form-input>
+            </b-form-group>
+            <b-form-group
+              label-for="password-field">
+              <b-form-input
+                id="password-field"
+                v-model="password"
+                 type="password"
+                required
+                placeholder="Enter password"
+              ></b-form-input>
+            </b-form-group>
+            <div class="d-flex justify-content-center">
+            <b-button
+              type="submit"
+              variant="primary">
+              Submit
+            </b-button>
           </div>
+          </b-form>
         </div>
       </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+  .container {
+    height: 100vh;
+  }
+  .columns,
+  .d-flex {
+    height: inherit;
+  }
+  h1 {
+    text-align: center;
+    font-size: 1.5em;
+  }
+</style>
 
 <script>
 import Notification from '~/components/Notification'
@@ -64,6 +72,9 @@ export default {
   methods: {
     async login() {
       try {
+        await this.$auth.logout();
+        console.log('AUTH 111', this.$auth.loggedIn);
+
         await this.$auth.loginWith('local', {
           data: {
             email: this.email,
