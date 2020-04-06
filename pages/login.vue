@@ -26,12 +26,12 @@
               ></b-form-input>
             </b-form-group>
             <div class="d-flex justify-content-center">
-            <b-button
-              type="submit"
-              variant="primary">
-              Submit
-            </b-button>
-          </div>
+              <b-button
+                type="submit"
+                variant="primary">
+                Submit
+              </b-button>
+            </div>
           </b-form>
         </div>
       </div>
@@ -60,7 +60,6 @@ export default {
   components: {
     Notification,
   },
-
   data() {
     return {
       email: '',

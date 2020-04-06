@@ -9,10 +9,10 @@
         :items="items"
         :fields="fields">
         <template v-slot:cell(actions)="row">
-          <b-button>
+          <b-button @click="info(row.item, row.index, $event.target)">
             View Sites
           </b-button>
-          <b-button @click="info(row.item, row.index, $event.target)">
+          <b-button @click="showEditPage(row.item)">
             Edit
           </b-button>
           <b-button @click="showDeletePopup(row.item)">
@@ -75,12 +75,21 @@ export default {
     info(item, index, button) {
       console.log('item', item, index, button);
     },
+    showEditPage(item) {
+      this.$router.push(`/environments/${item.id}`);
+    },
     showDeletePopup(item) {
       this.deleteItem = item;
       this.$refs['delete-popup'].show();
     },
-    deleteEnvironment() {
+    async deleteEnvironment() {
       console.log('deleteEnvironment');
+      return;
+
+      const response = await this.$axios.$delete(
+        `environments/${deleteItem.id}`
+      );
+      console.log('response', response);
     }
   }
 }
