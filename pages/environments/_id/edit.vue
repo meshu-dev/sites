@@ -22,6 +22,7 @@ export default {
   data() {
     return {
       environment: {
+        id: 0,
         name: ''
       }
     }
@@ -37,13 +38,17 @@ export default {
   },
   methods: {
     async edit() {
-      console.log('edit', this.environment.name);
-      return;
-
-      const response = await $axios.put(
-        `/environments/${environment.id}`,
-        {}
+      const response = await this.$axios.put(
+        `/environments/${this.environment.id}`,
+        {
+          name: this.environment.name
+        }
       );
+
+      if (response) {
+        this.$router.push(`/`);
+      }
+
     }
   }
 }
