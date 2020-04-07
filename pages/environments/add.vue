@@ -14,6 +14,7 @@
 import EnvironmentForm from '~/components/EnvironmentForm'
 
 export default {
+  middleware: 'auth',
   components: {
     EnvironmentForm,
   },
@@ -38,9 +39,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  input {
-    max-width: 300px;
-  }
-</style>

@@ -41,7 +41,7 @@
 
 <style scoped>
   .container {
-    height: 100vh;
+    height: 80vh;
   }
   .columns,
   .d-flex {

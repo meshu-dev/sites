@@ -5,7 +5,16 @@
       label-for="name-field">
       <b-form-input
         id="name-field"
-        v-model="fieldValue"
+        v-model="fieldNameValue"
+        type="text"
+        required
+      ></b-form-input>
+    </b-form-group>
+    <b-form-group
+      label-for="url-field">
+      <b-form-input
+        id="url-field"
+        v-model="fieldUrlValue"
         type="text"
         required
       ></b-form-input>
@@ -30,14 +39,22 @@ export default {
     }
   },
   computed: {
-      fieldValue: {
-        get() {
-          return this.$attrs.fieldValue;
-        },
-        set(val) {
-          this.$emit('update:fieldValue', val);
-        }
-     }
+    fieldNameValue: {
+      get() {
+        return this.$attrs.fieldNameValue;
+      },
+      set(val) {
+        this.$emit('update:fieldNameValue', val);
+      }
+    },
+    fieldUrlValue: {
+      get() {
+        return this.$attrs.fieldUrlValue;
+      },
+      set(val) {
+        this.$emit('update:fieldUrlValue', val);
+      }
+    }
   }
 }
 </script>

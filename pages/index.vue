@@ -9,7 +9,7 @@
         :items="items"
         :fields="fields">
         <template v-slot:cell(actions)="row">
-          <b-button @click="info(row.item, row.index, $event.target)">
+          <b-button @click="showEnvPage(row.item)">
             View Sites
           </b-button>
           <b-button @click="showEditPage(row.item)">
@@ -75,8 +75,11 @@ export default {
     info(item, index, button) {
       console.log('item', item, index, button);
     },
-    showEditPage(item) {
+    showEnvPage(item) {
       this.$router.push(`/environments/${item.id}`);
+    },
+    showEditPage(item) {
+      this.$router.push(`/environments/edit/${item.id}`);
     },
     showDeletePopup(item) {
       this.deleteItem = item;

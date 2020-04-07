@@ -2,46 +2,46 @@
   <section class="section">
     <div class="container">
       <EnvironmentForm
-        pageTitle="Edit environment"
+        pageTitle="Edit site"
         btnText="Save"
-        :fieldValue.sync="environment.name"
+        :fieldValue.sync="site.name"
         @form-submit="edit" />
     </div>
   </section>
 </template>
 
 <script>
-import EnvironmentForm from '~/components/EnvironmentForm'
+import SiteForm from '~/components/SiteForm'
 
 export default {
   middleware: 'auth',
   components: {
-    EnvironmentForm,
+    SiteForm,
   },
   middleware: 'auth',
   data() {
     return {
-      environment: {
+      site: {
         name: ''
       }
     }
   },
   async asyncData({ params, $axios, error }) {
     if (params.id) {
-      const response = await $axios.get(`/environments/${params.id}`);
+      const response = await $axios.get(`/sites/${params.id}`);
 
       return {
-        environment: response.data
+        site: response.data
       }
     }
   },
   methods: {
     async edit() {
-      console.log('edit', this.environment.name);
+      console.log('edit', this.site.name);
       return;
 
       const response = await $axios.put(
-        `/environments/${environment.id}`,
+        `/sites/${site.id}`,
         {}
       );
     }

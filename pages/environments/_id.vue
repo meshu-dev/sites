@@ -1,7 +1,16 @@
 <template>
   <section class="section">
     <div class="container">
-      <h1 class="title">Environment</h1>
+      <div class="d-flex justify-content-between">
+        <h1 class="title">Environment</h1>
+        <b-button
+          type="submit"
+          variant="primary"
+          @click="showAddSitePage">
+          Add Site
+        </b-button>
+      </div>
+      <div v-show="sites.length === 0">No sites added</div>
     </div>
   </section>
 </template>
@@ -11,7 +20,7 @@ export default {
   middleware: 'auth',
   data() {
     return {
-      items: []
+      sites: []
     }
   },
   async asyncData({ params, $axios, error }) {
@@ -19,31 +28,23 @@ export default {
       const response = await $axios.get(`/environments/${params.id}`);
       let sites = response.data.sites;
 
-      //console.log('response', response.data.sites);
+      return {
+        //environmentId: params.id,
+        sites: sites
+      };
     }
-
-    /*
-    let environments = response.data['hydra:member'],
-        data = { items: [] };
-
-    for (let environment of environments) {
-      data.items.push({
-        id: environment['id'],
-        name: environment['name']
-      });
-    }
-
-    console.log('environments', environments);
-
-    return data; */
   },
   methods: {
-    info(item, index, button) {
-      console.log('item', item, index, button);
+    showAddSitePage() {
+      this.$router.push(`/sites/add`);
+
+      this.$router.push({
+        path: `/sites/add`,
+        params: {
+          environmentId: this.$route.query.id
+        }
+      });
     }
   }
 }
 </script>
-
-<style scoped>
-</style>
