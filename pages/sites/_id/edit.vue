@@ -1,10 +1,11 @@
 <template>
   <section class="section">
     <div class="container">
-      <EnvironmentForm
+      <SiteForm
         pageTitle="Edit site"
         btnText="Save"
-        :fieldValue.sync="site.name"
+        :fieldNameValue.sync="site.name"
+        :fieldUrlValue.sync="site.url"
         @form-submit="edit" />
     </div>
   </section>
@@ -22,7 +23,9 @@ export default {
   data() {
     return {
       site: {
-        name: ''
+        id: 0,
+        name: '',
+        url: ''
       }
     }
   },
@@ -37,13 +40,21 @@ export default {
   },
   methods: {
     async edit() {
-      console.log('edit', this.site.name);
-      return;
-
-      const response = await $axios.put(
-        `/sites/${site.id}`,
-        {}
+      const response = await this.$axios.put(
+        `/sites/${this.site.id}`,
+        {
+          name: this.site.name,
+          url: this.site.url
+        }
       );
+
+      let environmentId = this.site.environment.replace('/environments/', '');
+
+      if (response) {
+        this.$router.push(
+          `/environments/${environmentId}`
+        );
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <section class="section">
     <div class="container">
-      <h1 class="title">Nuxt Auth</h1>
+      <h1 class="title">Environments</h1>
       <b-table
         show-empty
         striped
@@ -46,7 +46,8 @@ export default {
     return {
       items: [],
       fields: [
-        { key: 'name', label: 'Environment' },
+        { key: 'name', label: 'Name' },
+        { key: 'siteCount', label: 'Site count' },
         { key: 'actions', label: 'Actions' }
       ],
       deleteItem: {
@@ -63,7 +64,8 @@ export default {
     for (let environment of environments) {
       data.items.push({
         id: environment['id'],
-        name: environment['name']
+        name: environment['name'],
+        siteCount: environment['sites'].length
       });
     }
 

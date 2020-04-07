@@ -15,7 +15,7 @@
       <b-form-input
         id="url-field"
         v-model="fieldUrlValue"
-        type="text"
+        type="url"
         required
       ></b-form-input>
     </b-form-group>
