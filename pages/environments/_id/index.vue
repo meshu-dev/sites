@@ -29,21 +29,15 @@ export default {
       let sites = response.data.sites;
 
       return {
-        //environmentId: params.id,
         sites: sites
       };
     }
   },
   methods: {
     showAddSitePage() {
-      this.$router.push(`/sites/add`);
-
-      this.$router.push({
-        path: `/sites/add`,
-        params: {
-          environmentId: this.$route.query.id
-        }
-      });
+      this.$router.push(
+        `/environments/${this.$route.params.id}/sites/add`
+      );
     }
   }
 }

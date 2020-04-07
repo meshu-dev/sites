@@ -79,7 +79,7 @@ export default {
       this.$router.push(`/environments/${item.id}`);
     },
     showEditPage(item) {
-      this.$router.push(`/environments/edit/${item.id}`);
+      this.$router.push(`/environments/${item.id}/edit`);
     },
     showDeletePopup(item) {
       this.deleteItem = item;
