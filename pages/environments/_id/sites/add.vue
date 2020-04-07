@@ -2,7 +2,7 @@
   <section class="section">
     <div class="container">
       <SiteForm
-        pageTitle="Add site"
+        pageTitle="Add site 2"
         btnText="Add"
         :fieldNameValue.sync="site.name"
         :fieldUrlValue.sync="site.url"
@@ -22,7 +22,6 @@ export default {
   middleware: 'auth',
   data() {
     return {
-      environmentId: this.$router,
       site: {
         name: '',
         url: ''
@@ -34,16 +33,15 @@ export default {
       const response = await this.$axios.$post(
         `/sites`,
         {
-          environment: `/environments/1`,
+          environment: `/environments/${this.$route.params.id}`,
           name: this.site.name,
           url: this.site.url
         }
       );
 
       if (response) {
-        this.$router.push('/');
+        this.$router.push(`/environments/${this.$route.params.id}`);
       }
-      console.log('r', response);
     }
   }
 }
