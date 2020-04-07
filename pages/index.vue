@@ -1,7 +1,15 @@
 <template>
   <section class="section">
     <div class="container">
-      <h1 class="title">Environments</h1>
+      <div class="d-flex justify-content-between">
+        <h1 class="title">Environments</h1>
+        <b-button
+          type="submit"
+          variant="primary"
+          @click="showAddEnvironmentPage">
+          Add Environment
+        </b-button>
+      </div>
       <b-table
         show-empty
         striped
@@ -74,8 +82,27 @@ export default {
     return data;
   },
   methods: {
-    info(item, index, button) {
-      console.log('item', item, index, button);
+    async getEnvironmentItems() {
+      const response = await this.$axios.get(
+        `/environments`
+      );
+
+      let environments = response.data['hydra:member'],
+          data = [];
+
+      for (let environment of environments) {
+        data.push({
+          id: environment['id'],
+          name: environment['name'],
+          siteCount: environment['sites'].length
+        });
+      }
+      return data;
+    },
+    showAddEnvironmentPage() {
+      this.$router.push(
+        `/environments/add`
+      );
     },
     showEnvPage(item) {
       this.$router.push(`/environments/${item.id}`);
@@ -88,13 +115,14 @@ export default {
       this.$refs['delete-popup'].show();
     },
     async deleteEnvironment() {
-      console.log('deleteEnvironment');
-      return;
-
       const response = await this.$axios.$delete(
-        `environments/${deleteItem.id}`
+        `environments/${this.deleteItem.id}`
       );
-      console.log('response', response);
+      this.$refs['delete-popup'].hide();
+
+      let items = await this.getEnvironmentItems();
+      this.items = items;
+
     }
   }
 }

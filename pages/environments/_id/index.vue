@@ -88,7 +88,7 @@ export default {
     }
   },
   methods: {
-    async getEnvironmentItems() {
+    async getSiteItems() {
       const response = await this.$axios.get(
         `/environments/${this.$route.params.id}`
       );
@@ -123,7 +123,7 @@ export default {
       );
       this.$refs['delete-popup'].hide();
 
-      let items = await this.getEnvironmentItems();
+      let items = await this.getSiteItems();
       this.items = items;
     }
   }

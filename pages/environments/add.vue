@@ -1,46 +1,42 @@
 <template>
   <section class="section">
     <div class="container">
-      <SiteForm
-        pageTitle="Add site"
+      <EnvironmentForm
+        pageTitle="Add environment"
         btnText="Add"
-        :fieldNameValue.sync="site.name"
-        :fieldUrlValue.sync="site.url"
+        :fieldValue.sync="environment.name"
         @form-submit="add" />
     </div>
   </section>
 </template>
 
 <script>
-import SiteForm from '~/components/SiteForm'
+import EnvironmentForm from '~/components/EnvironmentForm'
 
 export default {
   middleware: 'auth',
   components: {
-    SiteForm,
+    EnvironmentForm,
   },
   middleware: 'auth',
   data() {
     return {
-      site: {
-        name: '',
-        url: ''
+      environment: {
+        name: ''
       }
     }
   },
   methods: {
     async add() {
       const response = await this.$axios.$post(
-        `/sites`,
+        `/environments`,
         {
-          environment: `/environments/${this.$route.params.id}`,
-          name: this.site.name,
-          url: this.site.url
+          name: this.environment.name
         }
       );
 
       if (response) {
-        this.$router.push(`/environments/${this.$route.params.id}`);
+        this.$router.push(`/`);
       }
     }
   }
