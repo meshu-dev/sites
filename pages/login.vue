@@ -71,9 +71,6 @@ export default {
   methods: {
     async login() {
       try {
-        await this.$auth.logout();
-        console.log('AUTH 111', this.$auth.loggedIn);
-
         await this.$auth.loginWith('local', {
           data: {
             email: this.email,

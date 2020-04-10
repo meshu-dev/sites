@@ -14,7 +14,6 @@
 import EnvironmentForm from '~/components/EnvironmentForm'
 
 export default {
-  middleware: 'auth',
   components: {
     EnvironmentForm,
   },

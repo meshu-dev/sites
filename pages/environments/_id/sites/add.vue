@@ -15,7 +15,6 @@
 import SiteForm from '~/components/SiteForm'
 
 export default {
-  middleware: 'auth',
   components: {
     SiteForm,
   },

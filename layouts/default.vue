@@ -9,6 +9,10 @@
 import Navbar from '~/components/Navbar'
 
 export default {
+  middleware: [
+    'auth',
+    'verify-token'
+  ],
   components: {
     Navbar
   }
