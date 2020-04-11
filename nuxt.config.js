@@ -1,3 +1,5 @@
+require('dotenv').config({ path: '.env' });
+
 export default {
   mode: 'spa',
   /*
@@ -57,7 +59,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env.BASE_URL || 'https://localhost:8000'
+    baseURL: process.env.API_URL
   },
   /*
    ** Build configuration
@@ -68,16 +70,19 @@ export default {
      */
     extend(config, ctx) {}
   },
-
   auth: {
     strategies: {
       local: {
         endpoints: {
           login: { url: 'login', method: 'post', propertyName: 'token' },
-          user: false, //{ url: 'me', method: 'get', propertyName: 'data' },
+          user: false,
           logout: false
         }
       }
     }
+  },
+  server: {
+    port: process.env.PORT,
+    host: process.env.URL
   }
 }
