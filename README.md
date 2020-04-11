@@ -1,5 +1,5 @@
 # devadmin
-> My cat&#39;s pajamas Nuxt.js project
+> A developer admin app built with Nuxt.js
 
 ## Build Setup
 
