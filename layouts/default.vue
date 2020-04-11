@@ -46,4 +46,9 @@ section {
 .btn {
   max-height: 40px;
 }
+.btn-primary,
+.btn-primary:hover {
+  background-color: #0C7470;
+  border-color: #0C7470;
+}
 </style>
