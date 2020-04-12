@@ -28,18 +28,15 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
-
 *,
 *:before,
 *:after {
   box-sizing: border-box;
   margin: 0;
 }
-
 section {
   margin-top: 5vh;
 }
-
 .btn {
   max-height: 40px;
 }
@@ -47,5 +44,16 @@ section {
 .btn-primary:hover {
   background-color: #0c7470;
   border-color: #0c7470;
+}
+.page-item.active .page-link {
+  background-color: #0c7470;
+  border-color: #0c7470;
+}
+.page-link {
+  color: #0c7470;
+}
+a,
+a:hover {
+  color: #0c7470;
 }
 </style>
