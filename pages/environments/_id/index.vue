@@ -7,13 +7,9 @@
           Add Site
         </b-button>
       </div>
-      <b-table show-empty striped hover :items="items"
-        :fields="fields">
+      <b-table show-empty striped hover :items="items" :fields="fields">
         <template v-slot:cell(url)="data">
-          <a
-            :href="data.item.url"
-            target="_blank"
-            rel="noopener noreferrer">
+          <a :href="data.item.url" target="_blank" rel="noopener noreferrer">
             {{ data.item.url }}
           </a>
         </template>
@@ -31,7 +27,8 @@
         id="delete-popup"
         ref="delete-popup"
         title="Confirm delete"
-        hide-footer>
+        hide-footer
+      >
         <p class="my-4">
           Are you you want to delete the {{ deleteItem.name }} site?
         </p>
@@ -79,7 +76,9 @@ export default {
   },
   methods: {
     async getSiteItems() {
-      const response = await this.$axios.get(`/environments/${this.$route.params.id}`)
+      const response = await this.$axios.get(
+        `/environments/${this.$route.params.id}`
+      )
       const sites = response.data.sites
       const data = []
 
@@ -93,9 +92,7 @@ export default {
       return data
     },
     showAddSitePage() {
-      this.$router.push(
-        `/environments/${this.$route.params.id}/sites/add`
-      )
+      this.$router.push(`/environments/${this.$route.params.id}/sites/add`)
     },
     showEditPage(item) {
       this.$router.push(`/sites/${item.id}/edit`)

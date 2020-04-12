@@ -4,7 +4,8 @@
       <div class="d-flex justify-content-between">
         <h1 class="title">Environments</h1>
         <b-button
-          type="submit" variant="primary"
+          type="submit"
+          variant="primary"
           @click="showAddEnvironmentPage"
         >
           Add Environment
@@ -103,9 +104,7 @@ export default {
       this.$refs['delete-popup'].show()
     },
     async deleteEnvironment() {
-      await this.$axios.$delete(
-        `environments/${this.deleteItem.id}`
-      )
+      await this.$axios.$delete(`environments/${this.deleteItem.id}`)
       this.$refs['delete-popup'].hide()
       this.items = await this.getEnvironmentItems()
     }
