@@ -46,8 +46,10 @@
 export default {
   async asyncData({ params, $axios, error }) {
     if (params.id) {
-      const response = await $axios.get(`/environments/${params.id}`)
-      const sites = response.data.sites
+      const response = await $axios.get(
+        encodeURI(`/sites?order[name]=asc&environment=/environments/${params.id}`)
+      )
+      const sites = response.data['hydra:member']
       const data = { items: [] }
 
       for (const site of sites) {
