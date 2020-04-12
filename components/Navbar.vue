@@ -4,9 +4,11 @@
       <b-navbar-brand to="/">DevAdmin</b-navbar-brand>
       <b-navbar-nav class="ml-auto" v-show="isLoggedIn">
         <b-nav-item href="javascript:void(0);" @click="showEnvironments"
-          >Environments</b-nav-item>
+          >Environments</b-nav-item
+        >
         <b-nav-item href="javascript:void(0);" @click="logout"
-          >Logout</b-nav-item>
+          >Logout</b-nav-item
+        >
       </b-navbar-nav>
     </b-navbar>
   </div>
