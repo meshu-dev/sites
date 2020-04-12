@@ -58,7 +58,7 @@ import Notification from '~/components/Notification'
 
 export default {
   components: {
-    Notification,
+    Notification
   },
   data() {
     return {
@@ -67,7 +67,6 @@ export default {
       error: null
     }
   },
-
   methods: {
     async login() {
       try {
