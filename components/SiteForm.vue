@@ -2,7 +2,9 @@
   <b-form method="post" @submit.prevent="submit">
     <h1>{{ pageTitle }}</h1>
     <b-form-group
-      label-for="name-field">
+      label-for="name-field"
+      label-cols="2"
+      label="Name:">
       <b-form-input
         id="name-field"
         v-model="fieldNameValue"
@@ -11,7 +13,9 @@
       ></b-form-input>
     </b-form-group>
     <b-form-group
-      label-for="url-field">
+      label-for="url-field"
+      label-cols="2"
+      label="Url:">
       <b-form-input
         id="url-field"
         v-model="fieldUrlValue"
