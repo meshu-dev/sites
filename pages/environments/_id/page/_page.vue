@@ -22,6 +22,12 @@
           </b-button>
         </template>
       </b-table>
+      <b-pagination-nav
+        :link-gen="linkGen"
+        :number-of-pages="perPage"
+        use-router
+      >
+      </b-pagination-nav>
       <div v-show="!items">No environments available</div>
       <b-modal
         id="delete-popup"
@@ -47,7 +53,9 @@ export default {
   async asyncData({ params, $axios, error }) {
     if (params.id) {
       const response = await $axios.get(
-        encodeURI(`/sites?order[name]=asc&environment=/environments/${params.id}`)
+        encodeURI(
+          `/sites?order[name]=asc&environment=/environments/${params.id}&page=${params.page}`
+        )
       )
       const sites = response.data['hydra:member']
       const data = { items: [] }
@@ -59,12 +67,20 @@ export default {
           url: site.url
         })
       }
+      data.itemTotal = response.data['hydra:totalItems']
+      data.perPage = Math.ceil(
+        response.data['hydra:totalItems'] / process.env.ITEMS_PER_PAGE
+      )
+
       return data
     }
   },
   data() {
     return {
       items: [],
+      itemTotal: 0,
+      currentPage: 1,
+      perPage: 1,
       fields: [
         { key: 'name', label: 'Name' },
         { key: 'url', label: 'Url' },
@@ -107,6 +123,9 @@ export default {
       await this.$axios.$delete(`sites/${this.deleteItem.id}`)
       this.$refs['delete-popup'].hide()
       this.items = await this.getSiteItems()
+    },
+    linkGen(pageNum) {
+      return `/environments/${this.$route.params.id}/page/${pageNum}`
     }
   }
 }

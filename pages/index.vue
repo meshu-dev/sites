@@ -94,7 +94,7 @@ export default {
       this.$router.push(`/environments/add`)
     },
     showEnvPage(item) {
-      this.$router.push(`/environments/${item.id}`)
+      this.$router.push(`/environments/${item.id}/page/1`)
     },
     showEditPage(item) {
       this.$router.push(`/environments/${item.id}/edit`)
