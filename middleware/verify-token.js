@@ -1,22 +1,22 @@
 export default function({ $auth, redirect }) {
-  let token = localStorage.getItem('auth._token.local');
+  const token = localStorage.getItem('auth._token.local')
 
   if (token && token !== 'false') {
-    token = token.replace('Bearer ', '');
+    token = token.replace('Bearer ', '')
 
-    let payload = token.split('.')[1],
-      tokenData = JSON.parse(atob(payload));
+    const payload = token.split('.')[1]
+    const tokenData = JSON.parse(atob(payload))
 
     if (tokenData.exp) { // Date.now() + 100000
-      let expiryTime = tokenData.exp * 1000,
-        currentTime = Date.now();
+      const expiryTime = tokenData.exp * 1000
+      const currentTime = Date.now()
 
-      console.log('expiryTime', new Date(expiryTime));
-      console.log('currentTime', new Date(currentTime));
+      console.log('expiryTime', new Date(expiryTime))
+      console.log('currentTime', new Date(currentTime))
 
       if (expiryTime < currentTime) {
-        redirect('/login');
-        $auth.logout();
+        redirect('/login')
+        $auth.logout()
       }
     }
   }

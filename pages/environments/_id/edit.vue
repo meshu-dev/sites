@@ -2,10 +2,11 @@
   <section class="section">
     <div class="container">
       <EnvironmentForm
-        pageTitle="Edit environment"
-        btnText="Save"
+        page-title="Edit environment"
+        btn-text="Save"
         :fieldValue.sync="environment.name"
-        @form-submit="edit" />
+        @form-submit="edit"
+      />
     </div>
   </section>
 </template>
@@ -15,23 +16,23 @@ import EnvironmentForm from '~/components/EnvironmentForm'
 
 export default {
   components: {
-    EnvironmentForm,
+    EnvironmentForm
   },
   middleware: 'auth',
+  async asyncData({ params, $axios, error }) {
+    if (params.id) {
+      const response = await $axios.get(`/environments/${params.id}`)
+
+      return {
+        environment: response.data
+      }
+    }
+  },
   data() {
     return {
       environment: {
         id: 0,
         name: ''
-      }
-    }
-  },
-  async asyncData({ params, $axios, error }) {
-    if (params.id) {
-      const response = await $axios.get(`/environments/${params.id}`);
-
-      return {
-        environment: response.data
       }
     }
   },
@@ -42,12 +43,11 @@ export default {
         {
           name: this.environment.name
         }
-      );
+      )
 
       if (response) {
-        this.$router.push(`/`);
+        this.$router.push(`/`)
       }
-
     }
   }
 }

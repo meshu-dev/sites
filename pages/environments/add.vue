@@ -2,10 +2,11 @@
   <section class="section">
     <div class="container">
       <EnvironmentForm
-        pageTitle="Add environment"
-        btnText="Add"
+        page-title="Add environment"
+        btn-text="Add"
         :fieldValue.sync="environment.name"
-        @form-submit="add" />
+        @form-submit="add"
+      />
     </div>
   </section>
 </template>
@@ -15,7 +16,7 @@ import EnvironmentForm from '~/components/EnvironmentForm'
 
 export default {
   components: {
-    EnvironmentForm,
+    EnvironmentForm
   },
   middleware: 'auth',
   data() {
@@ -27,15 +28,12 @@ export default {
   },
   methods: {
     async add() {
-      const response = await this.$axios.$post(
-        `/environments`,
-        {
-          name: this.environment.name
-        }
-      );
+      const response = await this.$axios.$post(`/environments`, {
+        name: this.environment.name
+      })
 
       if (response) {
-        this.$router.push(`/`);
+        this.$router.push(`/`)
       }
     }
   }

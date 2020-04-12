@@ -4,18 +4,13 @@
       <div class="d-flex justify-content-between">
         <h1 class="title">Environments</h1>
         <b-button
-          type="submit"
-          variant="primary"
-          @click="showAddEnvironmentPage">
+          type="submit" variant="primary"
+          @click="showAddEnvironmentPage"
+        >
           Add Environment
         </b-button>
       </div>
-      <b-table
-        show-empty
-        striped
-        hover
-        :items="items"
-        :fields="fields">
+      <b-table show-empty striped hover :items="items" :fields="fields">
         <template v-slot:cell(actions)="row">
           <b-button @click="showEnvPage(row.item)">
             View Sites
@@ -33,12 +28,13 @@
         id="delete-popup"
         ref="delete-popup"
         title="Confirm delete"
-        hide-footer>
+        hide-footer
+      >
         <p class="my-4">
           Are you you want to delete the {{ deleteItem.name }} environment?
         </p>
         <div class="d-flex justify-content-center">
-          <b-button @click="deleteEnvironment" class="danger">
+          <b-button class="danger" @click="deleteEnvironment">
             Delete
           </b-button>
         </div>
@@ -49,6 +45,21 @@
 
 <script>
 export default {
+  async asyncData({ $axios, error }) {
+    const response = await $axios.get('/environments')
+    const environments = response.data['hydra:member']
+    const data = { items: [] }
+
+    for (const environment of environments) {
+      data.items.push({
+        id: environment.id,
+        name: environment.name,
+        siteCount: environment.sites.length
+      })
+    }
+
+    return data
+  },
   data() {
     return {
       items: [],
@@ -63,65 +74,40 @@ export default {
       }
     }
   },
-  async asyncData({ $axios, error }) {
-    const response = await $axios.get('/environments');
-    let environments = response.data['hydra:member'],
-        data = { items: [] };
-
-    for (let environment of environments) {
-      data.items.push({
-        id: environment['id'],
-        name: environment['name'],
-        siteCount: environment['sites'].length
-      });
-    }
-
-    console.log('environments', environments);
-
-    return data;
-  },
   methods: {
     async getEnvironmentItems() {
-      const response = await this.$axios.get(
-        `/environments`
-      );
+      const response = await this.$axios.get(`/environments`)
+      const environments = response.data['hydra:member']
+      const data = []
 
-      let environments = response.data['hydra:member'],
-          data = [];
-
-      for (let environment of environments) {
+      for (const environment of environments) {
         data.push({
-          id: environment['id'],
-          name: environment['name'],
-          siteCount: environment['sites'].length
-        });
+          id: environment.id,
+          name: environment.name,
+          siteCount: environment.sites.length
+        })
       }
-      return data;
+      return data
     },
     showAddEnvironmentPage() {
-      this.$router.push(
-        `/environments/add`
-      );
+      this.$router.push(`/environments/add`)
     },
     showEnvPage(item) {
-      this.$router.push(`/environments/${item.id}`);
+      this.$router.push(`/environments/${item.id}`)
     },
     showEditPage(item) {
-      this.$router.push(`/environments/${item.id}/edit`);
+      this.$router.push(`/environments/${item.id}/edit`)
     },
     showDeletePopup(item) {
-      this.deleteItem = item;
-      this.$refs['delete-popup'].show();
+      this.deleteItem = item
+      this.$refs['delete-popup'].show()
     },
     async deleteEnvironment() {
-      const response = await this.$axios.$delete(
+      await this.$axios.$delete(
         `environments/${this.deleteItem.id}`
-      );
-      this.$refs['delete-popup'].hide();
-
-      let items = await this.getEnvironmentItems();
-      this.items = items;
-
+      )
+      this.$refs['delete-popup'].hide()
+      this.items = await this.getEnvironmentItems()
     }
   }
 }

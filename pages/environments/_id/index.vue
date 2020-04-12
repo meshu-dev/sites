@@ -3,18 +3,11 @@
     <div class="container">
       <div class="d-flex justify-content-between">
         <h1 class="title">Sites</h1>
-        <b-button
-          type="submit"
-          variant="primary"
-          @click="showAddSitePage">
+        <b-button type="submit" variant="primary" @click="showAddSitePage">
           Add Site
         </b-button>
       </div>
-      <b-table
-        show-empty
-        striped
-        hover
-        :items="items"
+      <b-table show-empty striped hover :items="items"
         :fields="fields">
         <template v-slot:cell(url)="data">
           <a
@@ -43,7 +36,7 @@
           Are you you want to delete the {{ deleteItem.name }} site?
         </p>
         <div class="d-flex justify-content-center">
-          <b-button @click="deleteSite" class="danger">
+          <b-button class="danger" @click="deleteSite">
             Delete
           </b-button>
         </div>
@@ -54,6 +47,22 @@
 
 <script>
 export default {
+  async asyncData({ params, $axios, error }) {
+    if (params.id) {
+      const response = await $axios.get(`/environments/${params.id}`)
+      const sites = response.data.sites
+      const data = { items: [] }
+
+      for (const site of sites) {
+        data.items.push({
+          id: site.id,
+          name: site.name,
+          url: site.url
+        })
+      }
+      return data
+    }
+  },
   data() {
     return {
       items: [],
@@ -68,62 +77,37 @@ export default {
       }
     }
   },
-  async asyncData({ params, $axios, error }) {
-    if (params.id) {
-      const response = await $axios.get(`/environments/${params.id}`);
-      
-      let sites = response.data.sites,
-          data = { items: [] };
-
-      for (let site of sites) {
-        data.items.push({
-          id: site['id'],
-          name: site['name'],
-          url: site['url']
-        });
-      }
-
-      return data;
-    }
-  },
   methods: {
     async getSiteItems() {
-      const response = await this.$axios.get(
-        `/environments/${this.$route.params.id}`
-      );
+      const response = await this.$axios.get(`/environments/${this.$route.params.id}`)
+      const sites = response.data.sites
+      const data = []
 
-      let sites = response.data.sites,
-          data = [];
-
-      for (let site of sites) {
+      for (const site of sites) {
         data.push({
-          id: site['id'],
-          name: site['name'],
-          url: site['url']
-        });
+          id: site.id,
+          name: site.name,
+          url: site.url
+        })
       }
-      return data;
+      return data
     },
     showAddSitePage() {
       this.$router.push(
         `/environments/${this.$route.params.id}/sites/add`
-      );
+      )
     },
     showEditPage(item) {
-      this.$router.push(`/sites/${item.id}/edit`);
+      this.$router.push(`/sites/${item.id}/edit`)
     },
     showDeletePopup(item) {
-      this.deleteItem = item;
-      this.$refs['delete-popup'].show();
+      this.deleteItem = item
+      this.$refs['delete-popup'].show()
     },
     async deleteSite() {
-      const response = await this.$axios.$delete(
-        `sites/${this.deleteItem.id}`
-      );
-      this.$refs['delete-popup'].hide();
-
-      let items = await this.getSiteItems();
-      this.items = items;
+      await this.$axios.$delete(`sites/${this.deleteItem.id}`)
+      this.$refs['delete-popup'].hide()
+      this.items = await this.getSiteItems()
     }
   }
 }

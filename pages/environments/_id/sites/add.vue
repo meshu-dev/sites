@@ -2,11 +2,12 @@
   <section class="section">
     <div class="container">
       <SiteForm
-        pageTitle="Add site"
-        btnText="Add"
+        page-title="Add site"
+        btn-text="Add"
         :fieldNameValue.sync="site.name"
         :fieldUrlValue.sync="site.url"
-        @form-submit="add" />
+        @form-submit="add"
+      />
     </div>
   </section>
 </template>
@@ -16,7 +17,7 @@ import SiteForm from '~/components/SiteForm'
 
 export default {
   components: {
-    SiteForm,
+    SiteForm
   },
   middleware: 'auth',
   data() {
@@ -29,17 +30,14 @@ export default {
   },
   methods: {
     async add() {
-      const response = await this.$axios.$post(
-        `/sites`,
-        {
-          environment: `/environments/${this.$route.params.id}`,
-          name: this.site.name,
-          url: this.site.url
-        }
-      );
+      const response = await this.$axios.$post(`/sites`, {
+        environment: `/environments/${this.$route.params.id}`,
+        name: this.site.name,
+        url: this.site.url
+      })
 
       if (response) {
-        this.$router.push(`/environments/${this.$route.params.id}`);
+        this.$router.push(`/environments/${this.$route.params.id}`)
       }
     }
   }

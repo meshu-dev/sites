@@ -9,10 +9,7 @@
 import Navbar from '~/components/Navbar'
 
 export default {
-  middleware: [
-    'auth',
-    'verify-token'
-  ],
+  middleware: ['auth', 'verify-token'],
   components: {
     Navbar
   }
@@ -48,7 +45,7 @@ section {
 }
 .btn-primary,
 .btn-primary:hover {
-  background-color: #0C7470;
-  border-color: #0C7470;
+  background-color: #0c7470;
+  border-color: #0c7470;
 }
 </style>
