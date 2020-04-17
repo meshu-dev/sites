@@ -1,4 +1,10 @@
-require('dotenv').config({ path: '.env' })
+let envFilename = '.env'
+
+if (process.env.NODE_ENV !== 'production') {
+  envFilename = `.env.${process.env.NODE_ENV}`
+}
+
+require('dotenv').config({ path: envFilename })
 
 export default {
   mode: 'spa',
