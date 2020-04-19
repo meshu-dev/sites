@@ -4,6 +4,8 @@ if (process.env.NODE_ENV !== 'production') {
   envFilename = `.env.${process.env.NODE_ENV}`
 }
 
+console.log('process.env.NODE_ENV', process.env.NODE_ENV);
+
 require('dotenv').config({ path: envFilename })
 
 export default {
