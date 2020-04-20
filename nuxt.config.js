@@ -1,12 +1,6 @@
-let envFilename = '.env'
-
-if (process.env.NODE_ENV !== 'production') {
-  envFilename = `.env.${process.env.NODE_ENV}`
-}
-
 console.log('process.env.NODE_ENV', process.env.NODE_ENV);
 
-require('dotenv').config({ path: envFilename })
+require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
 
 export default {
   mode: 'spa',
@@ -57,7 +51,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv',
+    ['@nuxtjs/dotenv', { filename: `.env.${process.env.NODE_ENV}` }],
     // Doc: https://auth.nuxtjs.org
     // Doc: https://www.digitalocean.com/community/tutorials/implementing-authentication-in-nuxtjs-app
     '@nuxtjs/auth'

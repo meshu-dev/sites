@@ -23,6 +23,7 @@
         </template>
       </b-table>
       <b-pagination-nav
+        v-show="perPage > 1"
         :link-gen="linkGen"
         :number-of-pages="perPage"
         use-router
@@ -69,7 +70,7 @@ export default {
       }
       data.itemTotal = response.data['hydra:totalItems']
       data.perPage = Math.ceil(
-        response.data['hydra:totalItems'] / process.env.ITEMS_PER_PAGE
+        data.itemTotal / process.env.ITEMS_PER_PAGE
       )
 
       return data
