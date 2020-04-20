@@ -40,7 +40,6 @@ export default {
     // '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/stylelint-module
     // '@nuxtjs/stylelint-module'
-    ['@nuxtjs/dotenv', { filename: `.env.${process.env.NODE_ENV}` }]
   ],
   /*
    ** Nuxt.js modules
@@ -87,5 +86,8 @@ export default {
   server: {
     port: process.env.PORT,
     host: process.env.URL
+  },
+  env: {
+    itemsPerPage: process.env.ITEMS_PER_PAGE
   }
 }
