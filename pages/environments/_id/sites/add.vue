@@ -37,7 +37,7 @@ export default {
       })
 
       if (response) {
-        this.$router.push(`/environments/${this.$route.params.id}`)
+        this.$router.push(`/environments/${this.$route.params.id}/page/1`)
       }
     }
   }
