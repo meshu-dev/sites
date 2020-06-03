@@ -47,7 +47,7 @@ export default {
       const environmentId = this.site.environment.replace('/environments/', '')
 
       if (response) {
-        this.$router.push(`/environments/${environmentId}`)
+        this.$router.push(`/environments/${environmentId}/page/1`)
       }
     }
   }
