@@ -30,7 +30,7 @@ export default {
   computed: {
     fieldValue: {
       get() {
-        return this.$attrs.fieldValue
+        return this.$attrs['field-value']
       },
       set(val) {
         this.$emit('update:fieldValue', val)

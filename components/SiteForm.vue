@@ -38,7 +38,7 @@ export default {
   computed: {
     fieldNameValue: {
       get() {
-        return this.$attrs.fieldNameValue
+        return this.$attrs['field-name-value']
       },
       set(val) {
         this.$emit('update:fieldNameValue', val)
@@ -46,7 +46,7 @@ export default {
     },
     fieldUrlValue: {
       get() {
-        return this.$attrs.fieldUrlValue
+        return this.$attrs['field-url-value']
       },
       set(val) {
         this.$emit('update:fieldUrlValue', val)
