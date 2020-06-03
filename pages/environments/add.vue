@@ -4,7 +4,7 @@
       <EnvironmentForm
         page-title="Add environment"
         btn-text="Add"
-        :fieldValue.sync="environment.name"
+        :field-value.sync="environment.name"
         @form-submit="add"
       />
     </div>

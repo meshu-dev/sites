@@ -7,6 +7,11 @@
 <script>
 export default {
   name: 'Notification',
-  props: ['message']
+  props: {
+    message: {
+      type: String,
+      default: ''
+    }
+  }
 }
 </script>

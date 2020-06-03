@@ -4,8 +4,8 @@
       <SiteForm
         page-title="Add site"
         btn-text="Add"
-        :fieldNameValue.sync="site.name"
-        :fieldUrlValue.sync="site.url"
+        :field-name-value.sync="site.name"
+        :field-url-value.sync="site.url"
         @form-submit="add"
       />
     </div>

@@ -61,8 +61,6 @@ export default {
       const sites = response.data['hydra:member']
       const data = { items: [] }
 
-      console.log('process.env', process.env);
-
       for (const site of sites) {
         data.items.push({
           id: site.id,
@@ -71,9 +69,7 @@ export default {
         })
       }
       data.itemTotal = response.data['hydra:totalItems']
-      data.perPage = Math.ceil(
-        data.itemTotal / process.env.itemsPerPage
-      )
+      data.perPage = Math.ceil(data.itemTotal / process.env.itemsPerPage)
 
       return data
     }

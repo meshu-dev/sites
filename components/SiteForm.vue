@@ -26,8 +26,14 @@
 <script>
 export default {
   props: {
-    pageTitle: String,
-    btnText: String
+    pageTitle: {
+      type: String,
+      default: ''
+    },
+    btnText: {
+      type: String,
+      default: ''
+    }
   },
   computed: {
     fieldNameValue: {
