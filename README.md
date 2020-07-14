@@ -16,7 +16,7 @@ brew install node
 ### Nuxt
 - Install via NPM
 ```
-sudo npm install -g nuxt
+npm install -g nuxt
 ```
 ### Dev Admin API
 Go to https://github.com/meshu-dev/devadmin-api then follow install and setup instructions
