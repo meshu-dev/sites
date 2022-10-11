@@ -3,6 +3,8 @@ import Head from 'next/head'
 import { Box } from '@mui/system';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import ErrorPanel from '../components/ErrorPanel/ErrorPanel';
+import ApiHandler from '../common/ApiHandler';
 
 export default class LoginPage extends React.Component {
   constructor(props) {
@@ -10,7 +12,8 @@ export default class LoginPage extends React.Component {
   
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      messages: []
     };
   }
 
@@ -24,16 +27,30 @@ export default class LoginPage extends React.Component {
     })
   }
 
-  handleSubmit = event => {
+  handleSubmit = async (event) => {
     event.preventDefault()
 
-    /*
-    this.setState({
-      isLoading: true,
-    })
-    this.recaptcha.execute() */
+    const response = await this.loginRequest();
 
-    console.log('BIGN!!!', this.state.email, this.state.password);
+    if (response['token']) {
+
+    } else {
+      
+    }
+
+    console.log('BIGN!!!', response);
+  }
+
+  loginRequest = async () => {
+    const params = {
+      email: this.state.email,
+      password: this.state.password
+    };
+
+    const apiHandler = new ApiHandler();
+    const response = await apiHandler.post('auth/login', params);
+
+    return response;
   }
 
   render() {
@@ -44,6 +61,8 @@ export default class LoginPage extends React.Component {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <form onSubmit={ this.handleSubmit }>
+          <h1>DevAdmin Login</h1>
+          <ErrorPanel />
           <TextField
               id="email-field"
               className="login-field"
@@ -53,9 +72,7 @@ export default class LoginPage extends React.Component {
               value={ this.state.email }
               onChange={ this.handleInputChange }
               fullWidth
-              required
-              minLength="10"
-              maxLength="20" />
+              required />
           <TextField
             id="password-field"
             className="login-field"
@@ -65,9 +82,7 @@ export default class LoginPage extends React.Component {
             value={ this.state.password }
             onChange={ this.handleInputChange }
             fullWidth
-            required
-            minLength="10"
-            maxLength="20" />
+            required />
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button
               type="submit"
