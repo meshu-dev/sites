@@ -1,13 +1,10 @@
 import * as React from 'react';
-import InputLabel from '@mui/material/InputLabel';
-import { Box } from '@mui/system';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import { apiGet } from '../apiCall.js';
 
+import EnvSelectorDropdown from './EnvSelectorDropdown';
+
 const EnvSelector = ({ onEnvChangeFtn }) => {
-  const menuItems = [];
+  const environments = [];
   const [selectedEnv, setSelectedEnv] = React.useState('');
   const { data, error } = apiGet('environments');
 
@@ -20,43 +17,24 @@ const EnvSelector = ({ onEnvChangeFtn }) => {
     console.log('handleChange', `Env Id: ${envId}`);
   };
   
-  if (!data) {
-    return <div>Loading...</div>
-  } else {
-    const environments = data.data;
+  if (data) {
+    environments = data.data;
 
-    console.log('DATA', data);
+    if (!selectedEnv && environments.length > 0) {
+      const firstEnv = environments[0];
 
-    for (const environment of environments) {
-      if (!selectedEnv) {
-        setSelectedEnv(environment['id']);
-        onEnvChangeFtn(environment['id']);
-      }
-
-      menuItems.push(
-        <MenuItem value={ environment['id'] }>
-          { environment['name'] }
-        </MenuItem>
-      );
+      setSelectedEnv(firstEnv['id']);
+      onEnvChangeFtn(firstEnv['id']);
     }
-  }
 
-  return (
-    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-      <FormControl sx={{ minWidth: 250 }}>
-        <InputLabel id="envselector-label">Environment</InputLabel>
-        <Select
-          labelId="envselector-label"
-          id="envselector-select"
-          value={ selectedEnv }
-          label="Environment"
-          onChange={ onOptionChange }
-        >
-          { menuItems }
-        </Select>
-      </FormControl>
-    </Box>
-  );
+    return (
+      <EnvSelectorDropdown
+        selectedEnv={ selectedEnv }
+        environments={ environments }
+        onOptionChange={ onOptionChange } />
+    );
+  }
+  return <div>Loading...</div>
 }
 
 export default EnvSelector;

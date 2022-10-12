@@ -4,10 +4,13 @@ import { Box } from '@mui/system';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import ErrorPanel from '../components/ErrorPanel/ErrorPanel';
-import AuthService from '../services/AuthService';
 import Router from 'next/router';
+import AuthService from '../services/AuthService';
+import { apiPost } from '../components/apiCall.js';
 
 export default class LoginPage extends React.Component {
+  //const { data, error } = apiPost('auth/login', params);
+
   constructor(props) {
     super(props);
   
@@ -39,7 +42,11 @@ export default class LoginPage extends React.Component {
     const authService = new AuthService();
     const response = await authService.login(params);
 
-    console.log('AuthService response', response);
+    
+
+    //let data = '';
+
+    //console.log('AuthService response', data);
 
     Router.push('/');
   }
