@@ -1,4 +1,4 @@
-class ApiHandler {
+class ApiService {
   constructor() {
     this.apiUrl = process.env.NEXT_PUBLIC_API_URL
   }
@@ -59,4 +59,4 @@ class ApiHandler {
   } */
 }
 
-export default ApiHandler
+export default ApiService

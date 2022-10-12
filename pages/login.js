@@ -4,7 +4,8 @@ import { Box } from '@mui/system';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import ErrorPanel from '../components/ErrorPanel/ErrorPanel';
-import ApiHandler from '../common/ApiHandler';
+import AuthService from '../services/AuthService';
+import Router from 'next/router';
 
 export default class LoginPage extends React.Component {
   constructor(props) {
@@ -30,27 +31,23 @@ export default class LoginPage extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault()
 
-    const response = await this.loginRequest();
-
-    if (response['token']) {
-
-    } else {
-      
-    }
-
-    console.log('BIGN!!!', response);
-  }
-
-  loginRequest = async () => {
     const params = {
       email: this.state.email,
       password: this.state.password
     };
 
-    const apiHandler = new ApiHandler();
-    const response = await apiHandler.post('auth/login', params);
+    const authService = new AuthService();
+    const response = await authService.login(params);
 
-    return response;
+    console.log('AuthService response', response);
+
+    Router.push('/');
+
+    this.setState({
+      email: '',
+      password: '',
+      messages: []
+    });
   }
 
   render() {

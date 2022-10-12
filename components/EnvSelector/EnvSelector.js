@@ -1,53 +1,69 @@
 import * as React from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import useSWR from 'swr';
 
-export default function SelectLabels() {
-  const [age, setAge] = React.useState('');
+const fetcher = (url, token) => fetch(url, {
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+}).then((res) => res.json());
+
+const SelectLabels = () => {
+  const [selectedEnv, setSelectedEnv] = React.useState('');
+
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/environments`;
+  const token = '24|Hr4x2kc2MCh3sR9kAEH9ZRJOPSLN120Vqm20dwHU';
+
+  const { data, error } = useSWR([apiUrl, token], fetcher);
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setSelectedEnv(event.target.value);
+
+    console.log('daaaa', data);
   };
+  
+  const menuItems = [];
+
+  if (!data) {
+    return <div>Loading...</div>
+  } else {
+    const environments = data.data;
+
+    console.log('DATA', data);
+
+    for (const environment of environments) {
+      if (!selectedEnv) {
+        setSelectedEnv(environment['id']);
+      }
+
+      menuItems.push(
+        <MenuItem value={ environment['id'] }>
+          { environment['name'] }
+        </MenuItem>
+      );
+    }
+  }
 
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-helper-label">Age</InputLabel>
+      <FormControl sx={{ minWidth: 250 }}>
+        <InputLabel id="envselector-label">Environment</InputLabel>
         <Select
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-          value={age}
-          label="Age"
-          onChange={handleChange}
+          labelId="envselector-label"
+          id="envselector-select"
+          value={ selectedEnv }
+          label="Environment"
+          onChange={ handleChange }
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          { menuItems }
         </Select>
-        <FormHelperText>With label + helper text</FormHelperText>
-      </FormControl>
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
-        <Select
-          value={age}
-          onChange={handleChange}
-          displayEmpty
-          inputProps={{ 'aria-label': 'Without label' }}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-        <FormHelperText>Without label</FormHelperText>
       </FormControl>
     </div>
   );
 }
+
+export default SelectLabels;
