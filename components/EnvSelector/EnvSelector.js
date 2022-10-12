@@ -1,5 +1,6 @@
 import * as React from 'react';
 import InputLabel from '@mui/material/InputLabel';
+import { Box } from '@mui/system';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -12,7 +13,8 @@ const fetcher = (url, token) => fetch(url, {
   }
 }).then((res) => res.json());
 
-const SelectLabels = () => {
+const EnvSelector = () => {
+  const menuItems = [];
   const [selectedEnv, setSelectedEnv] = React.useState('');
 
   const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/environments`;
@@ -20,14 +22,11 @@ const SelectLabels = () => {
 
   const { data, error } = useSWR([apiUrl, token], fetcher);
 
-  const handleChange = (event) => {
+  const onOptionChange = (event) => {
     setSelectedEnv(event.target.value);
-
-    console.log('daaaa', data);
+    console.log('handleChange', `Env Id: ${event.target.value}`);
   };
   
-  const menuItems = [];
-
   if (!data) {
     return <div>Loading...</div>
   } else {
@@ -49,7 +48,7 @@ const SelectLabels = () => {
   }
 
   return (
-    <div>
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
       <FormControl sx={{ minWidth: 250 }}>
         <InputLabel id="envselector-label">Environment</InputLabel>
         <Select
@@ -57,13 +56,13 @@ const SelectLabels = () => {
           id="envselector-select"
           value={ selectedEnv }
           label="Environment"
-          onChange={ handleChange }
+          onChange={ onOptionChange }
         >
           { menuItems }
         </Select>
       </FormControl>
-    </div>
+    </Box>
   );
 }
 
-export default SelectLabels;
+export default EnvSelector;

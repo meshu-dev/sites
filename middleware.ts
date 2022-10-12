@@ -1,14 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export function middleware(req: NextRequest) {
-
-  console.log(
-    'MIDDLEWARE',
-    req.cookies,
-    req.cookies.get('authToken'),
-    req.nextUrl.pathname
-  );
-
   const token = req.cookies.get('authToken');
   let redirectUrl = '';
 
@@ -25,8 +17,3 @@ export function middleware(req: NextRequest) {
 
   return NextResponse.next();
 }
-
-/*
-export const config = {
-  matcher: ['/', '/login'],
-}; */

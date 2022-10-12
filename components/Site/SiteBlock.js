@@ -5,14 +5,18 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 
-export default function MultiActionAreaCard() {
+const MultiActionAreaCard = () => {
+
+
+
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea>
+      <CardActionArea sx={{ display: 'flex', maxWidth: 345 }}>
         <CardMedia
           component="img"
-          height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
+          width="100"
+          height="100"
+          image="https://mui.com/static/images/cards/live-from-space.jpg"
           alt="green iguana"
         />
         <CardContent>
@@ -33,3 +37,5 @@ export default function MultiActionAreaCard() {
     </Card>
   );
 }
+
+export default MultiActionAreaCard;
