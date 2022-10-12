@@ -8,6 +8,17 @@ class ApiService {
     return this.request(url, "GET", {}, incHeaders)
   } */
 
+  getFetcher() {
+    const fetcher = (url, token) => fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    }).then((res) => res.json());
+
+    return fetcher;
+  }
+
   async post(url, params = {}) {
     let apiUrl =`${this.apiUrl}/${url}`;
   

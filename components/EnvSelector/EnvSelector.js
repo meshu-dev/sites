@@ -4,23 +4,12 @@ import { Box } from '@mui/system';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import useSWR from 'swr';
-
-const fetcher = (url, token) => fetch(url, {
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  }
-}).then((res) => res.json());
+import { apiGet } from '../apiCall.js';
 
 const EnvSelector = ({ onEnvChangeFtn }) => {
   const menuItems = [];
   const [selectedEnv, setSelectedEnv] = React.useState('');
-
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/environments`;
-  const token = '24|Hr4x2kc2MCh3sR9kAEH9ZRJOPSLN120Vqm20dwHU';
-
-  const { data, error } = useSWR([apiUrl, token], fetcher);
+  const { data, error } = apiGet('environments');
 
   const onOptionChange = (event) => {
     const envId = event.target.value;

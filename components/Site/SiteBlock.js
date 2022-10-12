@@ -5,6 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
+import { apiGet } from '../components/apiCall.js';
 
 const SiteBlock = ({ envId }) => {
   const [sites, setSites] = React.useState([]);
@@ -16,6 +17,8 @@ const SiteBlock = ({ envId }) => {
   useEffect(() => {
     console.log('useEffect logic ran');
     console.log('EFFECT', envId);
+
+    // const { data, error } = apiGet(`environments/${envId}/sites`);
   }, [envId]);
 
   if (!sites.length) {
