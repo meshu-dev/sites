@@ -13,7 +13,7 @@ const fetcher = (url, token) => fetch(url, {
   }
 }).then((res) => res.json());
 
-const EnvSelector = () => {
+const EnvSelector = ({ onEnvChangeFtn }) => {
   const menuItems = [];
   const [selectedEnv, setSelectedEnv] = React.useState('');
 
@@ -23,8 +23,12 @@ const EnvSelector = () => {
   const { data, error } = useSWR([apiUrl, token], fetcher);
 
   const onOptionChange = (event) => {
-    setSelectedEnv(event.target.value);
-    console.log('handleChange', `Env Id: ${event.target.value}`);
+    const envId = event.target.value;
+
+    setSelectedEnv(envId);
+    onEnvChangeFtn(envId);
+
+    console.log('handleChange', `Env Id: ${envId}`);
   };
   
   if (!data) {
@@ -37,6 +41,7 @@ const EnvSelector = () => {
     for (const environment of environments) {
       if (!selectedEnv) {
         setSelectedEnv(environment['id']);
+        onEnvChangeFtn(environment['id']);
       }
 
       menuItems.push(

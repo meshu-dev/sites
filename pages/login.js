@@ -42,12 +42,6 @@ export default class LoginPage extends React.Component {
     console.log('AuthService response', response);
 
     Router.push('/');
-
-    this.setState({
-      email: '',
-      password: '',
-      messages: []
-    });
   }
 
   render() {
