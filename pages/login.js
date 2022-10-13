@@ -1,95 +1,47 @@
-import React from 'react';
-import Head from 'next/head'
-import { Box } from '@mui/system';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import ErrorPanel from '../components/ErrorPanel/ErrorPanel';
+import { useState } from 'react';
 import Router from 'next/router';
-import AuthService from '../services/AuthService';
-import { apiPost } from '../components/apiCall.js';
+import LoginForm from '../components/LoginForm/LoginForm';
+import { apiLogin } from '../components/auth.js';
 
-export default class LoginPage extends React.Component {
-  //const { data, error } = apiPost('auth/login', params);
+export default () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  constructor(props) {
-    super(props);
-  
-    this.state = {
-      email: '',
-      password: '',
-      messages: []
-    };
+  // const [messages, setMessages] = React.useState([]);
+
+  const handleInputChange = event => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    if (name === 'email') {
+      setEmail(value);
+    }
+
+    if (name === 'password') {
+      setPassword(value);
+    }
   }
 
-  handleInputChange = event => {
-    const target = event.target
-    const value = target.value
-    const name = target.name
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    this.setState({
-      [name]: value,
-    })
+    const isLoggedIn = await apiLogin(
+      email,
+      password
+    );
+
+    console.log('LOGIN', isLoggedIn);
+
+    if (isLoggedIn === true) {
+      Router.push('/');
+    }
   }
 
-  handleSubmit = async (event) => {
-    event.preventDefault()
-
-    const params = {
-      email: this.state.email,
-      password: this.state.password
-    };
-
-    const authService = new AuthService();
-    const response = await authService.login(params);
-
-    
-
-    //let data = '';
-
-    //console.log('AuthService response', data);
-
-    Router.push('/');
-  }
-
-  render() {
-    return (
-      <main id="login">
-        <Head>
-          <title>DevAdmin - Login</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <form onSubmit={ this.handleSubmit }>
-          <h1>DevAdmin Login</h1>
-          <ErrorPanel />
-          <TextField
-              id="email-field"
-              className="login-field"
-              type="email"
-              label="Email"
-              name="email"
-              value={ this.state.email }
-              onChange={ this.handleInputChange }
-              fullWidth
-              required />
-          <TextField
-            id="password-field"
-            className="login-field"
-            type="password"
-            label="Password"
-            name="password"
-            value={ this.state.password }
-            onChange={ this.handleInputChange }
-            fullWidth
-            required />
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Button
-              type="submit"
-              variant="contained">
-                Submit
-            </Button>
-          </Box>
-        </form>
-      </main>
-    )
-  }
+  return (
+    <LoginForm
+      email={ email }
+      password={ password }
+      handleInputChange={ handleInputChange }
+      handleSubmit={ handleSubmit } />
+  );
 }

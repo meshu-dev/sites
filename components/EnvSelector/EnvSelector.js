@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { apiGet } from '../apiCall.js';
+import { useState } from 'react';
+import apiHook from '../apiHook.js';
 
 import EnvSelectorDropdown from './EnvSelectorDropdown';
 
 const EnvSelector = ({ onEnvChangeFtn }) => {
   const environments = [];
-  const [selectedEnv, setSelectedEnv] = React.useState('');
-  const { data, error } = apiGet('environments');
+  const [selectedEnv, setSelectedEnv] = useState('');
+  const { data, error } = apiHook('environments');
 
   const onOptionChange = (event) => {
     const envId = event.target.value;

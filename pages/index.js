@@ -1,17 +1,10 @@
-import * as React from 'react';
+import { useState } from 'react';
 import Layout from '../components/Layout/layout';
-import SiteBlock from '../components/Site/SiteBlock';
 import EnvSelector from '../components/EnvSelector/EnvSelector';
+import SiteBlock from '../components/Site/SiteBlock';
 
-const fetcher = (url, token) => fetch(url, {
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  }
-}).then((res) => res.json());
-
-const Index = () => {
-  const [selectedEnv, setSelectedEnv] = React.useState(0);
+export default () => {
+  const [selectedEnv, setSelectedEnv] = useState(0);
 
   const onEnvChange = (envId) => {
     console.log('onEnvChange', envId);
@@ -25,5 +18,3 @@ const Index = () => {
     </Layout>
   );
 }
-
-export default Index;
