@@ -31,7 +31,7 @@ const EnvSelector = ({ onEnvChangeFtn }) => {
         onOptionChange={ onOptionChange } />
     );
   }
-  return <div>Loading...</div>
+  return (null);
 }
 
 export default EnvSelector;

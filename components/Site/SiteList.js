@@ -1,14 +1,17 @@
+import { useEffect } from 'react';
 import apiHook from '../apiHook';
 import SiteBlock from './SiteBlock';
 import Loader from '../Loader/Loader';
 
 import styles from './site-list.module.scss';
 
-const SiteList = ({ envId }) => {
+const SiteList = ({ envId, onLoadedFtn }) => {
   if (envId) {
     const { data, error } = apiHook(`environments/${envId}/sites`);
-  
-    console.log('SiteList - Error', error);
+
+    useEffect(() => {
+      onLoadedFtn(data && data.data ? false : true);
+    }, [data]);
   
     if (data) {
       const sites = data.data;
@@ -25,7 +28,7 @@ const SiteList = ({ envId }) => {
       );
     }
   }
-  return (<Loader />);
+  return (null);
 }
 
 export default SiteList;
