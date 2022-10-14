@@ -1,18 +1,26 @@
 import useSWR from 'swr';
 import { fetcherWithToken } from './fetcherFtns.js';
+import { authToken } from './auth.js';
 
 const apiHook = (url, params) => {
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${url}`;
-  const token = '24|Hr4x2kc2MCh3sR9kAEH9ZRJOPSLN120Vqm20dwHU';
+  if (url) {
+    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${url}`;
+    const token = authToken();
+  
+    const fetcherParams = {
+      method: 'GET',
+      params: params,
+      token: token
+    };
+    console.log('URL', apiUrl);
+  
+    return useSWR([apiUrl, fetcherParams], fetcherWithToken);
+  }
 
-  const fetcherParams = {
-    method: 'GET',
-    params: params,
-    token: token
+  return {
+    data: null,
+    error: ''
   };
-  console.log('URL', apiUrl);
-
-  return useSWR([apiUrl, fetcherParams], fetcherWithToken);
 }
 
 export default apiHook;

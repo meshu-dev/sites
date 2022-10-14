@@ -1,11 +1,14 @@
-const apiRequest = async (method, url, params) => {
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${url}`;
-  const token = '24|Hr4x2kc2MCh3sR9kAEH9ZRJOPSLN120Vqm20dwHU';
+import { authToken } from './auth.js';
 
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  };
+const apiRequest = async (method, url, params) => {
+  const headers = {'Content-Type': 'application/json'};
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${url}`;
+
+  const token = authToken();
+
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
 
   const fetchParams = {
     method,

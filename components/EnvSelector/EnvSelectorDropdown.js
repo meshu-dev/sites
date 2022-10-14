@@ -10,7 +10,9 @@ const EnvSelectorDropdown = ({ selectedEnv, environments, onOptionChange }) => {
 
   for (const environment of environments) {
     menuItems.push(
-      <MenuItem value={ environment['id'] }>
+      <MenuItem
+        key={ environment['id'] }
+        value={ environment['id'] }>
         { environment['name'] }
       </MenuItem>
     );

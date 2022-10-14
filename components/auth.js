@@ -25,4 +25,17 @@ export const apiLogin = async (email, password) => {
   }
   return false;
 }
+
+export const authToken = () => {
+  let cookies = parseCookies();
+
+  if (cookies.authToken) {
+    return cookies.authToken;
+  }
+  return null;
+}
+
+export const isLoggedIn = () => {
+  return authToken() !== null ? true : false;
+}
   

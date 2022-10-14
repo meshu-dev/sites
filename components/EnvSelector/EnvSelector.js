@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import apiHook from '../apiHook.js';
 
 import EnvSelectorDropdown from './EnvSelectorDropdown';
@@ -10,21 +10,18 @@ const EnvSelector = ({ onEnvChangeFtn }) => {
 
   const onOptionChange = (event) => {
     const envId = event.target.value;
-
     setSelectedEnv(envId);
-    onEnvChangeFtn(envId);
-
-    console.log('handleChange', `Env Id: ${envId}`);
   };
+
+  useEffect(() => {
+    onEnvChangeFtn(selectedEnv);
+  }, [selectedEnv]);
   
   if (data) {
     environments = data.data;
 
     if (!selectedEnv && environments.length > 0) {
-      const firstEnv = environments[0];
-
-      setSelectedEnv(firstEnv['id']);
-      onEnvChangeFtn(firstEnv['id']);
+      setSelectedEnv(environments[0]['id']);
     }
 
     return (

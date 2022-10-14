@@ -1,54 +1,38 @@
-import * as React from 'react';
-import { useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
-import { apiGet } from '../apiCall.js';
 
-const SiteBlock = ({ envId }) => {
-  const [sites, setSites] = React.useState([]);
+import styles from './site-block.module.scss';
 
-  //setSelectedEnv(envId);
-
-  console.log('envId', envId);
-
-  useEffect(() => {
-    console.log('useEffect logic ran');
-    console.log('EFFECT', envId);
-
-    // const { data, error } = apiGet(`environments/${envId}/sites`);
-  }, [envId]);
-
-  if (!sites.length) {
-    return (<div>SITE BLOCK Loading...</div>);
-  }
-
+const SiteBlock = ({ site }) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea sx={{ display: 'flex', maxWidth: 345 }}>
-        <CardMedia
-          sx={{ width: '100px', height: '100px', padding: '15px 0' }}
-          component="img"
-          image="https://mui.com/static/images/cards/live-from-space.jpg"
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            http://www.google.co.uk
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions sx={{ display: 'none' }}>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-      </CardActions>
-    </Card>
+    <div className={ styles['site-block-wrapper'] }>
+      <Card className={ styles['site-block'] }>
+        <CardActionArea className={ styles['site-block-link'] } href={ site['url'] } target="_blank">
+          <CardMedia
+            className={ styles['site-block-img'] }
+            component="img"
+            image="https://mui.com/static/images/cards/live-from-space.jpg"
+            alt="green iguana"
+          />
+          <CardContent className={ styles['site-block-content'] }>
+            <Typography gutterBottom variant="subtitle2">
+              { site['name'] }
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              { site['url'] }
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions sx={{ display: 'none' }}>
+          <Button size="small" color="primary">
+            Share
+          </Button>
+        </CardActions>
+      </Card>
+    </div>
   );
 }
 
