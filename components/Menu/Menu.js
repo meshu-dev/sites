@@ -8,21 +8,21 @@ import StorageIcon from '@mui/icons-material/Storage';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 const actions = [
-  { icon: <SettingsIcon />, name: 'Settings' },
-  { icon: <StorageIcon />, name: 'Environments' },
-  { icon: <WebIcon />, name: 'Sites' },
+  { key: 'settings', name: 'Settings', icon: <SettingsIcon /> },
+  { key: 'environments', name: 'Environments', icon: <StorageIcon /> },
+  { key: 'sites', name: 'Sites', icon: <WebIcon /> }
 ];
 
-const Menu = ({ onButtonClickFtn }) => {
+const Menu = ({ onClickFtn }) => {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
   
-  const handleClose = () => {
-    onButtonClickFtn();
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const buttonClick = (key) => {
+    onClickFtn(key);
     setOpen(false);
   }
-
-
 
   return (
     <Box sx={{ transform: 'translateZ(0px)', flexGrow: 1 }}>
@@ -37,10 +37,10 @@ const Menu = ({ onButtonClickFtn }) => {
       >
         {actions.map((action) => (
           <SpeedDialAction
-            key={ action.name }
+            key={ action.key }
             icon={ action.icon }
             tooltipTitle={ action.name }
-            onClick={ handleClose }
+            onClick={() => buttonClick(action.key)}
           />
         ))}
       </SpeedDial>

@@ -1,0 +1,13 @@
+.env-row {
+	display: flex;
+	justify-content: space-between;
+  margin-bottom: 5px;
+
+  .env-row-name {
+    flex: 2;
+  }
+
+  .env-row-link {
+    flex: 1;
+  }
+}
