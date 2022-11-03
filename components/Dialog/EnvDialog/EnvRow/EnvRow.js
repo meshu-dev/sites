@@ -1,4 +1,4 @@
-import styles from './env-row.module.scss';
+import styles from './EnvRow.module.scss';
 import Button from '@mui/material/Button';
 
 const EnvRow = ({ environment, onEditFtn, onDeleteFtn }) => {

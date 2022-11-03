@@ -1,39 +1,25 @@
-import { useState } from 'react';
-import Layout from '../components/Layout/layout';
-import Loader from '../components/Loader/Loader';
+import { useSelector } from 'react-redux';
+import Layout from '../components/Layout/Main/Main';
+import Loader from '../components/Layout/Loader/Loader';
 import EnvSelector from '../components/EnvSelector/EnvSelector';
-import SiteList from '../components/Site/SiteList';
+import SiteList from '../components/Site/SIteList/SiteList';
 import Menu from '../components/Menu/Menu';
-import DialogList from '../components/Dialog/DialogList';
+import EnvListDialog from '../components/Dialog/EnvDialog/EnvListDialog/EnvListDialog';
+import EnvEditDialog from '../components/Dialog/EnvDialog/EnvEditDialog/EnvEditDialog';
+import EnvDeleteDialog from '../components/Dialog/EnvDialog/EnvDeleteDialog/EnvDeleteDialog';
 
 export default () => {
-  const [selectedEnv, setSelectedEnv] = useState(0);
-  const [showLoader, setShowLoader] = useState(true);
-  const [menuAction, setMenuAction] = useState('');
-
-  const onEnvChange = (envId) => {
-    setSelectedEnv(envId);
-  }
-
-  const onLoaded = (isLoading) => {
-    setShowLoader(isLoading);
-  }
-
-  const onMenuButtonClick = (action) => {
-    setMenuAction(action);
-  }
-
-  const onDialogClose = () => {
-    setMenuAction('');
-  }
+  const environment = useSelector(state => state.environment);
 
   return (
     <Layout>
-      <DialogList action={ menuAction } onActionChangeFtn={ onDialogClose } />
-      <EnvSelector onEnvChangeFtn={ onEnvChange } />
-      <Loader isLoading={ showLoader } />
-      <SiteList envId={ selectedEnv } onLoadedFtn={ onLoaded } />
-      <Menu onClickFtn={ onMenuButtonClick } />
+      <EnvListDialog />
+      <EnvEditDialog />
+      <EnvDeleteDialog />
+      <EnvSelector />
+      <Loader isLoading={ environment.isLoading } />
+      <SiteList />
+      <Menu />
     </Layout>
   );
 }

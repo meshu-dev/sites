@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
@@ -7,20 +8,25 @@ import WebIcon from '@mui/icons-material/Web';
 import StorageIcon from '@mui/icons-material/Storage';
 import SettingsIcon from '@mui/icons-material/Settings';
 
+import { menuAction } from '../../store/menu-slice';
+
 const actions = [
-  { key: 'settings', name: 'Settings', icon: <SettingsIcon /> },
+  //{ key: 'settings', name: 'Settings', icon: <SettingsIcon />, action: '' },
   { key: 'environments', name: 'Environments', icon: <StorageIcon /> },
-  { key: 'sites', name: 'Sites', icon: <WebIcon /> }
+  { key: 'sites', name: 'Sites', icon: <WebIcon />, action: '' }
 ];
 
-const Menu = ({ onClickFtn }) => {
+const Menu = () => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const buttonClick = (key) => {
-    onClickFtn(key);
+    dispatch(menuAction.setItemAsOpen(key));
+    dispatch(menuAction.openEnvironmentList());
+
     setOpen(false);
   }
 

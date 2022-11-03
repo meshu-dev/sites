@@ -4,7 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 
-import styles from './site-block.module.scss';
+import styles from './SiteBlock.module.scss';
 
 const SiteBlock = ({ site }) => {
   return (

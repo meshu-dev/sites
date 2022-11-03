@@ -1,32 +1,41 @@
-import { useState, useEffect } from 'react';
-import apiHook from '../apiHook.js';
+import { useEffect } from 'react';
+
+//import { useGetEnvironmentsQuery } from '../../store/environment-api-slice';
+//import apiHook from '../apiHook.js';
 
 import EnvSelectorDropdown from './EnvSelectorDropdown';
+import { useGetEnvironmentsQuery } from '../../services/environments';
 
-const EnvSelector = ({ onEnvChangeFtn }) => {
-  const environments = [];
-  const [selectedEnv, setSelectedEnv] = useState('');
-  const { data, error } = apiHook('environments');
+import { useSelector, useDispatch } from 'react-redux';
+import { environmentAction } from '../../store/environment-slice';
+
+const EnvSelector = () => {
+  const envState = useSelector(state => state.environment);
+  const dispatch = useDispatch();
+  const { data: environments = [], isFetching } = useGetEnvironmentsQuery();
 
   const onOptionChange = (event) => {
     const envId = event.target.value;
-    setSelectedEnv(envId);
+    
+    let selectedEnv = environments.filter(env => env.id == envId);
+    selectedEnv = selectedEnv[0] ?? null;
+
+    if (selectedEnv) {
+      dispatch(environmentAction.setSelectedEnvironment(selectedEnv));
+      dispatch(environmentAction.startLoading());
+    }
   };
 
   useEffect(() => {
-    onEnvChangeFtn(selectedEnv);
-  }, [selectedEnv]);
-  
-  if (data) {
-    environments = data.data;
-
-    if (!selectedEnv && environments.length > 0) {
-      setSelectedEnv(environments[0]['id']);
+    if (envState.selected == null) {
+      dispatch(environmentAction.setSelectedEnvironment(environments[0]));
     }
-
+  }, [environments]);
+  
+  if (environments.length > 0) {
     return (
       <EnvSelectorDropdown
-        selectedEnv={ selectedEnv }
+        selectedEnv={ envState.selected ? envState.selected.id : 0 }
         environments={ environments }
         onOptionChange={ onOptionChange } />
     );
