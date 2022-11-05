@@ -9,6 +9,7 @@ import StorageIcon from '@mui/icons-material/Storage';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 import { menuEnvironmentAction } from '../../store/menu-environment-slice';
+import { menuSiteAction } from '../../store/menu-site-slice';
 
 const actions = [
   //{ key: 'settings', name: 'Settings', icon: <SettingsIcon />, action: '' },
@@ -24,7 +25,11 @@ const Menu = () => {
   const handleClose = () => setOpen(false);
 
   const buttonClick = (key) => {
-    dispatch(menuEnvironmentAction.openList());
+    if (key === 'environments') {
+      dispatch(menuEnvironmentAction.openList());
+    } else if (key === 'sites') {
+      dispatch(menuSiteAction.toggleWriteMode());
+    }
     setOpen(false);
   }
 

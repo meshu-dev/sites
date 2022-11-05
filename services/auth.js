@@ -2,7 +2,7 @@ import api from './api';
 
 export const authApi = api.injectEndpoints({
   endpoints: (build) => ({
-    login: build.query({
+    login: build.mutation({
       query: (credentials) => ({
         url: 'auth/login',
         method: 'POST',
@@ -13,7 +13,7 @@ export const authApi = api.injectEndpoints({
           retry.fail({ fake: 'error' })
         }
       },
-      transformResponse: (response) => response.data
+      transformResponse: (response) => response
     }),
   })
 });

@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import Router from 'next/router';
 import LoginForm from '../components/LoginForm/LoginForm';
-import { apiLogin } from '../components/auth.js';
+import { setTokenCookie } from '../components/auth.js';
+
+import { useLoginMutation } from '../services/auth';
+import { mainAction } from '../store/main-slice';
 
 export default () => {
+  const [login, { isLoading }] = useLoginMutation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -25,15 +29,18 @@ export default () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const isLoggedIn = await apiLogin(
+    const params = {
       email,
       password
-    );
+    };
 
-    console.log('LOGIN', isLoggedIn);
+    const response = await login(params);
 
-    if (isLoggedIn === true) {
+    if (response.data && response.data.token) {
+      setTokenCookie(response.data.token);
       Router.push('/');
+    } else {
+      console.log('Login failed', response);
     }
   }
 

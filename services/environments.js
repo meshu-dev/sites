@@ -35,8 +35,6 @@ export const environmentsApi = api.injectEndpoints({
       query(params) {
         const id = params['id'];
         delete params['id'];
-
-        console.log('editEnvironment', id, params);
         
         return {
           url: `/environments/${id}`,

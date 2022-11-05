@@ -22,7 +22,7 @@ const EnvDeleteDialog = () => {
       await deleteEnvironment(envId);
     
       if (envId == envState.selected.id) {
-        dispatch(environmentAction.setSelectedEnvironment(null));
+        dispatch(environmentAction.setSelected(null));
       }
     }
 

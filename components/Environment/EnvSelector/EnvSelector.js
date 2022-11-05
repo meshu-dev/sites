@@ -4,10 +4,11 @@ import { useEffect } from 'react';
 //import apiHook from '../apiHook.js';
 
 import EnvSelectorDropdown from './EnvSelectorDropdown';
-import { useGetEnvironmentsQuery } from '../../services/environments';
+import { useGetEnvironmentsQuery } from '../../../services/environments';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { environmentAction } from '../../store/environment-slice';
+import { mainAction } from '../../../store/main-slice';
+import { environmentAction } from '../../../store/environment-slice';
 
 const EnvSelector = () => {
   const envState = useSelector(state => state.environment);
@@ -21,14 +22,14 @@ const EnvSelector = () => {
     selectedEnv = selectedEnv[0] ?? null;
 
     if (selectedEnv) {
-      dispatch(environmentAction.setSelectedEnvironment(selectedEnv));
-      dispatch(environmentAction.startLoading());
+      dispatch(environmentAction.setSelected(selectedEnv));
+      dispatch(mainAction.startLoading());
     }
   };
 
   useEffect(() => {
     if (envState.selected == null) {
-      dispatch(environmentAction.setSelectedEnvironment(environments[0]));
+      dispatch(environmentAction.setSelected(environments[0]));
     }
   }, [environments]);
   

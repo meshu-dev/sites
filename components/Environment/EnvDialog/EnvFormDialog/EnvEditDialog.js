@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEditEnvironmentMutation } from '../../../../services/environments';
 import { menuEnvironmentAction } from '../../../../store/menu-environment-slice';
-import EnvFormDialog from '../EnvFormDialog/EnvFormDialog';
+import EnvFormDialog from './EnvFormDialog';
 
 const EnvEditDialog = () => {
   const dispatch = useDispatch();

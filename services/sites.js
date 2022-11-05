@@ -23,7 +23,10 @@ export const sitesApi = api.injectEndpoints({
       ]
     }),
     editSite: build.mutation({
-      query(id, params) {
+      query(params) {
+        const id = params['id'];
+        delete params['id'];
+
         return {
           url: `/sites/${id}`,
           method: 'PUT',
@@ -49,6 +52,13 @@ export const sitesApi = api.injectEndpoints({
     })
   })
 });
+
+export const clearEnvironmentSites = (envId) => {
+  return api.util.invalidateTags([{
+    type: 'EnvironmentSites',
+    id: envId
+  }]);
+};
 
 export const {
   useGetSitesQuery,

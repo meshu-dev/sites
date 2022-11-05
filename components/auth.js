@@ -1,7 +1,7 @@
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import { apiPost } from './apiCall.js';
 
-const setTokenCookie = (token) => {
+export const setTokenCookie = (token) => {
   setCookie(
     null,
     'authToken',
@@ -38,4 +38,3 @@ export const authToken = () => {
 export const isLoggedIn = () => {
   return authToken() !== null ? true : false;
 }
-  

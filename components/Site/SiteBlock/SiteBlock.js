@@ -1,12 +1,37 @@
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
-
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardActionArea,
+  CardActions,
+  CardMedia,
+  Typography
+} from '@mui/material';
+import { menuSiteAction } from '../../../store/menu-site-slice';
 import styles from './SiteBlock.module.scss';
 
 const SiteBlock = ({ site }) => {
+  const dispatch = useDispatch();
+  const menuSite = useSelector(state => state.menuSite);
+
+  const setSite = (siteId) => {
+    let selectedEnv = environments.filter(env => env.id == envId);
+    selectedEnv = selectedEnv[0] ? selectedEnv[0] : null;
+
+    dispatch(menuSiteAction.setSelected(selectedEnv));
+  }
+
+  const onEdit = () => {
+    dispatch(menuSiteAction.setSelected(site));
+    dispatch(menuSiteAction.openEdit());
+  };
+
+  const onDelete = () => {
+    dispatch(menuSiteAction.setSelected(site));
+    dispatch(menuSiteAction.openDelete());
+  };
+
   return (
     <div className={ styles['site-block-wrapper'] }>
       <Card className={ styles['site-block'] }>
@@ -26,9 +51,18 @@ const SiteBlock = ({ site }) => {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions sx={{ display: 'none' }}>
-          <Button size="small" color="primary">
-            Share
+        <CardActions sx={{ display: menuSite.writeMode ? 'block' : 'none' }}>
+          <Button
+            size="small"
+            color="primary"
+            onClick={ onEdit }>
+            Edit
+          </Button>
+          <Button
+            size="small"
+            color="primary"
+            onClick={ onDelete }>
+            Delete
           </Button>
         </CardActions>
       </Card>
