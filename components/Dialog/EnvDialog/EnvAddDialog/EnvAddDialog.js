@@ -1,40 +1,37 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEditEnvironmentMutation } from '../../../../services/environments';
+import { useAddEnvironmentMutation } from '../../../../services/environments';
 import { menuEnvironmentAction } from '../../../../store/menu-environment-slice';
 import EnvFormDialog from '../EnvFormDialog/EnvFormDialog';
 
-const EnvEditDialog = () => {
+const EnvAddDialog = () => {
   const dispatch = useDispatch();
   const menuEnvironment = useSelector(state => state.menuEnvironment);
-  const [editEnvironment, { isLoading }] = useEditEnvironmentMutation();
+  const [addEnvironment, { isLoading }] = useAddEnvironmentMutation();
 
   const onSaveClick = async (envName) => {
     const params = {
-      id: menuEnvironment.selected.id,
       name: envName
     };
-    await editEnvironment(params);
+    await addEnvironment(params);
 
-    dispatch(menuEnvironmentAction.closeEdit());
-    dispatch(menuEnvironmentAction.openList());
+    onCloseClick();
   };
 
   const onCloseClick = () => {
-    dispatch(menuEnvironmentAction.closeEdit());
-    dispatch(menuEnvironmentAction.setSelected(null));
+    dispatch(menuEnvironmentAction.closeAdd());
     dispatch(menuEnvironmentAction.openList());
   };
 
-  const editForm = (<EnvFormDialog
-                      title={ 'Edit Environment' }
+  const addForm = (<EnvFormDialog
+                      title={ 'Add Environment' }
                       onSaveFtn={ onSaveClick }
                       onCloseFtn={ onCloseClick } />);
 
   return (
     <div>
-      { menuEnvironment.edit ? editForm : null }
+      { menuEnvironment.add ? addForm : null }
     </div>
   );
 };
 
-export default EnvEditDialog;
+export default EnvAddDialog;

@@ -1,5 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { menuAction } from '../../../../store/menu-slice';
+import { useDeleteEnvironmentMutation } from '../../../../services/environments';
+import { environmentAction } from '../../../../store/environment-slice';
+import { menuEnvironmentAction } from '../../../../store/menu-environment-slice';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -9,12 +11,24 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 const EnvDeleteDialog = () => {
   const dispatch = useDispatch();
-  const menu = useSelector(state => state.menu);
-  const menuEnvironment = menu.items.environments ?? null;
+  const envState = useSelector(state => state.environment);
+  const menuEnvironment = useSelector(state => state.menuEnvironment);
+  const envName = menuEnvironment.selected ? menuEnvironment.selected.name : '';
+  const [deleteEnvironment, { isLoading }] = useDeleteEnvironmentMutation();
 
-  const onSelection = (doDelete) => {
-    dispatch(menuAction.closeEnvironmentDelete());
-    dispatch(menuAction.openEnvironmentList());
+  const onSelection = async (doDelete) => {
+    if (doDelete === true && menuEnvironment.selected) {
+      const envId = menuEnvironment.selected.id;
+      await deleteEnvironment(envId);
+    
+      if (envId == envState.selected.id) {
+        dispatch(environmentAction.setSelectedEnvironment(null));
+      }
+    }
+
+    dispatch(menuEnvironmentAction.closeDelete());
+    dispatch(menuEnvironmentAction.setSelected(null));
+    dispatch(menuEnvironmentAction.openList());
   };
 
   return (
@@ -28,12 +42,19 @@ const EnvDeleteDialog = () => {
         <DialogTitle id="env-dialog-title">Delete Environment?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete the environment?
+            Are you sure you want to delete the environment { envName }?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={ () => onSelection(true) }>Yes</Button>
-          <Button onClick={ () => onSelection(false) }>No</Button>
+          <Button
+            disabled={ isLoading }
+            onClick={ () => onSelection(true) }>
+            Yes
+          </Button>
+          <Button
+            onClick={ () => onSelection(false) }>
+            No
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

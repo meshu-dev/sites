@@ -5,6 +5,7 @@ import EnvSelector from '../components/EnvSelector/EnvSelector';
 import SiteList from '../components/Site/SIteList/SiteList';
 import Menu from '../components/Menu/Menu';
 import EnvListDialog from '../components/Dialog/EnvDialog/EnvListDialog/EnvListDialog';
+import EnvAddDialog from '../components/Dialog/EnvDialog/EnvAddDialog/EnvAddDialog';
 import EnvEditDialog from '../components/Dialog/EnvDialog/EnvEditDialog/EnvEditDialog';
 import EnvDeleteDialog from '../components/Dialog/EnvDialog/EnvDeleteDialog/EnvDeleteDialog';
 
@@ -14,6 +15,7 @@ export default () => {
   return (
     <Layout>
       <EnvListDialog />
+      <EnvAddDialog />
       <EnvEditDialog />
       <EnvDeleteDialog />
       <EnvSelector />

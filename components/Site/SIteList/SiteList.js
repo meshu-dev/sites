@@ -9,26 +9,27 @@ const SiteList = () => {
   const envState = useSelector(state => state.environment);
   const dispatch = useDispatch();
   const envId = envState.selected ? envState.selected.id : 0;
-  let { data: environmentSites = [] } = useGetEnvironmentSitesQuery(envId, { skip: !envId });
+  let { data: environmentSites = [], isLoading } = useGetEnvironmentSitesQuery(envId, { skip: !envId });
 
   useEffect(() => {
-    if (environmentSites.length > 0 && envState.isLoading === true) {
+    if (envState.isLoading === true) {
       dispatch(environmentAction.finishLoading());
     }
-
-    console.log('USE FFECT - environmentSites', environmentSites);
-
   }, [environmentSites]);
 
-  console.log('environmentSites', environmentSites, envId, envState.selected ? envState.selected.id : 0);
+  if (isLoading === false) {
+    const siteBlocks = [];
 
-  if (environmentSites.length > 0) {
-    const siteBlocks = environmentSites.map(
-      (site) => {
-        return <SiteBlock key={ site.id } site={ site } />
-      }
-    );
-  
+    if (environmentSites.length > 0) {
+      siteBlocks = environmentSites.map(
+        (site) => {
+          return <SiteBlock key={ site.id } site={ site } />
+        }
+      );
+    } else {
+      siteBlocks.push(<div key={ 'blank' }>No sites available for this environment</div>);
+    }
+
     return (
       <div id={styles['site-list']}>
         { siteBlocks }

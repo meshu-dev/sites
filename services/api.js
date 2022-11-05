@@ -13,7 +13,7 @@ const getBaseQueryParams = {
 
 const api = createApi({
   reducerPath: 'api',
-  tagTypes: ['Environment', 'EnvironmentSite', 'Site'],
+  tagTypes: ['Environments', 'EnvironmentSites', 'Sites'],
   baseQuery: fetchBaseQuery(getBaseQueryParams),
   endpoints: () => ({ })
 });

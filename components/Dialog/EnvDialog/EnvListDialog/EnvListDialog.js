@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useGetEnvironmentsQuery } from '../../../../services/environments';
-import { menuAction } from '../../../../store/menu-slice';
+import { menuEnvironmentAction } from '../../../../store/menu-environment-slice';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -11,8 +11,7 @@ import EnvRow from '../EnvRow/EnvRow';
 
 const EnvListDialog = () => {
   const dispatch = useDispatch();
-  const menu = useSelector(state => state.menu);
-  const menuEnvironment = menu.items.environments ?? null;
+  const menuEnvironment = useSelector(state => state.menuEnvironment);
   const { data: environments = [] } = useGetEnvironmentsQuery();
   //const action = EnvDialogAction;
 
@@ -20,24 +19,28 @@ const EnvListDialog = () => {
     let selectedEnv = environments.filter(env => env.id == envId);
     selectedEnv = selectedEnv[0] ? selectedEnv[0] : null;
 
-    dispatch(menuAction.setSelectedEnvironment(selectedEnv));
+    dispatch(menuEnvironmentAction.setSelected(selectedEnv));
   }
+
+  const onAdd = () => {
+    dispatch(menuEnvironmentAction.closeList());
+    dispatch(menuEnvironmentAction.openAdd());
+  };
 
   const onEdit = (envId) => {
     setEnv(envId);
-    dispatch(menuAction.closeEnvironmentList());
-    dispatch(menuAction.openEnvironmentEdit());
+    dispatch(menuEnvironmentAction.closeList());
+    dispatch(menuEnvironmentAction.openEdit());
   };
 
   const onDelete = (envId) => {
     setEnv(envId);
-    dispatch(menuAction.closeEnvironmentList());
-    dispatch(menuAction.openEnvironmentDelete());
+    dispatch(menuEnvironmentAction.closeList());
+    dispatch(menuEnvironmentAction.openDelete());
   };
 
   const onCloseClick = () => {
-    dispatch(menuAction.closeEnvironmentList());
-    dispatch(menuAction.setItemAsClosed('environments'));
+    dispatch(menuEnvironmentAction.closeList());
   };
 
   const envElements = [];
@@ -62,11 +65,12 @@ const EnvListDialog = () => {
         scroll={ 'body' }
         fullWidth={ true }
       >
-        <DialogTitle id="env-dialog-title">Edit Environments</DialogTitle>
+        <DialogTitle id="env-dialog-title">Environments</DialogTitle>
         <DialogContent>
           { envElements }
         </DialogContent>
         <DialogActions>
+          <Button onClick={ onAdd }>Add</Button>
           <Button onClick={ onCloseClick }>Close</Button>
         </DialogActions>
       </Dialog>

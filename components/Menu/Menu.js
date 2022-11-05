@@ -8,7 +8,7 @@ import WebIcon from '@mui/icons-material/Web';
 import StorageIcon from '@mui/icons-material/Storage';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-import { menuAction } from '../../store/menu-slice';
+import { menuEnvironmentAction } from '../../store/menu-environment-slice';
 
 const actions = [
   //{ key: 'settings', name: 'Settings', icon: <SettingsIcon />, action: '' },
@@ -24,9 +24,7 @@ const Menu = () => {
   const handleClose = () => setOpen(false);
 
   const buttonClick = (key) => {
-    dispatch(menuAction.setItemAsOpen(key));
-    dispatch(menuAction.openEnvironmentList());
-
+    dispatch(menuEnvironmentAction.openList());
     setOpen(false);
   }
 
