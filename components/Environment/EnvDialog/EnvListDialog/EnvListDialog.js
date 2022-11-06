@@ -58,23 +58,21 @@ const EnvListDialog = () => {
   }
 
   return (
-    <div>
-      <Dialog
-        open={ menuEnvironment.list ?? false }
-        onClose={ onCloseClick }
-        scroll={ 'body' }
-        fullWidth={ true }
-      >
-        <DialogTitle id="env-dialog-title">Environments</DialogTitle>
-        <DialogContent>
-          { envElements }
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={ onAdd }>Add</Button>
-          <Button onClick={ onCloseClick }>Close</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+    <Dialog
+      open={ menuEnvironment.list ?? false }
+      onClose={ onCloseClick }
+      scroll={ 'body' }
+      fullWidth={ true }
+    >
+      <DialogTitle id="env-dialog-title">Environments</DialogTitle>
+      <DialogContent>
+        { envElements }
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={ onAdd }>Add</Button>
+        <Button onClick={ onCloseClick }>Close</Button>
+      </DialogActions>
+    </Dialog>
   );
 }
 

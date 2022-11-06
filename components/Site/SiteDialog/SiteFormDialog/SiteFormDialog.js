@@ -20,7 +20,7 @@ const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
   const handleInputChange = event => {
     const name = event.target.name;
     const value = event.target.value;
-    
+
     if (name === 'name') {
       setName(value);
     }
@@ -42,10 +42,15 @@ const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
   };
 
   useEffect(() => {
-    const site = menuSite.selected ? menuSite.selected : '';
+    const site = menuSite.selected ? menuSite.selected : null;
     
-    setName(site.name);
-    setUrl(site.url);
+    if (site) {
+      setName(site.name);
+      setUrl(site.url);
+    } else {
+      setName('');
+      setUrl('');
+    }
   }, [menuSite.selected]);
 
   return (
@@ -60,14 +65,16 @@ const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
         <DialogContent id={ styles['site-dialog-content'] }>
           <TextField
                 id="env-field"
-                label="Site"
-                name="site"
+                className={ styles['site-dialog-textfield'] }
+                label="Name"
+                name="name"
                 value={ name }
                 onChange={ handleInputChange }
                 fullWidth
                 required />
           <TextField
                 id="env-field"
+                className={ styles['site-dialog-textfield'] }
                 label="Url"
                 name="url"
                 value={ url }

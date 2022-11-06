@@ -26,21 +26,6 @@ a:hover {
   height: 100%;
 }
 
-#login {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  h1 {
-    text-align: center;
-  }
-
-  .login-field {
-    margin-bottom: 12px;
-  }
-}
-
 #leftcolumn:after {
     background: #F0F0F0;
     width: 0.1rem;

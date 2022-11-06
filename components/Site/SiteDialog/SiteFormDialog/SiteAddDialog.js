@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEditSiteMutation, clearEnvironmentSites } from '../../../../services/sites';
+import { useAddSiteMutation, clearEnvironmentSites } from '../../../../services/sites';
 import { menuSiteAction } from '../../../../store/menu-site-slice';
 import SiteFormDialog from './SiteFormDialog';
 
@@ -7,10 +7,10 @@ const SiteAddDialog = () => {
   const dispatch = useDispatch();
   const menuSite = useSelector(state => state.menuSite);
   const environment = useSelector(state => state.environment);
-  const [editSite, { isLoading }] = useEditSiteMutation();
+  const [addSite, { isLoading }] = useAddSiteMutation();
 
   const onSaveClick = async (params) => {
-    params['environmentId'] = environment.selected.id;
+    params['environment_id'] = environment.selected.id;
     await addSite(params);
 
     dispatch(clearEnvironmentSites(environment.selected.id));

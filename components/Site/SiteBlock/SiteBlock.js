@@ -13,14 +13,8 @@ import styles from './SiteBlock.module.scss';
 
 const SiteBlock = ({ site }) => {
   const dispatch = useDispatch();
+  const mainState = useSelector(state => state.main);
   const menuSite = useSelector(state => state.menuSite);
-
-  const setSite = (siteId) => {
-    let selectedEnv = environments.filter(env => env.id == envId);
-    selectedEnv = selectedEnv[0] ? selectedEnv[0] : null;
-
-    dispatch(menuSiteAction.setSelected(selectedEnv));
-  }
 
   const onEdit = () => {
     dispatch(menuSiteAction.setSelected(site));
@@ -31,6 +25,8 @@ const SiteBlock = ({ site }) => {
     dispatch(menuSiteAction.setSelected(site));
     dispatch(menuSiteAction.openDelete());
   };
+
+  // menuSite.writeMode
 
   return (
     <div className={ styles['site-block-wrapper'] }>
@@ -51,7 +47,7 @@ const SiteBlock = ({ site }) => {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions sx={{ display: menuSite.writeMode ? 'block' : 'none' }}>
+        <CardActions sx={{ display: mainState.isEditMode ? 'block' : 'none' }}>
           <Button
             size="small"
             color="primary"

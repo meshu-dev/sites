@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 export const mainSlice = createSlice({
   name: 'main',
   initialState: {
-    isLoading: true
+    isLoading: true,
+    isEditMode: false
   },
   reducers: {
     startLoading: (state) => {
@@ -11,6 +12,9 @@ export const mainSlice = createSlice({
     },
     finishLoading: (state) => {
       state.isLoading = false;
+    },
+    toggleEditMode: (state) => {
+      state.isEditMode = state.isEditMode ? false : true;
     }
   }
 });

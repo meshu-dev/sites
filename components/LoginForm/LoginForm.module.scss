@@ -1,0 +1,15 @@
+#login {
+  height: 100%;
+  display: flex;
+  margin: 0 40px;
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    text-align: center;
+  }
+
+  .login-field {
+    margin-bottom: 12px;
+  }
+}

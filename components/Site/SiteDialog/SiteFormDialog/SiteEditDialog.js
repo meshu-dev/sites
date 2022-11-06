@@ -9,9 +9,9 @@ const SiteEditDialog = () => {
   const environment = useSelector(state => state.environment);
   const [editSite, { isLoading }] = useEditSiteMutation();
 
-  const onSaveClick = async (name) => {
+  const onSaveClick = async (params) => {
     params['id'] = menuSite.selected.id;
-    params['environmentId'] = environment.selected.id;
+    params['environment_id'] = environment.selected.id;
     console.log('editSite', params);
 
     await editSite(params);
