@@ -1,5 +1,4 @@
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
-import { apiPost } from './apiCall.js';
 
 export const setTokenCookie = (token) => {
   setCookie(
@@ -11,19 +10,6 @@ export const setTokenCookie = (token) => {
       path: '/'
     }
   );
-}
-
-export const apiLogin = async (email, password) => {
-  const response = await apiPost(
-    'auth/login',
-    { email, password }
-  );
-
-  if (response['token']) {
-    setTokenCookie(response['token']);
-    return true;
-  }
-  return false;
 }
 
 export const authToken = () => {
