@@ -4,6 +4,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import styles from './EnvSelectorDropdown.module.scss';
 
 const EnvSelectorDropdown = ({ selectedEnv, environments, onOptionChange }) => {
   const menuItems = [];
@@ -19,12 +20,11 @@ const EnvSelectorDropdown = ({ selectedEnv, environments, onOptionChange }) => {
   }
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-      <FormControl sx={{ minWidth: 250 }}>
+    <div id={ styles['envselector'] }>
+      <FormControl id={ styles['envselector-form'] }>
         <InputLabel id="envselector-label">Environment</InputLabel>
         <Select
           labelId="envselector-label"
-          id="envselector-select"
           value={ selectedEnv }
           label="Environment"
           onChange={ onOptionChange }
@@ -32,7 +32,7 @@ const EnvSelectorDropdown = ({ selectedEnv, environments, onOptionChange }) => {
           { menuItems }
         </Select>
       </FormControl>
-    </Box>
+    </div>
   );
 }
 

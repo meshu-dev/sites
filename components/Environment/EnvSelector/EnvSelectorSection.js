@@ -9,7 +9,7 @@ import styles from './EnvSelectorSection.module.scss';
 const EnvSelectorSection = () => {
   const dispatch = useDispatch();
   const mainState = useSelector(state => state.main);
-  const menuButtonCss = { display: mainState.isEditMode ? 'block' : 'none' };
+  const buttonSectionCSS = { display: mainState.isEditMode ? 'flex' : 'none' };
 
   const showEditEnvironments = () => {
     dispatch(menuEnvironmentAction.openList());
@@ -22,14 +22,12 @@ const EnvSelectorSection = () => {
   return (
     <div id={ styles['environment-selector-wrapper'] }>
       <EnvSelector />
-      <div id={ styles['environment-selector-btns'] }>
+      <div id={ styles['environment-selector-btns'] } style={ buttonSectionCSS }>
         <Button
-          sx={ menuButtonCss }
           onClick={ showEditEnvironments }>
           Edit Environments
         </Button>
         <Button
-          sx={ menuButtonCss }
           onClick={ showAddSite }>
           Add Site
         </Button>

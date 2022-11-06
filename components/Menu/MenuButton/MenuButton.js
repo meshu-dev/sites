@@ -1,11 +1,12 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { mainAction } from '../../store/main-slice';
+import { mainAction } from '../../../store/main-slice';
 import {
-  Box,
+  Tooltip,
   IconButton
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import EditOffIcon from '@mui/icons-material/EditOff';
+import styles from './MenuButton.module.scss';
 
 const MenuButton = () => {
   const dispatch = useDispatch();
@@ -21,14 +22,16 @@ const MenuButton = () => {
   const viewBtn = <EditOffIcon fontSize="inherit" />;
 
   return (
-    <Box sx={{ position: 'absolute', bottom: 16, right: 16 }}>
-      <IconButton
-        aria-label="Edit mode"
-        size="large"
-        onClick={ buttonClick }>
-          { isEditMode ? viewBtn : editBtn }
-      </IconButton>
-    </Box>
+    <div id={ styles['edit-button-wrapper'] }>
+      <Tooltip title={ isEditMode ? 'View mode' : 'Edit mode' }>
+        <IconButton
+          aria-label="Edit mode"
+          size="large"
+          onClick={ buttonClick }>
+            { isEditMode ? viewBtn : editBtn }
+        </IconButton>
+      </Tooltip>
+    </div>
   );
 }
 

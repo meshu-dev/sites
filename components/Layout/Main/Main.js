@@ -16,7 +16,7 @@ export default props => {
         <EnvGroupDialog />
         <SiteGroupDialog />
         { props.children }
-        <Loader isLoading={ mainState.isLoading } />
+        <Loader />
       </main>
       <Footer />
     </div>

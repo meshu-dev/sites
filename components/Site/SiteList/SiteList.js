@@ -10,7 +10,7 @@ const SiteList = () => {
   const envState = useSelector(state => state.environment);
   const dispatch = useDispatch();
   const envId = envState.selected ? envState.selected.id : 0;
-  let { data: environmentSites = [], isLoading } = useGetEnvironmentSitesQuery(envId, { skip: !envId });
+  let { data: environmentSites = [] } = useGetEnvironmentSitesQuery(envId, { skip: !envId });
 
   useEffect(() => {
     if (mainState.isLoading === true) {
@@ -18,7 +18,7 @@ const SiteList = () => {
     }
   }, [environmentSites]);
 
-  if (isLoading === false) {
+  if (mainState.isLoading === false) {
     const siteBlocks = [];
 
     if (environmentSites.length > 0) {
