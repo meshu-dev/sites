@@ -32,7 +32,7 @@ const SiteList = () => {
     }
 
     return (
-      <div id={styles['site-list']}>
+      <div id={ styles['site-list'] }>
         { siteBlocks }
       </div>
     );
