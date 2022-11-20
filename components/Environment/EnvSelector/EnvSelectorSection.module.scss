@@ -1,0 +1,39 @@
+#environment-selector-wrapper {
+	display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  #environment-selector-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0 20px;
+
+    button {
+      margin-top: 0;
+    }
+
+    button:first-child {
+      margin-right: 20px;
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  #environment-selector-wrapper {
+    flex-direction: column;
+
+    #environment-selector-btns {
+      flex-direction: column;
+      padding: 0;
+      
+      button {
+        margin-top: 20px;
+      }
+
+      button:first-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

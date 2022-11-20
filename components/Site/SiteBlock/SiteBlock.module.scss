@@ -1,0 +1,28 @@
+.site-block-wrapper {
+	margin: 20px;
+
+  .site-block {
+    border-radius: 15px;
+    width: 350px;
+    height: 100%;
+
+    .site-block-link {
+      display: flex;
+      justify-content: flex-start;
+      height: 120px;
+      padding: 20px;
+
+      .site-block-img {
+        width: 80px;
+        height: 80px;
+      }
+
+      .site-block-content {
+        display: flex;
+        flex-direction: column;
+        align-content: flex-start;
+        height: 85px;
+      }
+    }
+  }
+}
