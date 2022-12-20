@@ -5,8 +5,6 @@ import environmentReducer from './environment-slice';
 import menuEnvironmentReducer from './menu-environment-slice';
 import menuSiteReducer from './menu-site-slice';
 
-console.log('api', api);
-
 const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,

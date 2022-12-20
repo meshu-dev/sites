@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Router from 'next/router';
 import LoginForm from '../components/LoginForm/LoginForm';
-import { setTokenCookie } from '../components/auth.js';
 
 import { useLoginMutation } from '../services/auth';
 import { mainAction } from '../store/main-slice';
@@ -37,7 +36,7 @@ export default () => {
     const response = await login(params);
 
     if (response.data && response.data.token) {
-      setTokenCookie(response.data.token);
+      localStorage.setItem('isLoggedIn', true);
       Router.push('/');
     } else {
       console.log('Login failed', response);
