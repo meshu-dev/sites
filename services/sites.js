@@ -1,10 +1,13 @@
-import api from './api';
+import api, { validateReponse } from './api';
 
 export const sitesApi = api.injectEndpoints({
   endpoints: (build) => ({
     getSites: build.query({
       query() {
-        return '/sites'
+        return {
+          url: `/sites`,
+          validateStatus: validateReponse
+        }
       },
       providesTags: [{ type: 'Sites', id: 'LIST' }],
       transformResponse: (response) => response.data
@@ -14,7 +17,8 @@ export const sitesApi = api.injectEndpoints({
         return {
           url: `/sites`,
           method: 'POST',
-          params
+          params,
+          validateStatus: validateReponse
         }
       },
       invalidatesTags: (site) => [
@@ -30,7 +34,8 @@ export const sitesApi = api.injectEndpoints({
         return {
           url: `/sites/${id}`,
           method: 'PUT',
-          params
+          params,
+          validateStatus: validateReponse
         }
       },
       invalidatesTags: (site) => [
@@ -42,7 +47,8 @@ export const sitesApi = api.injectEndpoints({
       query(id) {
         return {
           url: `/sites/${id}`,
-          method: 'DELETE'
+          method: 'DELETE',
+          validateStatus: validateReponse
         }
       },
       invalidatesTags: (site) => [

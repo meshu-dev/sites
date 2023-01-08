@@ -1,17 +1,23 @@
-import api from './api';
+import api, { validateReponse } from './api';
 
 export const environmentsApi = api.injectEndpoints({
   endpoints: (build) => ({
     getEnvironments: build.query({
       query() {
-        return '/environments'
+        return {
+          url: `/environments`,
+          validateStatus: validateReponse
+        }
       },
       providesTags: [{ type: 'Environments', id: 'LIST' }],
       transformResponse: (response) => response.data
     }),
     getEnvironmentSites: build.query({
       query(envId) {
-        return `/environments/${envId}/sites`
+        return {
+          url: `/environments/${envId}/sites`,
+          validateStatus: validateReponse
+        }
       },
       providesTags: (_environments, _err, envId) => [
         { type: 'EnvironmentSites', id: envId }
@@ -23,7 +29,8 @@ export const environmentsApi = api.injectEndpoints({
         return {
           url: `/environments`,
           method: 'POST',
-          params
+          params,
+          validateStatus: validateReponse
         }
       },
       invalidatesTags: (env) => [
@@ -39,7 +46,8 @@ export const environmentsApi = api.injectEndpoints({
         return {
           url: `/environments/${id}`,
           method: 'PUT',
-          params
+          params,
+          validateStatus: validateReponse
         }
       },
       invalidatesTags: (env) => [
@@ -51,7 +59,8 @@ export const environmentsApi = api.injectEndpoints({
       query(id) {
         return {
           url: `/environments/${id}`,
-          method: 'DELETE'
+          method: 'DELETE',
+          validateStatus: validateReponse
         }
       },
       invalidatesTags: (env) => [
