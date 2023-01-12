@@ -9,6 +9,7 @@ import {
   DialogContent,
   DialogContentText
 } from '@mui/material';
+import styles from './SiteDeleteDialog.module.scss';
 
 const SiteDeleteDialog = () => {
   const dispatch = useDispatch();
@@ -32,21 +33,22 @@ const SiteDeleteDialog = () => {
         open={ menuSite.delete ?? false }
         onClose={ () => onSelection(false) }
         scroll={ 'body' }
-        fullWidth={ true }
-      >
-        <DialogTitle id="env-dialog-title">Delete Site?</DialogTitle>
+        fullWidth={ true }>
+        <DialogTitle>Delete Site?</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Are you sure you want to delete the site { site ? site.name : '' }?
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        <DialogActions id={ styles['site-dialog-btns'] }>
           <Button
+            variant="contained"
             disabled={ isLoading }
             onClick={ () => onSelection(true) }>
             Yes
           </Button>
           <Button
+            variant="contained"
             onClick={ () => onSelection(false) }>
             No
           </Button>

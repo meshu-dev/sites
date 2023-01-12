@@ -1,0 +1,11 @@
+@import '../../../styles/variables.scss';
+
+#edit-button-wrapper {
+  button {
+    background-color: $theme-primary;
+
+    svg {
+      color: #FFF;
+    }
+  }
+}

@@ -1,8 +1,12 @@
 #site-list {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: left;
-  margin-top: 60px;
-  gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, max-content));
+  grid-gap: 30px;
+  justify-content: center;
+  padding: initial;
+  margin-top: 30px;
+}
+
+#site-list-none {
+  text-align: center;
 }

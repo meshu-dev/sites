@@ -28,7 +28,7 @@ const SiteList = () => {
         }
       );
     } else {
-      siteBlocks.push(<div key={ 'blank' }>No sites available for this environment</div>);
+      siteBlocks.push(<div id={ styles['site-list-none'] }>No sites available for this environment</div>);
     }
 
     return (

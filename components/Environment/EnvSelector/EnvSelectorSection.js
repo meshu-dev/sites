@@ -24,10 +24,12 @@ const EnvSelectorSection = () => {
       <EnvSelector />
       <div id={ styles['environment-selector-btns'] } style={ buttonSectionCSS }>
         <Button
+          variant="contained"
           onClick={ showEditEnvironments }>
           Edit Environments
         </Button>
         <Button
+          variant="contained"
           onClick={ showAddSite }>
           Add Site
         </Button>

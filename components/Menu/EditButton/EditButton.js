@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import EditOffIcon from '@mui/icons-material/EditOff';
-import styles from './MenuButton.module.scss';
+import styles from './EditButton.module.scss';
 
 const MenuButton = () => {
   const dispatch = useDispatch();
@@ -25,6 +25,7 @@ const MenuButton = () => {
     <div id={ styles['edit-button-wrapper'] }>
       <Tooltip title={ isEditMode ? 'View mode' : 'Edit mode' }>
         <IconButton
+          color="primary"
           aria-label="Edit mode"
           size="large"
           onClick={ buttonClick }>

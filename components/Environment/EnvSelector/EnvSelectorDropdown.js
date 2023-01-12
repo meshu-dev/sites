@@ -27,8 +27,7 @@ const EnvSelectorDropdown = ({ selectedEnv, environments, onOptionChange }) => {
           labelId="envselector-label"
           value={ selectedEnv }
           label="Environment"
-          onChange={ onOptionChange }
-        >
+          onChange={ onOptionChange }>
           { menuItems }
         </Select>
       </FormControl>
