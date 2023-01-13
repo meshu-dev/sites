@@ -12,13 +12,13 @@ const SiteAddDialog = () => {
 
   const onSaveClick = async (params) => {
     dispatch(mainAction.clearStatusMsg());
-    
+
     params['environment_id'] = environment.selected.id;
     const response = await addSite(params);
 
     setStatusMsg(response);
 
-    if (response['data']['data']) {
+    if (response['data']['errors'] == null) {
       dispatch(clearEnvironmentSites(environment.selected.id));
       dispatch(menuSiteAction.closeAdd());
     }

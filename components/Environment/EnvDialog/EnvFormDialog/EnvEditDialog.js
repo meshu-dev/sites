@@ -18,9 +18,11 @@ const EnvEditDialog = () => {
     };
     const response = await editEnvironment(params);
 
+    console.log('response', response);
+
     setStatusMsg(response);
 
-    if (response['data']['data']) {
+    if (response['data']['errors'] == null) {
       dispatch(menuEnvironmentAction.closeEdit());
       dispatch(menuEnvironmentAction.openList());
     }

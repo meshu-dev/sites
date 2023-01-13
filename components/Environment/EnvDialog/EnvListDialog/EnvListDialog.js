@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useGetEnvironmentsQuery } from '../../../../services/environments';
-import { menuEnvironmentAction } from '../../../../store/menu-environment-slice';
+import { useGetEnvironmentsQuery } from '@/services/environments';
+import { mainAction } from '@/store/main-slice';
+import { menuEnvironmentAction } from '@/store/menu-environment-slice';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -23,18 +24,24 @@ const EnvListDialog = () => {
   }
 
   const onAdd = () => {
+    dispatch(mainAction.clearStatusMsg());
+    dispatch(menuEnvironmentAction.setSelected(null));
+
     dispatch(menuEnvironmentAction.closeList());
     dispatch(menuEnvironmentAction.openAdd());
   };
 
   const onEdit = (envId) => {
+    dispatch(mainAction.clearStatusMsg());
     setEnv(envId);
+
     dispatch(menuEnvironmentAction.closeList());
     dispatch(menuEnvironmentAction.openEdit());
   };
 
   const onDelete = (envId) => {
     setEnv(envId);
+    
     dispatch(menuEnvironmentAction.closeList());
     dispatch(menuEnvironmentAction.openDelete());
   };

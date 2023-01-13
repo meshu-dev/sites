@@ -20,7 +20,9 @@ const SiteEditDialog = () => {
 
     setStatusMsg(response);
 
-    if (response['data']['data']) {
+    console.log('RRR', response, response['data']['errors'] == null);
+
+    if (response['data']['errors'] == null) {
       dispatch(clearEnvironmentSites(environment.selected.id));
       dispatch(menuSiteAction.closeEdit());
     }

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { mainAction } from '../../../store/main-slice';
-import { useGetEnvironmentSitesQuery } from '../../../services/environments';
+import { useGetEnvironmentSitesQuery } from '@/services/environments';
+import { mainAction } from '@/store/main-slice';
 import styles from './SiteList.module.scss';
 import SiteBlock from '../SiteBlock/SiteBlock';
 

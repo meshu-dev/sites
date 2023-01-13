@@ -2,8 +2,9 @@ import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@mui/material';
 import EnvSelector from './EnvSelector';
-import { menuEnvironmentAction } from '../../../store/menu-environment-slice';
-import { menuSiteAction } from '../../../store/menu-site-slice';
+import { mainAction } from '@/store/main-slice';
+import { menuEnvironmentAction } from '@/store/menu-environment-slice';
+import { menuSiteAction } from '@/store/menu-site-slice';
 import styles from './EnvSelectorSection.module.scss';
 
 const EnvSelectorSection = () => {
@@ -16,6 +17,9 @@ const EnvSelectorSection = () => {
   };
 
   const showAddSite = () => {
+    dispatch(mainAction.clearStatusMsg());
+    dispatch(menuSiteAction.setSelected(null));
+
     dispatch(menuSiteAction.openAdd());
   };
 

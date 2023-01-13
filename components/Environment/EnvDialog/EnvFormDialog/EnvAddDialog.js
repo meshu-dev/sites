@@ -11,13 +11,13 @@ const EnvAddDialog = () => {
 
   const onSaveClick = async (envName) => {
     dispatch(mainAction.clearStatusMsg());
-    
+
     const params = { name: envName };
     const response = await addEnvironment(params);
 
     setStatusMsg(response);
 
-    if (response['data']['data']) {
+    if (response['data']['errors'] == null) {
       onCloseClick();
     }
   };

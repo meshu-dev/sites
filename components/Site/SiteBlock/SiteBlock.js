@@ -8,16 +8,18 @@ import {
   CardMedia,
   Typography
 } from '@mui/material';
-import { menuSiteAction } from '../../../store/menu-site-slice';
+import { mainAction } from '@/store/main-slice';
+import { menuSiteAction } from '@/store/menu-site-slice';
 import styles from './SiteBlock.module.scss';
 
 const SiteBlock = ({ site }) => {
   const dispatch = useDispatch();
   const mainState = useSelector(state => state.main);
-  const menuSite = useSelector(state => state.menuSite);
 
   const onEdit = () => {
+    dispatch(mainAction.clearStatusMsg());
     dispatch(menuSiteAction.setSelected(site));
+
     dispatch(menuSiteAction.openEdit());
   };
 

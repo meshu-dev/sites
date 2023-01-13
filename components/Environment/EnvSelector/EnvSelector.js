@@ -1,14 +1,9 @@
 import { useEffect } from 'react';
-
-//import { useGetEnvironmentsQuery } from '../../store/environment-api-slice';
-//import apiHook from '../apiHook.js';
-
-import EnvSelectorDropdown from './EnvSelectorDropdown';
-import { useGetEnvironmentsQuery } from '../../../services/environments';
-
 import { useSelector, useDispatch } from 'react-redux';
-import { mainAction } from '../../../store/main-slice';
-import { environmentAction } from '../../../store/environment-slice';
+import EnvSelectorDropdown from './EnvSelectorDropdown';
+import { useGetEnvironmentsQuery } from '@/services/environments';
+import { mainAction } from '@/store/main-slice';
+import { environmentAction } from '@/store/environment-slice';
 
 const EnvSelector = () => {
   const envState = useSelector(state => state.environment);

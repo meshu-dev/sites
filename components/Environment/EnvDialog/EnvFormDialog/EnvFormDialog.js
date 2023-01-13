@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -7,9 +7,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import StatusMsg from '@/components/Layout/StatusMsg/StatusMsg';
+//import { mainAction } from '@/store/main-slice';
 import styles from './EnvFormDialog.module.scss';
 
 const EnvFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
+  //const dispatch = useDispatch();
   const menuEnvironment = useSelector(state => state.menuEnvironment);
   const [envName, setEnvName] = useState('');
 
@@ -32,6 +34,8 @@ const EnvFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
     const name = menuEnvironment.selected ? menuEnvironment.selected.name : '';
     setEnvName(name);
   }, [menuEnvironment.selected]);
+
+  // dispatch(mainAction.clearStatusMsg());
 
   return (
     <div>
