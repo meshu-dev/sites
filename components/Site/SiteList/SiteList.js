@@ -24,11 +24,17 @@ const SiteList = () => {
     if (environmentSites.length > 0) {
       siteBlocks = environmentSites.map(
         (site) => {
-          return <SiteBlock key={ site.id } site={ site } />
+          return <SiteBlock key={ `site-block-${site.id}` } site={ site } />
         }
       );
     } else {
-      siteBlocks.push(<div id={ styles['site-list-none'] }>No sites available for this environment</div>);
+      siteBlocks.push(
+        <div
+          key={ 'site-block-none' }
+          id={ styles['site-list-none'] }>
+            No sites available for this environment
+        </div>
+      );
     }
 
     return (

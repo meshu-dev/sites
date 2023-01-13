@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEditSiteMutation, clearEnvironmentSites } from '../../../../services/sites';
-import { menuSiteAction } from '../../../../store/menu-site-slice';
 import SiteFormDialog from './SiteFormDialog';
+import { useEditSiteMutation, clearEnvironmentSites } from '@/services/sites';
+import { mainAction } from '@/store/main-slice';
+import { menuSiteAction } from '@/store/menu-site-slice';
 
 const SiteEditDialog = () => {
   const dispatch = useDispatch();
@@ -10,19 +11,46 @@ const SiteEditDialog = () => {
   const [editSite, { isLoading }] = useEditSiteMutation();
 
   const onSaveClick = async (params) => {
+    dispatch(mainAction.clearStatusMsg());
+
     params['id'] = menuSite.selected.id;
     params['environment_id'] = environment.selected.id;
-    console.log('editSite', params);
 
-    await editSite(params);
+    const response = await editSite(params);
 
-    dispatch(clearEnvironmentSites(environment.selected.id));
-    dispatch(menuSiteAction.closeEdit());
+    setStatusMsg(response);
+
+    if (response['data']['data']) {
+      dispatch(clearEnvironmentSites(environment.selected.id));
+      dispatch(menuSiteAction.closeEdit());
+    }
   };
 
   const onCloseClick = () => {
     dispatch(menuSiteAction.closeEdit());
     dispatch(menuSiteAction.setSelected(null));
+  };
+
+  const setStatusMsg = (response) => {
+    if (response['data']['errors']) {
+      const data = response['data']['errors'];
+      let messages = [];
+
+      if (data['name']) {
+        messages.push(data['name']);
+      }
+
+      if (data['url']) {
+        messages.push(data['url']);
+      }
+
+      const params = {
+        type: 'error',
+        messages: messages
+      };
+
+      dispatch(mainAction.setStatusMsg(params));
+    }
   };
 
   const editForm = (<SiteFormDialog

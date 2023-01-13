@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEditEnvironmentMutation } from '../../../../services/environments';
-import { menuEnvironmentAction } from '../../../../store/menu-environment-slice';
+import { useEditEnvironmentMutation } from '@/services/environments';
+import { mainAction } from '@/store/main-slice';
+import { menuEnvironmentAction } from '@/store/menu-environment-slice';
 import EnvFormDialog from './EnvFormDialog';
 
 const EnvEditDialog = () => {
@@ -9,14 +10,38 @@ const EnvEditDialog = () => {
   const [editEnvironment, { isLoading }] = useEditEnvironmentMutation();
 
   const onSaveClick = async (envName) => {
+    dispatch(mainAction.clearStatusMsg());
+
     const params = {
       id: menuEnvironment.selected.id,
       name: envName
     };
-    await editEnvironment(params);
+    const response = await editEnvironment(params);
 
-    dispatch(menuEnvironmentAction.closeEdit());
-    dispatch(menuEnvironmentAction.openList());
+    setStatusMsg(response);
+
+    if (response['data']['data']) {
+      dispatch(menuEnvironmentAction.closeEdit());
+      dispatch(menuEnvironmentAction.openList());
+    }
+  };
+
+  const setStatusMsg = (response) => {
+    if (response['data']['errors']) {
+      const data = response['data']['errors'];
+      let messages = [];
+
+      if (data['name']) {
+        messages.push(data['name']);
+      }
+
+      const params = {
+        type: 'error',
+        messages: messages
+      };
+
+      dispatch(mainAction.setStatusMsg(params));
+    }
   };
 
   const onCloseClick = () => {

@@ -8,6 +8,7 @@ import {
   DialogActions,
   TextField
 } from '@mui/material';
+import StatusMsg from '@/components/Layout/StatusMsg/StatusMsg';
 import styles from './SiteFormDialog.module.scss';
 
 const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
@@ -59,28 +60,28 @@ const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
         open={ true }
         onClose={ onCloseClick }
         scroll={ 'body' }
-        fullWidth={ true }
-      >
+        fullWidth={ true }>
         <DialogTitle>{ title }</DialogTitle>
         <DialogContent id={ styles['site-dialog-content'] }>
+          <StatusMsg />
           <TextField
-                id="env-field"
-                className={ styles['site-dialog-textfield'] }
-                label="Name"
-                name="name"
-                value={ name }
-                onChange={ handleInputChange }
-                fullWidth
-                required />
+            id="env-field"
+            className={ styles['site-dialog-textfield'] }
+            label="Name"
+            name="name"
+            value={ name }
+            onChange={ handleInputChange }
+            fullWidth
+            required />
           <TextField
-                id="env-field"
-                className={ styles['site-dialog-textfield'] }
-                label="Url"
-                name="url"
-                value={ url }
-                onChange={ handleInputChange }
-                fullWidth
-                required />
+            id="env-field"
+            className={ styles['site-dialog-textfield'] }
+            label="Url"
+            name="url"
+            value={ url }
+            onChange={ handleInputChange }
+            fullWidth
+            required />
         </DialogContent>
         <DialogActions>
           <Button

@@ -1,14 +1,21 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Router from 'next/router';
-import LoginForm from '../components/LoginForm/LoginForm';
+import Head from 'next/head';
+import LoginForm from '@/components/LoginForm/LoginForm';
+import StatusMsg from '@/components/Layout/StatusMsg/StatusMsg';
+import { useLoginMutation } from '@/services/auth';
+import { mainAction } from '@/store/main-slice';
 
-import { useLoginMutation } from '../services/auth';
-import { mainAction } from '../store/main-slice';
+import styles from '../styles/login.module.scss';
 
 export default () => {
+  const dispatch = useDispatch();
   const [login, { isLoading }] = useLoginMutation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [msgType, setMsgType] = useState('');
+  const [msgText, setMsgText] = useState('');
 
   // const [messages, setMessages] = React.useState([]);
 
@@ -39,15 +46,39 @@ export default () => {
       localStorage.setItem('isLoggedIn', true);
       Router.push('/');
     } else {
+      setStatusMsg(response);
       console.log('Login failed', response);
     }
   }
 
+  const setStatusMsg = (response) => {
+    if (response['error']) {
+      const data = response['error']['data'];
+
+      const params = {
+        type: 'error',
+        messages: [data['error']]
+      };
+
+      dispatch(mainAction.setStatusMsg(params));
+    }
+  }
+
   return (
-    <LoginForm
-      email={ email }
-      password={ password }
-      handleInputChange={ handleInputChange }
-      handleSubmit={ handleSubmit } />
+    <div id={ styles['login-background'] }>
+      <div id={ styles['login-content'] }>
+        <Head>
+          <title>DevAdmin - Login</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <h1>DevAdmin Login</h1>
+        <StatusMsg />
+        <LoginForm
+          email={ email }
+          password={ password }
+          handleInputChange={ handleInputChange }
+          handleSubmit={ handleSubmit } />
+      </div>
+    </div>
   );
 }

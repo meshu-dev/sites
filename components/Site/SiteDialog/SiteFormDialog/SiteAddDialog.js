@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useAddSiteMutation, clearEnvironmentSites } from '../../../../services/sites';
-import { menuSiteAction } from '../../../../store/menu-site-slice';
 import SiteFormDialog from './SiteFormDialog';
+import { useAddSiteMutation, clearEnvironmentSites } from '@/services/sites';
+import { mainAction } from '@/store/main-slice';
+import { menuSiteAction } from '@/store/menu-site-slice';
 
 const SiteAddDialog = () => {
   const dispatch = useDispatch();
@@ -10,17 +11,45 @@ const SiteAddDialog = () => {
   const [addSite, { isLoading }] = useAddSiteMutation();
 
   const onSaveClick = async (params) => {
+    dispatch(mainAction.clearStatusMsg());
+    
     params['environment_id'] = environment.selected.id;
-    await addSite(params);
+    const response = await addSite(params);
 
-    dispatch(clearEnvironmentSites(environment.selected.id));
-    dispatch(menuSiteAction.closeAdd());
+    setStatusMsg(response);
+
+    if (response['data']['data']) {
+      dispatch(clearEnvironmentSites(environment.selected.id));
+      dispatch(menuSiteAction.closeAdd());
+    }
   };
 
   const onCloseClick = () => {
     dispatch(menuSiteAction.closeAdd());
     dispatch(menuSiteAction.setSelected(null));
   };
+
+  const setStatusMsg = (response) => {
+    if (response['data']['errors']) {
+      const data = response['data']['errors'];
+      let messages = [];
+
+      if (data['name']) {
+        messages.push(data['name']);
+      }
+
+      if (data['url']) {
+        messages.push(data['url']);
+      }
+
+      const params = {
+        type: 'error',
+        messages: messages
+      };
+
+      dispatch(mainAction.setStatusMsg(params));
+    }
+  }
 
   const addForm = (<SiteFormDialog
                       title={ 'Add Site' }

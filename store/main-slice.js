@@ -5,7 +5,8 @@ export const mainSlice = createSlice({
   initialState: {
     isLoading: true,
     isLoggedIn: false,
-    isEditMode: false
+    isEditMode: false,
+    statusMsg: null,
   },
   reducers: {
     startLoading: (state) => {
@@ -19,6 +20,12 @@ export const mainSlice = createSlice({
     },
     toggleEditMode: (state) => {
       state.isEditMode = state.isEditMode ? false : true;
+    },
+    setStatusMsg: (state, action) => {
+      state.statusMsg = action.payload;
+    },
+    clearStatusMsg: (state) => {
+      state.statusMsg = null;
     }
   }
 });

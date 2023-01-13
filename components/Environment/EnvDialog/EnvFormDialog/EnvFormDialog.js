@@ -6,6 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
+import StatusMsg from '@/components/Layout/StatusMsg/StatusMsg';
 import styles from './EnvFormDialog.module.scss';
 
 const EnvFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
@@ -38,18 +39,18 @@ const EnvFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
         open={ true }
         onClose={ onCloseClick }
         scroll={ 'body' }
-        fullWidth={ true }
-      >
+        fullWidth={ true }>
         <DialogTitle>{ title }</DialogTitle>
         <DialogContent id={ styles['env-dialog-content'] }>
+          <StatusMsg />
           <TextField
-                id="env-field"
-                label="Environment"
-                name="environment"
-                value={ envName }
-                onChange={ handleInputChange }
-                fullWidth
-                required />
+            id="env-field"
+            label="Environment"
+            name="environment"
+            value={ envName }
+            onChange={ handleInputChange }
+            fullWidth
+            required />
         </DialogContent>
         <DialogActions>
           <Button
