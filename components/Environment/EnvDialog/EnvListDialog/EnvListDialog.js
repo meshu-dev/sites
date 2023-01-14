@@ -40,6 +40,7 @@ const EnvListDialog = () => {
   };
 
   const onDelete = (envId) => {
+    dispatch(mainAction.clearStatusMsg());
     setEnv(envId);
     
     dispatch(menuEnvironmentAction.closeList());
