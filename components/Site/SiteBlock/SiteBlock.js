@@ -41,9 +41,7 @@ const SiteBlock = ({ site }) => {
             alt="green iguana"
           />
           <CardContent className={ styles['site-block-content'] }>
-            <Typography gutterBottom variant="subtitle2">
-              { site['name'] }
-            </Typography>
+            <span>{ site['name'] }</span>
             <Typography variant="body2" color="text.secondary">
               { site['url'] }
             </Typography>

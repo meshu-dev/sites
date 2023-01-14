@@ -31,7 +31,7 @@ const EnvSelector = () => {
   if (environments.length > 0) {
     return (
       <EnvSelectorDropdown
-        selectedEnv={ envState.selected ? envState.selected.id : 0 }
+        selectedEnv={ envState.selected ? envState.selected.id : '' }
         environments={ environments }
         onOptionChange={ onOptionChange } />
     );

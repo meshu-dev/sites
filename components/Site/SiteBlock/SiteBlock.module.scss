@@ -12,6 +12,14 @@
       height: 120px;
       padding: 20px;
 
+      :hover {
+        .site-block-content {
+          span {
+            text-decoration: none;
+          }
+        }
+      }
+
       .site-block-img {
         width: 80px;
         height: 80px;
