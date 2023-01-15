@@ -1,16 +1,21 @@
-import { useGetIconsQuery } from '@/services/icons';
+import { useSelector, useDispatch } from 'react-redux';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import { useGetIconsQuery } from '@/services/icons';
+import { menuSiteAction } from '@/store/menu-site-slice';
 import styles from './SiteIconSelector.module.scss';
 
-const SiteIconSelector = ({ onSelection }) => {
+const SiteIconSelector = ({ selectedIconId }) => {
+  const dispatch = useDispatch();
   let { data: icons = [] } = useGetIconsQuery();
+  const menuSite = useSelector(state => state.menuSite);
 
   const onIconClick = (iconId, event) => {
     removeSelection(event);
     addSelection(event);
 
-    onSelection(iconId);
+    let selectedIcon = icons.find(icon => icon.id == iconId);
+    dispatch(menuSiteAction.setSelectedIcon(selectedIcon));
   };
 
   const addSelection = (event) => {
@@ -27,6 +32,8 @@ const SiteIconSelector = ({ onSelection }) => {
     }
   };
 
+  console.log('selectedIconId', selectedIconId);
+
   return (
     <ImageList
       id={ styles['icon-list'] }
@@ -35,7 +42,10 @@ const SiteIconSelector = ({ onSelection }) => {
         icons.map((icon, index) => {
           let classNames = styles['icon-item'];
 
-          if (index == 0) {
+          if (
+            icon.id == selectedIconId ||
+            (selectedIconId == 0 && index == 0)
+          ) {
             classNames += ` ${styles['icon-selecteditem']}`;
           }
 

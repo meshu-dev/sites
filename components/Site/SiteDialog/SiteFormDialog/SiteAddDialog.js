@@ -14,6 +14,7 @@ const SiteAddDialog = () => {
     dispatch(mainAction.clearStatusMsg());
 
     params['environment_id'] = environment.selected.id;
+
     const response = await addSite(params);
 
     setStatusMsg(response);

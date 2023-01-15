@@ -24,7 +24,9 @@ const SiteList = () => {
     if (environmentSites.length > 0) {
       siteBlocks = environmentSites.map(
         (site) => {
-          return <SiteBlock key={ `site-block-${site.id}` } site={ site } />
+          return <SiteBlock
+                   key={ `site-block-${site.id}` }
+                   site={ site } />
         }
       );
     } else {

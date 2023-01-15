@@ -16,6 +16,9 @@ export const menuSiteSlice = createSlice({
     setSelected: (state, action) => {
       state.selected = action.payload;
     },
+    setSelectedIcon: (state, action) => {
+      state.selected.icon = action.payload;
+    },
     openAdd: (state) => {
       state.add = true;
     },

@@ -28,17 +28,15 @@ const SiteBlock = ({ site }) => {
     dispatch(menuSiteAction.openDelete());
   };
 
-  // menuSite.writeMode
-
   return (
     <div className={ styles['site-block-wrapper'] }>
       <Card className={ styles['site-block'] }>
-        <CardActionArea className={ styles['site-block-link'] } href={ site['url'] } target="_blank">
+        <CardActionArea className={ styles['site-block-link'] } href={ site.url } target="_blank">
           <CardMedia
             className={ styles['site-block-img'] }
             component="img"
-            image="https://mui.com/static/images/cards/live-from-space.jpg"
-            alt="green iguana"
+            image={ site.icon.url }
+            alt={ site.icon.name }
           />
           <CardContent className={ styles['site-block-content'] }>
             <span>{ site['name'] }</span>

@@ -10,9 +10,12 @@ import {
 } from '@mui/material';
 import StatusMsg from '@/components/Layout/StatusMsg/StatusMsg';
 import SiteIconSelector from '@/components/Site/SiteIconSelector/SiteIconSelector';
+import { useGetIconsQuery } from '@/services/icons';
 import styles from './SiteFormDialog.module.scss';
 
 const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
+  let { data: icons = [] } = useGetIconsQuery();
+
   const menuSite = useSelector(state => state.menuSite);
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
@@ -37,7 +40,7 @@ const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
     await onSaveFtn({
       name,
       url,
-      iconId
+      icon_id: iconId
     });
   };
 
@@ -45,20 +48,17 @@ const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
     onCloseFtn();
   };
 
-  const onIconSelection = (iconId) => {
-    setIconId(iconId);
-    console.log('onIconSelection', iconId);
-  }
-
   useEffect(() => {
     const site = menuSite.selected ? menuSite.selected : null;
     
     if (site) {
       setName(site.name);
       setUrl(site.url);
+      setIconId(site.icon.id);
     } else {
       setName('');
       setUrl('');
+      setIconId(icons[0].id);
     }
   }, [menuSite.selected]);
 
@@ -92,7 +92,7 @@ const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
             required />
           <div>Select icon:</div>
           <SiteIconSelector
-            onSelection={ onIconSelection } />
+            selectedIconId={ iconId } />
         </DialogContent>
         <DialogActions>
           <Button
