@@ -21,7 +21,7 @@ export const validateReponse = (response) => {
 
 const api = createApi({
   reducerPath: 'api',
-  tagTypes: ['Environments', 'EnvironmentSites', 'Sites'],
+  tagTypes: ['Environments', 'Icons', 'EnvironmentSites', 'Sites'],
   baseQuery: fetchBaseQuery(getBaseQueryParams),
   endpoints: () => ({ })
 });

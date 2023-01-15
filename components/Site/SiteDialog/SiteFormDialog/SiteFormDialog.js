@@ -9,12 +9,14 @@ import {
   TextField
 } from '@mui/material';
 import StatusMsg from '@/components/Layout/StatusMsg/StatusMsg';
+import SiteIconSelector from '@/components/Site/SiteIconSelector/SiteIconSelector';
 import styles from './SiteFormDialog.module.scss';
 
 const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
   const menuSite = useSelector(state => state.menuSite);
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
+  const [iconId, setIconId] = useState(0);
 
   const isLoading = false;
 
@@ -34,13 +36,19 @@ const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
   const onSaveClick = async () => {
     await onSaveFtn({
       name,
-      url
+      url,
+      iconId
     });
   };
 
   const onCloseClick = () => {
     onCloseFtn();
   };
+
+  const onIconSelection = (iconId) => {
+    setIconId(iconId);
+    console.log('onIconSelection', iconId);
+  }
 
   useEffect(() => {
     const site = menuSite.selected ? menuSite.selected : null;
@@ -82,6 +90,9 @@ const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
             onChange={ handleInputChange }
             fullWidth
             required />
+          <div>Select icon:</div>
+          <SiteIconSelector
+            onSelection={ onIconSelection } />
         </DialogContent>
         <DialogActions>
           <Button
