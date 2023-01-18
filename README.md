@@ -32,6 +32,7 @@ NEXT_PUBLIC_API_URL
 ```
 npm run dev
 ```
+
 ### Static Site Hosting
 
 - Run the following command to generate static site
