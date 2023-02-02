@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import SiteFormDialog from './SiteFormDialog';
 import { useAddSiteMutation, clearEnvironmentSites } from '@/services/sites';
+import { useGetIconsQuery } from '@/services/icons';
 import { mainAction } from '@/store/main-slice';
 import { menuSiteAction } from '@/store/menu-site-slice';
 
@@ -9,11 +11,17 @@ const SiteAddDialog = () => {
   const menuSite = useSelector(state => state.menuSite);
   const environment = useSelector(state => state.environment);
   const [addSite, { isLoading }] = useAddSiteMutation();
+  let { data: icons = [] } = useGetIconsQuery();
 
-  const onSaveClick = async (params) => {
+  const onSaveClick = async () => {
     dispatch(mainAction.clearStatusMsg());
 
-    params['environment_id'] = environment.selected.id;
+    const params = {
+      environment_id: environment.selected.id,
+      name: menuSite.selected.name,
+      url: menuSite.selected.url,
+      icon_id: menuSite.selected.icon.id
+    };
 
     const response = await addSite(params);
 
@@ -52,16 +60,22 @@ const SiteAddDialog = () => {
     }
   }
 
-  const addForm = (<SiteFormDialog
-                      title={ 'Add Site' }
-                      onSaveFtn={ onSaveClick }
-                      onCloseFtn={ onCloseClick } />);
+  useEffect(() => {
+    if (menuSite.selected == null && icons.length > 0) {
+      console.log('A2', icons);
+      dispatch(menuSiteAction.setSelectedAsNew(icons[0]));
+    }
+  }, [menuSite.add]);
 
-  return (
-    <div>
-      { menuSite.add ? addForm : null }
-    </div>
-  );
+  if (menuSite.add === true && menuSite.selected) {
+    return (
+      <SiteFormDialog
+        title={ 'Add Site' }
+        onSaveFtn={ onSaveClick }
+        onCloseFtn={ onCloseClick } />
+    );
+  }
+  return (null);
 };
 
 export default SiteAddDialog;

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Button,
   Dialog,
@@ -11,16 +11,14 @@ import {
 import StatusMsg from '@/components/Layout/StatusMsg/StatusMsg';
 import SiteIconSelector from '@/components/Site/SiteIconSelector/SiteIconSelector';
 import { useGetIconsQuery } from '@/services/icons';
+import { menuSiteAction } from '@/store/menu-site-slice';
 import styles from './SiteFormDialog.module.scss';
 
 const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
-  let { data: icons = [] } = useGetIconsQuery();
+  const dispatch = useDispatch();
+  //let { data: icons = [] } = useGetIconsQuery();
 
   const menuSite = useSelector(state => state.menuSite);
-  const [name, setName] = useState('');
-  const [url, setUrl] = useState('');
-  const [iconId, setIconId] = useState(0);
-
   const isLoading = false;
 
   const handleInputChange = event => {
@@ -28,39 +26,34 @@ const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
     const value = event.target.value;
 
     if (name === 'name') {
-      setName(value);
+      dispatch(menuSiteAction.setSelectedName(value));
     }
 
     if (name === 'url') {
-      setUrl(value);
+      dispatch(menuSiteAction.setSelectedUrl(value));
     }
   }
 
   const onSaveClick = async () => {
-    await onSaveFtn({
-      name,
-      url,
-      icon_id: iconId
-    });
+    await onSaveFtn();
   };
 
   const onCloseClick = () => {
     onCloseFtn();
   };
 
+  /*
   useEffect(() => {
-    const site = menuSite.selected ? menuSite.selected : null;
-    
-    if (site) {
-      setName(site.name);
-      setUrl(site.url);
-      setIconId(site.icon.id);
-    } else {
-      setName('');
-      setUrl('');
-      setIconId(icons[0].id);
+    if (menuSite.selected == null && icons.length > 0) {
+      console.log('A2', icons);
+      dispatch(menuSiteAction.setSelectedAsNew(icons[0]));
     }
-  }, [menuSite.selected]);
+  }, [icons]); 
+
+
+  if (menuSite.selected === null) {
+    return (null);
+  } */
 
   return (
     <div className={ styles['env-row'] }>
@@ -77,7 +70,7 @@ const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
             className={ styles['site-dialog-textfield'] }
             label="Name"
             name="name"
-            value={ name }
+            value={ menuSite.selected.name }
             onChange={ handleInputChange }
             fullWidth
             required />
@@ -86,13 +79,13 @@ const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
             className={ styles['site-dialog-textfield'] }
             label="Url"
             name="url"
-            value={ url }
+            value={ menuSite.selected.url }
             onChange={ handleInputChange }
             fullWidth
             required />
           <div>Select icon:</div>
           <SiteIconSelector
-            selectedIconId={ iconId } />
+            selectedIconId={ menuSite.selected.icon.id } />
         </DialogContent>
         <DialogActions>
           <Button

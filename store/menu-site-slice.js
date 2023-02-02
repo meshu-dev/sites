@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { useGetIconsQuery } from '@/services/icons';
 
 export const menuSiteSlice = createSlice({
   name: 'menuSite',
@@ -16,8 +17,29 @@ export const menuSiteSlice = createSlice({
     setSelected: (state, action) => {
       state.selected = action.payload;
     },
+    setSelectedName: (state, action) => {
+      if (state.selected) {
+        state.selected.name = action.payload;
+      }
+    },
+    setSelectedUrl: (state, action) => {
+      if (state.selected) {
+        state.selected.url = action.payload;
+      }
+    },
     setSelectedIcon: (state, action) => {
-      state.selected.icon = action.payload;
+      if (state.selected) {
+        state.selected.icon = action.payload;
+      }
+    },
+    setSelectedAsNew: (state, action) => {
+      const icon = action.payload;
+
+      state.selected = {
+        name: '',
+        url: '',
+        icon: icon || null
+      };
     },
     openAdd: (state) => {
       state.add = true;
