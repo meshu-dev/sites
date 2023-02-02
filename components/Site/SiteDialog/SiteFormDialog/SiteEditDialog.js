@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import SiteFormDialog from './SiteFormDialog';
 import { useEditSiteMutation, clearEnvironmentSites } from '@/services/sites';
+import { useGetIconsQuery } from '@/services/icons';
 import { mainAction } from '@/store/main-slice';
 import { menuSiteAction } from '@/store/menu-site-slice';
 
@@ -9,12 +11,18 @@ const SiteEditDialog = () => {
   const menuSite = useSelector(state => state.menuSite);
   const environment = useSelector(state => state.environment);
   const [editSite, { isLoading }] = useEditSiteMutation();
+  let { data: icons = [] } = useGetIconsQuery();
 
-  const onSaveClick = async (params) => {
+  const onSaveClick = async () => {
     dispatch(mainAction.clearStatusMsg());
 
-    params['id'] = menuSite.selected.id;
-    params['environment_id'] = environment.selected.id;
+    const params = {
+      id: menuSite.selected.id,
+      environment_id: environment.selected.id,
+      name: menuSite.selected.name,
+      url: menuSite.selected.url,
+      icon_id: menuSite.selected.icon.id
+    };
 
     const response = await editSite(params);
 
@@ -55,16 +63,15 @@ const SiteEditDialog = () => {
     }
   };
 
-  const editForm = (<SiteFormDialog
-                      title={ 'Edit Site' }
-                      onSaveFtn={ onSaveClick }
-                      onCloseFtn={ onCloseClick } />);
-
-  return (
-    <div>
-      { menuSite.edit ? editForm : null }
-    </div>
-  );
+  if (menuSite.edit === true && menuSite.selected) {
+    return (
+      <SiteFormDialog
+        title={ 'Edit Site' }
+        onSaveFtn={ onSaveClick }
+        onCloseFtn={ onCloseClick } />
+    );
+  }
+  return (null);
 };
 
 export default SiteEditDialog;
