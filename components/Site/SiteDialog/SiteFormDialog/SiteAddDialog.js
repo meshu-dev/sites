@@ -29,7 +29,9 @@ const SiteAddDialog = () => {
 
     if (response['data']['errors'] == null) {
       dispatch(clearEnvironmentSites(environment.selected.id));
+      
       dispatch(menuSiteAction.closeAdd());
+      dispatch(menuSiteAction.setSelected(null));
     }
   };
 
