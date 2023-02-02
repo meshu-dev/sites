@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import SiteFormDialog from './SiteFormDialog';
 import { useEditSiteMutation, clearEnvironmentSites } from '@/services/sites';
-import { useGetIconsQuery } from '@/services/icons';
 import { mainAction } from '@/store/main-slice';
 import { menuSiteAction } from '@/store/menu-site-slice';
 
@@ -11,7 +10,6 @@ const SiteEditDialog = () => {
   const menuSite = useSelector(state => state.menuSite);
   const environment = useSelector(state => state.environment);
   const [editSite, { isLoading }] = useEditSiteMutation();
-  let { data: icons = [] } = useGetIconsQuery();
 
   const onSaveClick = async () => {
     dispatch(mainAction.clearStatusMsg());
@@ -32,7 +30,9 @@ const SiteEditDialog = () => {
 
     if (response['data']['errors'] == null) {
       dispatch(clearEnvironmentSites(environment.selected.id));
+
       dispatch(menuSiteAction.closeEdit());
+      dispatch(menuSiteAction.setSelected(null));
     }
   };
 
