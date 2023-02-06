@@ -11,12 +11,11 @@
       justify-content: flex-start;
       height: 120px;
       padding: 20px;
+      text-decoration: none;
 
       :hover {
-        .site-block-content {
-          span {
-            text-decoration: none;
-          }
+        p {
+          text-decoration: underline;
         }
       }
 

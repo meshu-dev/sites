@@ -37,7 +37,7 @@ const SiteIconSelector = ({ selectedIconId }) => {
   return (
     <ImageList
       id={ styles['icon-list'] }
-      sx={{ width: 500, height: 200 }} cols={ 5 } rowHeight={ 80 }>
+      cols={ 5 } rowHeight={ 80 }>
       {
         icons.map((icon, index) => {
           let classNames = styles['icon-item'];
