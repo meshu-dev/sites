@@ -15,8 +15,8 @@ export const mainSlice = createSlice({
     finishLoading: (state) => {
       state.isLoading = false;
     },
-    isLoggedIn: (state) => {
-      state.isLoggedIn = state.isLoggedIn;
+    setIsLoggedIn: (state, action) => {
+      state.isLoggedIn = action.payload;
     },
     toggleEditMode: (state) => {
       state.isEditMode = state.isEditMode ? false : true;

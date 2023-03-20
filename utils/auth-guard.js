@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 const checkUrl = (router) => {
-  const isLoggedIn = localStorage.getItem('isLoggedIn') || false;
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true' || false;
   const path = router.pathname;
 
   let redirectUrl = '';

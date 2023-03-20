@@ -14,10 +14,6 @@ export default () => {
   const [login, { isLoading }] = useLoginMutation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [msgType, setMsgType] = useState('');
-  const [msgText, setMsgText] = useState('');
-
-  // const [messages, setMessages] = React.useState([]);
 
   const handleInputChange = event => {
     const name = event.target.name;
