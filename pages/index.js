@@ -12,8 +12,8 @@ export default () => {
   const isLoggedIn = mainState.isLoggedIn;
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true' || false;
-    dispatch(mainAction.setIsLoggedIn(isLoggedIn));
+    //const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true' || false;
+    //dispatch(mainAction.setIsLoggedIn(isLoggedIn));
   }, []);
 
   if (isLoggedIn === true) {
