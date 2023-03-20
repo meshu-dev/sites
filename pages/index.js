@@ -7,13 +7,13 @@ import MenuButtons from '../components/Menu/MenuButtons/MenuButtons';
 import { mainAction } from '@/store/main-slice';
 
 export default () => {
-  const dispatch = useDispatch();
-  const mainState = useSelector(state => state.main);
-  const isLoggedIn = mainState.isLoggedIn;
+  //const dispatch = useDispatch();
+  //const mainState = useSelector(state => state.main);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    //const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true' || false;
-    //dispatch(mainAction.setIsLoggedIn(isLoggedIn));
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true' || false;
+    setIsLoggedIn(isLoggedIn);
   }, []);
 
   if (isLoggedIn === true) {
