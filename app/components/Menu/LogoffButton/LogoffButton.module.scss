@@ -1,0 +1,14 @@
+@import '../../../styles/variables.scss';
+
+#logoff-button-wrapper {
+  button {
+    background-color: $theme-primary;
+    width: 52px;
+    height: 52px;
+
+    svg {
+      padding-left: 7px;
+      color: #FFF;
+    }
+  }
+}

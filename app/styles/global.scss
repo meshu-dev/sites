@@ -1,0 +1,82 @@
+@import "variables";
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #EDEDED;
+	font-size: 17px;
+    color: #3C3C3C;
+	margin: 0;
+}
+
+a {
+	text-decoration: none;
+    color: #3C3C3C !important;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+#__next {
+  height: 100%;
+}
+
+/*
+#leftcolumn:after {
+    background: #F0F0F0;
+    width: 0.1rem;
+    content: "";
+    height: 100%;
+    right: 0;
+    top: 0;
+    position: absolute;
+}
+
+a.active {
+    border-radius: .4rem;
+    background-color: $color-primary;
+    display: inline-block;
+    color: #FFF !important;
+    padding: 0;
+}
+
+a.active:hover {
+    cursor: default;
+    color: #FFF !important;
+    text-decoration: none !important;
+}
+
+nav {
+    display: flex !important;
+}
+
+.btn-primary {
+    background-color: $color-primary;
+    border-color: $color-primary;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: $color-primary;
+    border-color: $color-primary;
+}
+
+.page-item.active .page-link {
+    background-color: $color-primary;
+    border-color: $color-primary;
+}
+
+@media all and (max-width: 575px) {
+    #leftcolumn:after {
+        background: transparent;
+    }
+} */
