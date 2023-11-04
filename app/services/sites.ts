@@ -1,5 +1,12 @@
 import api, { validateReponse } from './api';
 
+export interface Site {
+  id? :number,
+  iconId :number,
+  name: string
+  url: string
+}
+
 export const sitesApi = api.injectEndpoints({
   endpoints: (build) => ({
     getSites: build.query({
@@ -12,7 +19,7 @@ export const sitesApi = api.injectEndpoints({
       providesTags: [{ type: 'Sites', id: 'LIST' }],
       transformResponse: (response) => response.data
     }),
-    addSite: build.mutation({
+    addSite: build.mutation<Site, Partial<Site>>({
       query(body) {
         return {
           url: `/sites`,
@@ -26,15 +33,16 @@ export const sitesApi = api.injectEndpoints({
         { type: 'Sites', id: site?.id }
       ]
     }),
-    editSite: build.mutation({
+    editSite: build.mutation<Site, Partial<Site>>({
       query(body) {
-        const id = params['id'];
-        delete params['id'];
-
         return {
-          url: `/sites/${id}`,
+          url: `/sites/${body.id}`,
           method: 'PUT',
-          body,
+          body: {
+            iconId: body.iconId,
+            name: body.name,
+            url: body.url
+          },
           validateStatus: validateReponse
         }
       },
@@ -43,7 +51,7 @@ export const sitesApi = api.injectEndpoints({
         { type: 'Sites', id: site?.id }
       ]
     }),
-    deleteSite: build.mutation({
+    deleteSite: build.mutation<number, Partial<number>>({
       query(id) {
         return {
           url: `/sites/${id}`,
@@ -59,7 +67,7 @@ export const sitesApi = api.injectEndpoints({
   })
 });
 
-export const clearEnvironmentSites = (envId) => {
+export const clearEnvironmentSites = (envId: number) => {
   return api.util.invalidateTags([{
     type: 'EnvironmentSites',
     id: envId

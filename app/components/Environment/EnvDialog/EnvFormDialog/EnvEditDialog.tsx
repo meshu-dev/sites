@@ -9,10 +9,10 @@ const EnvEditDialog = () => {
   const menuEnvironment = useSelector(state => state.menuEnvironment);
   const [editEnvironment, { isLoading }] = useEditEnvironmentMutation();
 
-  const onSaveClick = async (envName) => {
+  const onSaveClick = async (envName: string) => {
     dispatch(mainAction.clearStatusMsg());
 
-    const params = {
+    let params = {
       id: menuEnvironment.selected.id,
       name: envName
     };

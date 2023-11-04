@@ -20,9 +20,7 @@ const EnvAddDialog = () => {
 
     console.log('client - addEnvironment', params);
 
-    const e: Environment = { name: 'Dev' } 
-
-    const response = await addEnvironment(e);
+    const response = await addEnvironment(params);
 
     console.log('SAVE', response);
 

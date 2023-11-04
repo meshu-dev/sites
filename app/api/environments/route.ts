@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     console.log('Add Environment 2', {
       userId,
       name:   body.name,
-      order:  categoryCount
+      order:  categoryCount + 1
     }, categoryCount);
 
     const environment = await prisma.environment.create({

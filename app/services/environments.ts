@@ -1,6 +1,7 @@
 import api, { validateReponse } from './api';
 
 export interface Environment {
+  id? :number
   name: string
 }
 
@@ -42,15 +43,17 @@ export const environmentsApi = api.injectEndpoints({
         { type: 'Environments', id: env?.id }
       ]
     }),
-    editEnvironment: build.mutation({
+    editEnvironment: build.mutation<Environment, Partial<Environment>>({
       query(body) {
-        const id = params['id'];
-        delete params['id'];
-        
+
+        console.log('edit env', body);
+
         return {
-          url: `/environments/${id}`,
+          url: `/environments/${body.id}`,
           method: 'PUT',
-          body,
+          body: {
+            name: body.name
+          },
           validateStatus: validateReponse
         }
       },
@@ -59,7 +62,7 @@ export const environmentsApi = api.injectEndpoints({
         { type: 'Environments', id: env?.id }
       ]
     }),
-    deleteEnvironment: build.mutation({
+    deleteEnvironment: build.mutation<number, Partial<number>>({
       query(id) {
         return {
           url: `/environments/${id}`,

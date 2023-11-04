@@ -5,11 +5,7 @@ import { getServerSession } from 'next-auth/next'
 import { PrismaClient } from '@prisma/client'
 
 interface RequestParams {
-  userId:        number,
-  environmentId: number,
-  iconId:        number,
-  name:          string,
-  url:           string
+  name: string
 }
 
 export async function GET(
@@ -60,9 +56,7 @@ export async function PUT(
         userId
       },
       data: {
-        iconId: 0,
-        name:   body.name,
-        url:    body.url
+        name:   body.name
       }
     })
     response.data = category
