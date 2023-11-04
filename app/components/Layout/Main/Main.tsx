@@ -5,6 +5,7 @@ import EnvGroupDialog from '@/app/components/Environment/EnvDialog/EnvGroupDialo
 import SiteGroupDialog from '@/app/components/Site/SiteDialog/SiteGroupDialog';
 import Loader from '@/app/components/Layout/Loader/Loader';
 import styles from '@/app/components/Layout/Main/Main.module.scss';
+import AccessToken from '@/app/components/AccessToken'
 
 export default props => {
   const mainState = useSelector(state => state.main);
@@ -13,6 +14,7 @@ export default props => {
     <div className={ styles.container }>
       <Header />
       <main>
+        <AccessToken />
         <EnvGroupDialog />
         <SiteGroupDialog />
         { props.children }
