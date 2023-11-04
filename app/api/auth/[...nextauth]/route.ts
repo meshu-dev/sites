@@ -15,7 +15,21 @@ export const authOptions = {
     })
   ],
   callbacks: {
-    async jwt({ token, account }) {
+    async signIn({ user, account, profile, email, credentials}: any) {
+      let hasSiteAccess = false
+      const currentUser: string = profile['login']
+      const whitelistUsers: Array<String> = String(process.env.NEXTAUTH_WHITELIST).split(',')
+
+      for (const whitelistUser of whitelistUsers) {
+        if (whitelistUser === currentUser) {
+          hasSiteAccess = true
+          break
+        }
+      }
+
+      return hasSiteAccess
+    },
+    async jwt({ token, account }: any) {
 
       //console.log('JWT Callback Token', token);
       //console.log('JWT Callback Account', account);
@@ -26,7 +40,7 @@ export const authOptions = {
       }
       return token
     },
-    async session({ session, token, user }) {
+    async session({ session, token, user }: any) {
       // Send properties to the client, like an access_token from a provider.
       //session.accessToken = token.accessToken
 
