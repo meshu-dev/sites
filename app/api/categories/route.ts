@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     const prisma: PrismaClient = new PrismaClient()
     const body: RequestParams  = await request.json();
   
-    const categoryCount: number = await prisma.environment.count({
+    const categoryCount: number = await prisma.category.count({
       where: { userId }
     })
 
@@ -53,14 +53,14 @@ export async function POST(request: NextRequest) {
       order:  categoryCount + 1
     }, categoryCount);
 
-    const environment = await prisma.environment.create({
+    const category = await prisma.category.create({
       data: {
         userId,
         name:   body.name,
         order:  categoryCount
       }
     })
-    response.data = environment
+    response.data = category
   }
 
   return NextResponse.json(

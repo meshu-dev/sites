@@ -5,11 +5,11 @@ import { getServerSession } from 'next-auth/next'
 import { PrismaClient } from '@prisma/client'
 
 interface RequestParams {
-  userId:        string,
-  environmentId: number,
-  iconId:        number,
-  name:          string,
-  url:           string
+  userId:     string,
+  categoryId: number,
+  iconId:     number,
+  name:       string,
+  url:        string
 }
 
 export async function GET() {
@@ -44,11 +44,11 @@ export async function POST(request: NextRequest) {
   
     const site = await prisma.site.create({
       data: {
-        userId:        userId,
-        environmentId: body.environmentId,
-        iconId:        body.iconId,
-        name:          body.name,
-        url:           body.url
+        userId:     userId,
+        categoryId: body.categoryId,
+        iconId:     body.iconId,
+        name:       body.name,
+        url:        body.url
       }
     })
     response.data = site

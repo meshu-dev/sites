@@ -58,7 +58,7 @@ const EnvListDialog = () => {
       envElements.push(
         <EnvRow
           key={ category.id }
-          environment={ category }
+          category={ category }
           onEditFtn={ () => onEdit(category.id) }
           onDeleteFtn={ () => onDelete(category.id) } />
       );

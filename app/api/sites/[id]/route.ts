@@ -5,11 +5,11 @@ import { getServerSession } from 'next-auth/next'
 import { PrismaClient } from '@prisma/client'
 
 interface RequestParams {
-  userId:        number,
-  environmentId: number,
-  iconId:        number,
-  name:          string,
-  url:           string
+  userId:     number,
+  categoryId: number,
+  iconId:     number,
+  name:       string,
+  url:        string
 }
 
 export async function GET(

@@ -13,6 +13,7 @@ const EnvSelectorSection = () => {
   const buttonSectionCSS = { display: mainState.isEditMode ? 'flex' : 'none' };
 
   const showEditCategories = () => {
+    console.log('showEditCategories')
     dispatch(menuCategoryAction.openList());
   };
 

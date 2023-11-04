@@ -20,7 +20,7 @@ export async function GET(
   if (userId) {
     const prisma = new PrismaClient()
     
-    const category = await prisma.environment.findUnique({
+    const category = await prisma.category.findUnique({
       where: {
         userId,
         id: Number(params.id)
@@ -50,7 +50,7 @@ export async function PUT(
     const prisma              = new PrismaClient()
     const body: RequestParams = await request.json()
     
-    const category = await prisma.environment.update({
+    const category = await prisma.category.update({
       where: {
         id: Number(params.id),
         userId
@@ -82,7 +82,7 @@ export async function DELETE(
   if (userId) {
     const prisma = new PrismaClient()
     
-    category = await prisma.environment.delete({
+    category = await prisma.category.delete({
       where: {
         userId,
         id: Number(params.id)

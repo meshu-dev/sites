@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useDeleteSiteMutation, clearEnvironmentSites } from '../../../../services/sites';
+import { useDeleteSiteMutation, clearCategorySites } from '../../../../services/sites';
 import { menuSiteAction } from '../../../../store/menu-site-slice';
 import {
   Button,
@@ -21,7 +21,7 @@ const SiteDeleteDialog = () => {
   const onSelection = async (doDelete) => {
     if (doDelete === true) {
       await deleteSite(site.id);
-      dispatch(clearEnvironmentSites(environment.selected.id));
+      dispatch(clearCategorySites(environment.selected.id));
     }
     dispatch(menuSiteAction.closeDelete());
     dispatch(menuSiteAction.setSelected(null));

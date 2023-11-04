@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import SiteFormDialog from './SiteFormDialog';
-import { useEditSiteMutation, clearEnvironmentSites } from '@/app/services/sites';
+import { useEditSiteMutation, clearCategorySites } from '@/app/services/sites';
 import { mainAction } from '@/app/store/main-slice';
 import { menuSiteAction } from '@/app/store/menu-site-slice';
 
 const SiteEditDialog = () => {
   const dispatch = useDispatch();
   const menuSite = useSelector(state => state.menuSite);
-  const environment = useSelector(state => state.environment);
+  const category = useSelector(state => state.category);
   const [editSite, { isLoading }] = useEditSiteMutation();
 
   const onSaveClick = async () => {
@@ -16,7 +16,7 @@ const SiteEditDialog = () => {
 
     const params = {
       id: menuSite.selected.id,
-      environment_id: environment.selected.id,
+      category_id: category.selected.id,
       name: menuSite.selected.name,
       url: menuSite.selected.url,
       icon_id: menuSite.selected.icon.id
@@ -29,7 +29,7 @@ const SiteEditDialog = () => {
     console.log('RRR', response, response['data']['errors'] == null);
 
     if (response['data']['errors'] == null) {
-      dispatch(clearEnvironmentSites(environment.selected.id));
+      dispatch(clearCategorySites(category.selected.id));
 
       dispatch(menuSiteAction.closeEdit());
       dispatch(menuSiteAction.setSelected(null));

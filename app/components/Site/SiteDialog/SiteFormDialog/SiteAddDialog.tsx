@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import SiteFormDialog from './SiteFormDialog';
-import { useAddSiteMutation, clearEnvironmentSites } from '@/app/services/sites';
+import { useAddSiteMutation, clearCategorySites } from '@/app/services/sites';
 import { useGetIconsQuery } from '@/app/services/icons';
 import { mainAction } from '@/app/store/main-slice';
 import { menuSiteAction } from '@/app/store/menu-site-slice';
@@ -9,7 +9,7 @@ import { menuSiteAction } from '@/app/store/menu-site-slice';
 const SiteAddDialog = () => {
   const dispatch = useDispatch();
   const menuSite = useSelector(state => state.menuSite);
-  const environment = useSelector(state => state.environment);
+  const category = useSelector(state => state.category);
   const [addSite, { isLoading }] = useAddSiteMutation();
   let { data: icons = [] } = useGetIconsQuery();
 
@@ -17,7 +17,7 @@ const SiteAddDialog = () => {
     dispatch(mainAction.clearStatusMsg());
 
     const params = {
-      environmentId: environment.selected.id,
+      categoryId: category.selected.id,
       name: menuSite.selected.name,
       url: menuSite.selected.url,
       iconId: menuSite.selected.icon.id
@@ -28,7 +28,7 @@ const SiteAddDialog = () => {
     setStatusMsg(response);
 
     if (response['data']['errors'] == null) {
-      dispatch(clearEnvironmentSites(environment.selected.id));
+      dispatch(clearCategorySites(category.selected.id));
       
       dispatch(menuSiteAction.closeAdd());
       dispatch(menuSiteAction.setSelected(null));
