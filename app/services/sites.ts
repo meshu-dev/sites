@@ -67,10 +67,10 @@ export const sitesApi = api.injectEndpoints({
   })
 });
 
-export const clearEnvironmentSites = (envId: number) => {
+export const clearEnvironmentSites = (categoryId: number) => {
   return api.util.invalidateTags([{
-    type: 'EnvironmentSites',
-    id: envId
+    type: 'CategorySites',
+    id: categoryId
   }]);
 };
 

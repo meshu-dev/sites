@@ -12,7 +12,7 @@ import styles from './EnvFormDialog.module.scss';
 
 const EnvFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
   //const dispatch = useDispatch();
-  const menuEnvironment = useSelector(state => state.menuEnvironment);
+  const menuCategory = useSelector(state => state.menuCategory);
   const [envName, setEnvName] = useState('');
 
   const isLoading = false;
@@ -31,9 +31,9 @@ const EnvFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
   };
 
   useEffect(() => {
-    const name = menuEnvironment.selected ? menuEnvironment.selected.name : '';
+    const name = menuCategory.selected ? menuCategory.selected.name : '';
     setEnvName(name);
-  }, [menuEnvironment.selected]);
+  }, [menuCategory.selected]);
 
   // dispatch(mainAction.clearStatusMsg());
 
@@ -49,8 +49,8 @@ const EnvFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
           <StatusMsg />
           <TextField
             id="env-field"
-            label="Environment"
-            name="environment"
+            label="Category"
+            name="category"
             value={ envName }
             onChange={ handleInputChange }
             fullWidth

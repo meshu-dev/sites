@@ -1,30 +1,30 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEditEnvironmentMutation } from '@/app/services/environments';
+import { useEditCategoryMutation } from '@/app/services/categories';
 import { mainAction } from '@/app/store/main-slice';
-import { menuEnvironmentAction } from '@/app/store/menu-environment-slice';
+import { menuCategoryAction } from '@/app/store/menu-category-slice';
 import EnvFormDialog from './EnvFormDialog';
 
 const EnvEditDialog = () => {
   const dispatch = useDispatch();
-  const menuEnvironment = useSelector(state => state.menuEnvironment);
-  const [editEnvironment, { isLoading }] = useEditEnvironmentMutation();
+  const menuCategory = useSelector(state => state.menuCategory);
+  const [editCategory, { isLoading }] = useEditCategoryMutation();
 
   const onSaveClick = async (envName: string) => {
     dispatch(mainAction.clearStatusMsg());
 
     let params = {
-      id: menuEnvironment.selected.id,
+      id: menuCategory.selected.id,
       name: envName
     };
-    const response = await editEnvironment(params);
+    const response = await editCategory(params);
 
     console.log('response', response);
 
     setStatusMsg(response);
 
     if (response['data']['errors'] == null) {
-      dispatch(menuEnvironmentAction.closeEdit());
-      dispatch(menuEnvironmentAction.openList());
+      dispatch(menuCategoryAction.closeEdit());
+      dispatch(menuCategoryAction.openList());
     }
   };
 
@@ -47,19 +47,19 @@ const EnvEditDialog = () => {
   };
 
   const onCloseClick = () => {
-    dispatch(menuEnvironmentAction.closeEdit());
-    dispatch(menuEnvironmentAction.setSelected(null));
-    dispatch(menuEnvironmentAction.openList());
+    dispatch(menuCategoryAction.closeEdit());
+    dispatch(menuCategoryAction.setSelected(null));
+    dispatch(menuCategoryAction.openList());
   };
 
   const editForm = (<EnvFormDialog
-                      title={ 'Edit Environment' }
+                      title={ 'Edit Category' }
                       onSaveFtn={ onSaveClick }
                       onCloseFtn={ onCloseClick } />);
 
   return (
     <div>
-      { menuEnvironment.edit ? editForm : null }
+      { menuCategory.edit ? editForm : null }
     </div>
   );
 };

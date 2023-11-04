@@ -18,9 +18,9 @@ export async function GET(request: NextRequest) {
 
   if (userId) {
     const prisma = new PrismaClient()
-    const environments = await prisma.environment.findMany({ where: { userId } })
+    const categories = await prisma.category.findMany({ where: { userId } })
     
-    response.data = environments
+    response.data = categories
 
     await prisma.$disconnect()
   }

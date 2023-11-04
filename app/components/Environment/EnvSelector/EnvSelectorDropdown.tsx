@@ -6,15 +6,15 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import styles from './EnvSelectorDropdown.module.scss';
 
-const EnvSelectorDropdown = ({ selectedEnv, environments, onOptionChange }) => {
+const EnvSelectorDropdown = ({ selectedEnv, categories, onOptionChange }) => {
   const menuItems = [];
 
-  for (const environment of environments) {
+  for (const category of categories) {
     menuItems.push(
       <MenuItem
-        key={ environment['id'] }
-        value={ environment['id'] }>
-        { environment['name'] }
+        key={ category['id'] }
+        value={ category['id'] }>
+        { category['name'] }
       </MenuItem>
     );
   }
@@ -22,11 +22,11 @@ const EnvSelectorDropdown = ({ selectedEnv, environments, onOptionChange }) => {
   return (
     <div id={ styles['envselector'] }>
       <FormControl id={ styles['envselector-form'] }>
-        <InputLabel id="envselector-label">Environment</InputLabel>
+        <InputLabel id="envselector-label">Category</InputLabel>
         <Select
           labelId="envselector-label"
           value={ selectedEnv }
-          label="Environment"
+          label="Category"
           onChange={ onOptionChange }>
           { menuItems }
         </Select>

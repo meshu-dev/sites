@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useDeleteEnvironmentMutation } from '@/app/services/environments';
+import { useDeleteCategoryMutation } from '@/app/services/categories';
 import { mainAction } from '@/app/store/main-slice';
-import { environmentAction } from '@/app/store/environment-slice';
-import { menuEnvironmentAction } from '@/app/store/menu-environment-slice';
+import { categoryAction } from '@/app/store/category-slice';
+import { menuCategoryAction } from '@/app/store/menu-category-slice';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -13,15 +13,15 @@ import StatusMsg from '@/app/components/Layout/StatusMsg/StatusMsg';
 
 const EnvDeleteDialog = () => {
   const dispatch = useDispatch();
-  const envState = useSelector(state => state.environment);
-  const menuEnvironment = useSelector(state => state.menuEnvironment);
-  const envName = menuEnvironment.selected ? menuEnvironment.selected.name : '';
-  const [deleteEnvironment, { isLoading }] = useDeleteEnvironmentMutation();
+  const envState = useSelector(state => state.category);
+  const menuCategory = useSelector(state => state.menuCategory);
+  const envName = menuCategory.selected ? menuCategory.selected.name : '';
+  const [deleteCategory, { isLoading }] = useDeleteCategoryMutation();
 
   const onSelection = async (doDelete) => {
-    if (doDelete === true && menuEnvironment.selected) {
-      const envId = menuEnvironment.selected.id;
-      const response = await deleteEnvironment(envId);
+    if (doDelete === true && menuCategory.selected) {
+      const categoryId: number = menuCategory.selected.id;
+      const response = await deleteCategory(categoryId);
     
       const hasError = (response['data'] && response['data']['error']) ? true : false;
 
@@ -30,14 +30,14 @@ const EnvDeleteDialog = () => {
         return;
       }
 
-      if (envId == envState.selected.id) {
-        dispatch(environmentAction.setSelected(null));
+      if (categoryId == envState.selected.id) {
+        dispatch(categoryAction.setSelected(null));
       }
     }
 
-    dispatch(menuEnvironmentAction.closeDelete());
-    dispatch(menuEnvironmentAction.setSelected(null));
-    dispatch(menuEnvironmentAction.openList());
+    dispatch(menuCategoryAction.closeDelete());
+    dispatch(menuCategoryAction.setSelected(null));
+    dispatch(menuCategoryAction.openList());
   };
 
   const setStatusMsg = (response) => {
@@ -56,15 +56,15 @@ const EnvDeleteDialog = () => {
   return (
     <div>
       <Dialog
-        open={ menuEnvironment.delete ?? false }
+        open={ menuCategory.delete ?? false }
         onClose={ () => onSelection(false) }
         scroll={ 'body' }
         fullWidth={ true }>
-        <DialogTitle id="env-dialog-title">Delete Environment?</DialogTitle>
+        <DialogTitle id="env-dialog-title">Delete Category?</DialogTitle>
         <DialogContent>
           <StatusMsg />
           <DialogContentText>
-            Are you sure you want to delete the environment { envName }?
+            Are you sure you want to delete the category { envName }?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

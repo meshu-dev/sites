@@ -10,33 +10,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Environment {
+model Category {
   id     Int    @id @default(autoincrement())
   userId String
   name   String
   order  Int?
   user   User   @relation(fields: [userId], references: [id])
-  Site   Site[]
+  site   Site[]
 }
 
 model Icon {
   id   Int    @id @default(autoincrement())
   name String @unique
   url  String
-  Site Site[]
+  site Site[]
 }
 
 model Site {
-  id            Int         @id @default(autoincrement())
-  userId        String?
-  environmentId Int
-  iconId        Int
-  name          String
-  url           String
+  id         Int         @id @default(autoincrement())
+  userId     String?
+  categoryId Int
+  iconId     Int
+  name       String
+  url        String
 
-  User          User?       @relation(fields: [userId], references: [id])
-  environment   Environment @relation(fields: [environmentId], references: [id])
-  icon          Icon        @relation(fields: [iconId], references: [id])
+  user       User?    @relation(fields: [userId], references: [id])
+  category   Category @relation(fields: [category], references: [id])
+  icon       Icon     @relation(fields: [iconId], references: [id])
 }
 
 model Account {
@@ -74,7 +74,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  environments  Environment[]
+  categories    Category[]
   sites         Site[]
 }
 

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const menuEnvironmentSlice = createSlice({
-  name: 'menuEnvironment',
+export const menuCategorySlice = createSlice({
+  name: 'menuCategory',
   initialState: {
     list: false,
     selected: null,
@@ -40,6 +40,6 @@ export const menuEnvironmentSlice = createSlice({
   }
 });
 
-export const menuEnvironmentAction = menuEnvironmentSlice.actions;
+export const menuCategoryAction = menuCategorySlice.actions;
 
-export default menuEnvironmentSlice.reducer;
+export default menuCategorySlice.reducer;

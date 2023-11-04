@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useGetEnvironmentsQuery } from '@/app/services/environments';
+import { useGetCategoriesQuery } from '@/app/services/categories';
 import { mainAction } from '@/app/store/main-slice';
-import { menuEnvironmentAction } from '@/app/store/menu-environment-slice';
+import { menuCategoryAction } from '@/app/store/menu-category-slice';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -12,67 +12,67 @@ import EnvRow from '../EnvRow/EnvRow';
 
 const EnvListDialog = () => {
   const dispatch = useDispatch();
-  const menuEnvironment = useSelector(state => state.menuEnvironment);
-  const { data: environments = [] } = useGetEnvironmentsQuery();
+  const menuCategory = useSelector(state => state.menuCategory);
+  const { data: categories = [] } = useGetCategoriesQuery();
   //const action = EnvDialogAction;
 
-  const setEnv = (envId) => {
-    let selectedEnv = environments.filter(env => env.id == envId);
+  const setEnv = (categoryId: number) => {
+    let selectedEnv = categories.filter(category => category.id == categoryId);
     selectedEnv = selectedEnv[0] ? selectedEnv[0] : null;
 
-    dispatch(menuEnvironmentAction.setSelected(selectedEnv));
+    dispatch(menuCategoryAction.setSelected(selectedEnv));
   }
 
   const onAdd = () => {
     dispatch(mainAction.clearStatusMsg());
-    dispatch(menuEnvironmentAction.setSelected(null));
+    dispatch(menuCategoryAction.setSelected(null));
 
-    dispatch(menuEnvironmentAction.closeList());
-    dispatch(menuEnvironmentAction.openAdd());
+    dispatch(menuCategoryAction.closeList());
+    dispatch(menuCategoryAction.openAdd());
   };
 
-  const onEdit = (envId) => {
+  const onEdit = (categoryId: number) => {
     dispatch(mainAction.clearStatusMsg());
-    setEnv(envId);
+    setEnv(categoryId);
 
-    dispatch(menuEnvironmentAction.closeList());
-    dispatch(menuEnvironmentAction.openEdit());
+    dispatch(menuCategoryAction.closeList());
+    dispatch(menuCategoryAction.openEdit());
   };
 
-  const onDelete = (envId) => {
+  const onDelete = (categoryId: number) => {
     dispatch(mainAction.clearStatusMsg());
-    setEnv(envId);
+    setEnv(categoryId);
     
-    dispatch(menuEnvironmentAction.closeList());
-    dispatch(menuEnvironmentAction.openDelete());
+    dispatch(menuCategoryAction.closeList());
+    dispatch(menuCategoryAction.openDelete());
   };
 
   const onCloseClick = () => {
-    dispatch(menuEnvironmentAction.closeList());
+    dispatch(menuCategoryAction.closeList());
   };
 
   const envElements = [];
 
-  if (environments) {
-    for (const env of environments) {
+  if (categories) {
+    for (const category of categories) {
       envElements.push(
         <EnvRow
-          key={ env.id }
-          environment={ env }
-          onEditFtn={ () => onEdit(env.id) }
-          onDeleteFtn={ () => onDelete(env.id) } />
+          key={ category.id }
+          environment={ category }
+          onEditFtn={ () => onEdit(category.id) }
+          onDeleteFtn={ () => onDelete(category.id) } />
       );
     }
   }
 
   return (
     <Dialog
-      open={ menuEnvironment.list ?? false }
+      open={ menuCategory.list ?? false }
       onClose={ onCloseClick }
       scroll={ 'body' }
       fullWidth={ true }
     >
-      <DialogTitle id="env-dialog-title">Environments</DialogTitle>
+      <DialogTitle id="env-dialog-title">Categories</DialogTitle>
       <DialogContent>
         { envElements }
       </DialogContent>

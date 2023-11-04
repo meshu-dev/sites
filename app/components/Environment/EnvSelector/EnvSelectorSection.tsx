@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@mui/material';
 import EnvSelector from './EnvSelector';
 import { mainAction } from '@/app/store/main-slice';
-import { menuEnvironmentAction } from '@/app/store/menu-environment-slice';
+import { menuCategoryAction } from '@/app/store/menu-category-slice';
 import { menuSiteAction } from '@/app/store/menu-site-slice';
 import styles from './EnvSelectorSection.module.scss';
 
@@ -12,8 +12,8 @@ const EnvSelectorSection = () => {
   const mainState = useSelector(state => state.main);
   const buttonSectionCSS = { display: mainState.isEditMode ? 'flex' : 'none' };
 
-  const showEditEnvironments = () => {
-    dispatch(menuEnvironmentAction.openList());
+  const showEditCategories = () => {
+    dispatch(menuCategoryAction.openList());
   };
 
   const showAddSite = () => {
@@ -29,7 +29,7 @@ const EnvSelectorSection = () => {
       <div id={ styles['environment-selector-btns'] } style={ buttonSectionCSS }>
         <Button
           variant="contained"
-          onClick={ showEditEnvironments }>
+          onClick={ showEditCategories }>
           Edit Environments
         </Button>
         <Button

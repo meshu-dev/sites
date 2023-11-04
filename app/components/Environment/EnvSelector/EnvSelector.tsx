@@ -1,38 +1,38 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import EnvSelectorDropdown from './EnvSelectorDropdown';
-import { useGetEnvironmentsQuery } from '@/app/services/environments';
-import { mainAction } from '@/app/store/main-slice';
-import { environmentAction } from '@/app/store/environment-slice';
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import EnvSelectorDropdown from './EnvSelectorDropdown'
+import { useGetCategoriesQuery } from '@/app/services/categories'
+import { mainAction } from '@/app/store/main-slice'
+import { categoryAction } from '@/app/store/category-slice'
 
 const EnvSelector = () => {
-  const envState = useSelector(state => state.environment);
+  const envState = useSelector(state => state.category);
   const dispatch = useDispatch();
-  const { data: environments = [], isFetching } = useGetEnvironmentsQuery();
+  const { data: categories = [], isFetching } = useGetCategoriesQuery();
 
   const onOptionChange = (event) => {
-    const envId = event.target.value;
+    const categoryId: number = event.target.value;
     
-    let selectedEnv = environments.filter(env => env.id == envId);
+    let selectedEnv = categories.filter(category => category.id == categoryId);
     selectedEnv = selectedEnv[0] ?? null;
 
     if (selectedEnv) {
-      dispatch(environmentAction.setSelected(selectedEnv));
+      dispatch(categoryAction.setSelected(selectedEnv));
       dispatch(mainAction.startLoading());
     }
   };
 
   useEffect(() => {
     if (envState.selected == null) {
-      dispatch(environmentAction.setSelected(environments[0]));
+      dispatch(categoryAction.setSelected(categories[0]));
     }
-  }, [environments]);
+  }, [categories]);
   
-  if (environments.length > 0) {
+  if (categories.length > 0) {
     return (
       <EnvSelectorDropdown
         selectedEnv={ envState.selected ? envState.selected.id : '' }
-        environments={ environments }
+        categories={ categories }
         onOptionChange={ onOptionChange } />
     );
   }

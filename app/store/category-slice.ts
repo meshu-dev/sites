@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const environmentSlice = createSlice({
-  name: 'environment',
+export const categorySlice = createSlice({
+  name: 'category',
   initialState: {
     selected: null
   },
@@ -12,6 +12,6 @@ export const environmentSlice = createSlice({
   }
 });
 
-export const environmentAction = environmentSlice.actions;
+export const categoryAction = categorySlice.actions;
 
-export default environmentSlice.reducer;
+export default categorySlice.reducer;

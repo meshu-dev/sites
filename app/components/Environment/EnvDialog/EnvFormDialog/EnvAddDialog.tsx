@@ -1,26 +1,26 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useAddEnvironmentMutation } from '@/app/services/environments';
+import { useAddCategoryMutation } from '@/app/services/categories';
 import { mainAction } from '@/app/store/main-slice';
-import { menuEnvironmentAction } from '@/app/store/menu-environment-slice';
+import { menuCategoryAction } from '@/app/store/menu-category-slice';
 import EnvFormDialog from './EnvFormDialog';
 
-export interface Environment {
+export interface Category {
   name: string
 }
 
 const EnvAddDialog = () => {
   const dispatch = useDispatch();
-  const menuEnvironment = useSelector(state => state.menuEnvironment);
-  const [addEnvironment, { isLoading }] = useAddEnvironmentMutation();
+  const menuCategory = useSelector(state => state.menuCategory);
+  const [addCategory, { isLoading }] = useAddCategoryMutation();
 
-  const onSaveClick = async (envName) => {
+  const onSaveClick = async (categoryName: string) => {
     dispatch(mainAction.clearStatusMsg());
 
-    const params = { name: envName };
+    const params = { name: categoryName };
 
-    console.log('client - addEnvironment', params);
+    console.log('client - addCategory', params);
 
-    const response = await addEnvironment(params);
+    const response = await addCategory(params);
 
     console.log('SAVE', response);
 
@@ -50,18 +50,18 @@ const EnvAddDialog = () => {
   };
 
   const onCloseClick = () => {
-    dispatch(menuEnvironmentAction.closeAdd());
-    dispatch(menuEnvironmentAction.openList());
+    dispatch(menuCategoryAction.closeAdd());
+    dispatch(menuCategoryAction.openList());
   };
 
   const addForm = (<EnvFormDialog
-                      title={ 'Add Environment' }
+                      title={ 'Add Category' }
                       onSaveFtn={ onSaveClick }
                       onCloseFtn={ onCloseClick } />);
 
   return (
     <div>
-      { menuEnvironment.add ? addForm : null }
+      { menuCategory.add ? addForm : null }
     </div>
   );
 };
