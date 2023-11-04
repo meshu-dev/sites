@@ -34,7 +34,13 @@ export const authOptions = {
       console.log('Session Token', token);
       console.log('Session User', user);
       
-      return session
+      return {
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email
+        }
+      }
     }
   },
   secret: process.env.NEXTAUTH_SECRET
