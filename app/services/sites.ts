@@ -13,11 +13,11 @@ export const sitesApi = api.injectEndpoints({
       transformResponse: (response) => response.data
     }),
     addSite: build.mutation({
-      query(params) {
+      query(body) {
         return {
           url: `/sites`,
           method: 'POST',
-          params,
+          body,
           validateStatus: validateReponse
         }
       },
@@ -27,14 +27,14 @@ export const sitesApi = api.injectEndpoints({
       ]
     }),
     editSite: build.mutation({
-      query(params) {
+      query(body) {
         const id = params['id'];
         delete params['id'];
 
         return {
           url: `/sites/${id}`,
           method: 'PUT',
-          params,
+          body,
           validateStatus: validateReponse
         }
       },

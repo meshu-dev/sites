@@ -17,8 +17,8 @@ export const authOptions = {
   callbacks: {
     async jwt({ token, account }) {
 
-      console.log('JWT Callback Token', token);
-      console.log('JWT Callback Account', account);
+      //console.log('JWT Callback Token', token);
+      //console.log('JWT Callback Account', account);
 
       // Persist the OAuth access_token to the token right after signin
       if (account) {
@@ -30,9 +30,9 @@ export const authOptions = {
       // Send properties to the client, like an access_token from a provider.
       //session.accessToken = token.accessToken
 
-      console.log('Session', session);
-      console.log('Session Token', token);
-      console.log('Session User', user);
+      //console.log('Session', session);
+      //console.log('Session Token', token);
+      //console.log('Session User', user);
       
       return {
         user: {

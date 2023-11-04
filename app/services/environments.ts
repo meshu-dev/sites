@@ -1,5 +1,9 @@
 import api, { validateReponse } from './api';
 
+export interface Environment {
+  name: string
+}
+
 export const environmentsApi = api.injectEndpoints({
   endpoints: (build) => ({
     getEnvironments: build.query({
@@ -24,12 +28,12 @@ export const environmentsApi = api.injectEndpoints({
       ],
       transformResponse: (response) => response.data
     }),
-    addEnvironment: build.mutation({
-      query(params) {
+    addEnvironment: build.mutation<Environment, Partial<Environment>>({
+      query(body) {
         return {
           url: `/environments`,
           method: 'POST',
-          params,
+          body,
           validateStatus: validateReponse
         }
       },
@@ -39,14 +43,14 @@ export const environmentsApi = api.injectEndpoints({
       ]
     }),
     editEnvironment: build.mutation({
-      query(params) {
+      query(body) {
         const id = params['id'];
         delete params['id'];
         
         return {
           url: `/environments/${id}`,
           method: 'PUT',
-          params,
+          body,
           validateStatus: validateReponse
         }
       },

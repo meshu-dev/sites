@@ -17,10 +17,10 @@ const SiteAddDialog = () => {
     dispatch(mainAction.clearStatusMsg());
 
     const params = {
-      environment_id: environment.selected.id,
+      environmentId: environment.selected.id,
       name: menuSite.selected.name,
       url: menuSite.selected.url,
-      icon_id: menuSite.selected.icon.id
+      iconId: menuSite.selected.icon.id
     };
 
     const response = await addSite(params);

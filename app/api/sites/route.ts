@@ -1,47 +1,63 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { getServerSession } from 'next-auth/next'
 import { PrismaClient } from '@prisma/client'
 
 interface RequestParams {
-  userId:        number,
+  userId:        string,
   environmentId: number,
   iconId:        number,
   name:          string,
   url:           string
 }
 
-export async function GET(request: NextRequest) {
-  // TODO - Get user id from auth
-  //const userId: number = 1;
-  const userId: string = '111';
+export async function GET() {
+  let response: any = { data: null }
 
-  const prisma = new PrismaClient()
-  const sites  = await prisma.site.findMany({ where: { userId } })
-  
-  await prisma.$disconnect()
+  const session = await getServerSession(authOptions)
+  const userId  = session?.user?.id
+
+  if (userId) {
+    const prisma  = new PrismaClient()
+    const sites   = await prisma.site.findMany({ where: { userId } })
+    response.data = sites
+    
+    await prisma.$disconnect()
+  }
 
   return NextResponse.json(
-    sites,
+    response,
     { status: 200 }
   )
 }
 
 export async function POST(request: NextRequest) {
-  const prisma: PrismaClient = new PrismaClient()
-  const body: RequestParams  = await request.json();
+  let response: any = { data: null }
 
-  const site = await prisma.site.create({
-    data: {
-      userId:        body.userId,
-      environmentId: body.environmentId,
-      iconId:        0,
-      name:          body.name,
-      url:           body.url
-    }
-  })
+  const session = await getServerSession(authOptions)
+  const userId  = session?.user?.id
+
+  if (userId) {
+    const prisma: PrismaClient = new PrismaClient()
+    const body: RequestParams  = await request.json();
+  
+    const site = await prisma.site.create({
+      data: {
+        userId:        userId,
+        environmentId: body.environmentId,
+        iconId:        body.iconId,
+        name:          body.name,
+        url:           body.url
+      }
+    })
+    response.data = site
+
+    await prisma.$disconnect()
+  }
 
   return NextResponse.json(
-    site,
+    response,
     {
       status: 200
     }

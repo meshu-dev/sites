@@ -4,6 +4,10 @@ import { mainAction } from '@/app/store/main-slice';
 import { menuEnvironmentAction } from '@/app/store/menu-environment-slice';
 import EnvFormDialog from './EnvFormDialog';
 
+export interface Environment {
+  name: string
+}
+
 const EnvAddDialog = () => {
   const dispatch = useDispatch();
   const menuEnvironment = useSelector(state => state.menuEnvironment);
@@ -13,7 +17,14 @@ const EnvAddDialog = () => {
     dispatch(mainAction.clearStatusMsg());
 
     const params = { name: envName };
-    const response = await addEnvironment(params);
+
+    console.log('client - addEnvironment', params);
+
+    const e: Environment = { name: 'Dev' } 
+
+    const response = await addEnvironment(e);
+
+    console.log('SAVE', response);
 
     setStatusMsg(response);
 

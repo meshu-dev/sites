@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export default async function middleware(req: NextRequest) {
-  const hasSession = req.cookies.get("next-auth.session-token") ? true : false
+  const hasSession = req.cookies.get('next-auth.session-token') ? true : false
 
   if (hasSession) {
     return NextResponse.next()

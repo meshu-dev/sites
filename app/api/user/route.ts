@@ -1,21 +1,24 @@
 import { NextResponse } from 'next/server'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import { getServerSession } from "next-auth/next"
+import { getServerSession } from 'next-auth/next'
 import { PrismaClient } from '@prisma/client'
 
 export async function GET() {
-  let user      = null
+  let response: any = { data: null }
+
   const session = await getServerSession(authOptions)
+  const userId  = session?.user?.id
   
-  if (session?.user?.id) {
+  if (userId) {
     const prisma = new PrismaClient()
-    user = await prisma.user.findUnique({ where: { id: session.user.id } })
-    
+    const user   = await prisma.user.findUnique({ where: { id: userId } })
+    response['data'] = { user } 
+
     await prisma.$disconnect()
   }
 
   return NextResponse.json(
-    user,
+    response,
     { status: 200 }
   )
 }
