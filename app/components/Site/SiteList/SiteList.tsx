@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useGetCategorySitesQuery } from '@/app/services/categories';
-import { mainAction } from '@/app/store/main-slice';
-import styles from './SiteList.module.scss';
-import SiteBlock from '../SiteBlock/SiteBlock';
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useGetCategorySitesQuery } from '@/app/services/categories'
+import { mainAction } from '@/app/store/main-slice'
+import styles from './SiteList.module.scss'
+import SiteBlock from '../SiteBlock/SiteBlock'
 
 const SiteList = () => {
   const mainState = useSelector(state => state.main);

@@ -35,7 +35,7 @@ model Site {
   url        String
 
   user       User?    @relation(fields: [userId], references: [id])
-  category   Category @relation(fields: [category], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
   icon       Icon     @relation(fields: [iconId], references: [id])
 }
 

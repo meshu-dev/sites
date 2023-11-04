@@ -30,7 +30,7 @@ const EnvSelectorSection = () => {
         <Button
           variant="contained"
           onClick={ showEditCategories }>
-          Edit Environments
+          Edit Category
         </Button>
         <Button
           variant="contained"
