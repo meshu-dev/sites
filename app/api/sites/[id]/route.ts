@@ -60,7 +60,7 @@ export async function PUT(
         userId
       },
       data: {
-        iconId: 0,
+        iconId: body.iconId,
         name:   body.name,
         url:    body.url
       }
