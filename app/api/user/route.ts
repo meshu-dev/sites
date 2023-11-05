@@ -12,7 +12,7 @@ export async function GET() {
   if (userId) {
     const prisma = new PrismaClient()
     const user   = await prisma.user.findUnique({ where: { id: userId } })
-    response['data'] = { user } 
+    response['data'] = { user }
 
     await prisma.$disconnect()
   }

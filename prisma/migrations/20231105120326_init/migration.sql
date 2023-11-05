@@ -1,30 +1,33 @@
-/*
-  Warnings:
+-- CreateTable
+CREATE TABLE "Category" (
+    "id" SERIAL NOT NULL,
+    "userId" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "order" INTEGER,
 
-  - The primary key for the `User` table will be changed. If it partially fails, the table could be left without primary key constraint.
+    CONSTRAINT "Category_pkey" PRIMARY KEY ("id")
+);
 
-*/
--- DropForeignKey
-ALTER TABLE "Environment" DROP CONSTRAINT "Environment_userId_fkey";
+-- CreateTable
+CREATE TABLE "Icon" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "url" TEXT NOT NULL,
 
--- DropForeignKey
-ALTER TABLE "Site" DROP CONSTRAINT "Site_userId_fkey";
+    CONSTRAINT "Icon_pkey" PRIMARY KEY ("id")
+);
 
--- AlterTable
-ALTER TABLE "Environment" ALTER COLUMN "userId" SET DATA TYPE TEXT;
+-- CreateTable
+CREATE TABLE "Site" (
+    "id" SERIAL NOT NULL,
+    "userId" TEXT,
+    "categoryId" INTEGER NOT NULL,
+    "iconId" INTEGER NOT NULL,
+    "name" TEXT NOT NULL,
+    "url" TEXT NOT NULL,
 
--- AlterTable
-ALTER TABLE "Site" ALTER COLUMN "userId" SET DATA TYPE TEXT;
-
--- AlterTable
-ALTER TABLE "User" DROP CONSTRAINT "User_pkey",
-ADD COLUMN     "emailVerified" TIMESTAMP(3),
-ADD COLUMN     "image" TEXT,
-ALTER COLUMN "id" DROP DEFAULT,
-ALTER COLUMN "id" SET DATA TYPE TEXT,
-ALTER COLUMN "email" DROP NOT NULL,
-ADD CONSTRAINT "User_pkey" PRIMARY KEY ("id");
-DROP SEQUENCE "User_id_seq";
+    CONSTRAINT "Site_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Account" (
@@ -55,11 +58,25 @@ CREATE TABLE "Session" (
 );
 
 -- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "name" TEXT,
+    "email" TEXT,
+    "emailVerified" TIMESTAMP(3),
+    "image" TEXT,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "VerificationToken" (
     "identifier" TEXT NOT NULL,
     "token" TEXT NOT NULL,
     "expires" TIMESTAMP(3) NOT NULL
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Icon_name_key" ON "Icon"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
@@ -68,16 +85,25 @@ CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provi
 CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationToken"("identifier", "token");
 
 -- AddForeignKey
-ALTER TABLE "Environment" ADD CONSTRAINT "Environment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Category" ADD CONSTRAINT "Category_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Site" ADD CONSTRAINT "Site_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Site" ADD CONSTRAINT "Site_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Site" ADD CONSTRAINT "Site_iconId_fkey" FOREIGN KEY ("iconId") REFERENCES "Icon"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
