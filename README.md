@@ -27,7 +27,7 @@ NEXTAUTH_WHITELIST
 
 NEXT_PUBLIC_APP_URL
 ```
--  To apply prisma schema to Postgresql run db push **(Development environment)**
+-  To apply the current prisma schema state to Postgresql run db push **(Development environment)**
 ```
 npx prisma db push
 ```
