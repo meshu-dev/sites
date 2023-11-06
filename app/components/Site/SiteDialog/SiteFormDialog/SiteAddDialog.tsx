@@ -64,10 +64,10 @@ const SiteAddDialog = () => {
 
   useEffect(() => {
     if (menuSite.selected == null && icons.length > 0) {
-      console.log('A2', icons);
+      // console.log('A2', icons);
       dispatch(menuSiteAction.setSelectedAsNew(icons[0]));
     }
-  }, [menuSite.add]);
+  }, [dispatch, icons, menuSite]);
 
   if (menuSite.add === true && menuSite.selected) {
     return (

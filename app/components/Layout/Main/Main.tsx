@@ -6,7 +6,7 @@ import SiteGroupDialog from '@/app/components/Site/SiteDialog/SiteGroupDialog'
 import Loader from '@/app/components/Layout/Loader/Loader'
 import styles from '@/app/components/Layout/Main/Main.module.scss'
 
-export default props => {
+const Main = (props) => {
   const mainState = useSelector(state => state.main);
 
   return (
@@ -22,3 +22,5 @@ export default props => {
     </div>
   );
 }
+
+export default Main

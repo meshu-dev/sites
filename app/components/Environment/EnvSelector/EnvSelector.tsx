@@ -26,7 +26,7 @@ const EnvSelector = () => {
     if (envState.selected == null) {
       dispatch(categoryAction.setSelected(categories[0]));
     }
-  }, [categories]);
+  }, [dispatch, envState, categories]);
   
   if (categories.length > 0) {
     return (

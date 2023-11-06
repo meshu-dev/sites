@@ -3,7 +3,7 @@ import EnvSelectorSection from '@/app/components/Environment/EnvSelector/EnvSele
 import SiteList from '@/app/components/Site/SiteList/SiteList'
 import MenuButtons from '@/app/components/Menu/MenuButtons/MenuButtons'
 
-export default () => {
+const IndexPage = () => {
   //const dispatch = useDispatch();
   //const mainState = useSelector(state => state.main);
 
@@ -16,3 +16,5 @@ export default () => {
   );
   return (null);
 }
+
+export default IndexPage

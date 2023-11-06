@@ -4,6 +4,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 import { useGetIconsQuery } from '@/app/services/icons';
 import { menuSiteAction } from '@/app/store/menu-site-slice';
 import styles from './SiteIconSelector.module.scss';
+import Image from 'next/image'
 
 const SiteIconSelector = ({ selectedIconId }) => {
   const dispatch = useDispatch();
@@ -54,9 +55,8 @@ const SiteIconSelector = ({ selectedIconId }) => {
             className={ classNames }
             onClick={ (event) => onIconClick(icon.id, event) }>
             <ImageListItem>
-              <img
+              <Image
                 src={ icon.url }
-                srcSet={ icon.url }
                 alt={ icon.name }
                 loading="lazy"
                 className={ styles['icon-image'] }

@@ -1,7 +1,9 @@
 import styles from "./Header.module.scss"
 
-export default () => (
+const Header = () => (
   <h1 className={ styles.title }>
     Site Admin
   </h1>
 )
+
+export default Header

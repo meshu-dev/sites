@@ -16,7 +16,7 @@ const SiteList = () => {
     if (mainState.isLoading === true) {
       dispatch(mainAction.finishLoading());
     }
-  }, [categorySites]);
+  }, [dispatch, mainState, categorySites]);
 
   if (mainState.isLoading === false) {
     let siteBlocks = [];
