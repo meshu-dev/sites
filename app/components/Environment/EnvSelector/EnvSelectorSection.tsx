@@ -1,15 +1,15 @@
-import * as React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Button } from '@mui/material';
-import EnvSelector from './EnvSelector';
-import { mainAction } from '@/app/store/main-slice';
-import { menuCategoryAction } from '@/app/store/menu-category-slice';
-import { menuSiteAction } from '@/app/store/menu-site-slice';
-import styles from './EnvSelectorSection.module.scss';
+import * as React from 'react'
+import { useAppSelector, useAppDispatch } from '@/app/hooks'
+import { Button } from '@mui/material'
+import EnvSelector from './EnvSelector'
+import { mainAction } from '@/app/store/main-slice'
+import { menuCategoryAction } from '@/app/store/menu-category-slice'
+import { menuSiteAction } from '@/app/store/menu-site-slice'
+import styles from './EnvSelectorSection.module.scss'
 
 const EnvSelectorSection = () => {
-  const dispatch = useDispatch();
-  const mainState = useSelector(state => state.main);
+  const dispatch = useAppDispatch();
+  const mainState = useAppSelector(state => state.main);
   const buttonSectionCSS = { display: mainState.isEditMode ? 'flex' : 'none' };
 
   const showEditCategories = () => {

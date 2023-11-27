@@ -1,6 +1,4 @@
-import Router from 'next/router'
-import { useSelector, useDispatch } from 'react-redux'
-import { signOut, useSession } from 'next-auth/react'
+import { signOut } from 'next-auth/react'
 import {
   Tooltip,
   IconButton

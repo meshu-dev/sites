@@ -1,16 +1,16 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useAddCategoryMutation } from '@/app/services/categories';
-import { mainAction } from '@/app/store/main-slice';
-import { menuCategoryAction } from '@/app/store/menu-category-slice';
-import EnvFormDialog from './EnvFormDialog';
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { useAddCategoryMutation } from '@/app/services/categories'
+import { mainAction } from '@/app/store/main-slice'
+import { menuCategoryAction } from '@/app/store/menu-category-slice'
+import EnvFormDialog from './EnvFormDialog'
 
 export interface Category {
   name: string
 }
 
 const EnvAddDialog = () => {
-  const dispatch = useDispatch();
-  const menuCategory = useSelector(state => state.menuCategory);
+  const dispatch = useAppDispatch();
+  const menuCategory = useAppSelector(state => state.menuCategory);
   const [addCategory, { isLoading }] = useAddCategoryMutation();
 
   const onSaveClick = async (categoryName: string) => {

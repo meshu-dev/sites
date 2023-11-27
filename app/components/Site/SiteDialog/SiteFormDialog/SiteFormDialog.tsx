@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import {
   Button,
   Dialog,
@@ -7,40 +6,40 @@ import {
   DialogContent,
   DialogActions,
   TextField
-} from '@mui/material';
-import StatusMsg from '@/app/components/Layout/StatusMsg/StatusMsg';
-import SiteIconSelector from '@/app/components/Site/SiteIconSelector/SiteIconSelector';
-import { useGetIconsQuery } from '@/app/services/icons';
-import { menuSiteAction } from '@/app/store/menu-site-slice';
-import styles from './SiteFormDialog.module.scss';
+} from '@mui/material'
+import StatusMsg from '@/app/components/Layout/StatusMsg/StatusMsg'
+import SiteIconSelector from '@/app/components/Site/SiteIconSelector/SiteIconSelector'
+import { useGetIconsQuery } from '@/app/services/icons'
+import { menuSiteAction } from '@/app/store/menu-site-slice'
+import styles from './SiteFormDialog.module.scss'
 
 const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch()
   //let { data: icons = [] } = useGetIconsQuery();
 
-  const menuSite = useSelector(state => state.menuSite);
-  const isLoading = false;
+  const menuSite = useAppSelector(state => state.menuSite)
+  const isLoading = false
 
   const handleInputChange = event => {
-    const name = event.target.name;
-    const value = event.target.value;
+    const name = event.target.name
+    const value = event.target.value
 
     if (name === 'name') {
-      dispatch(menuSiteAction.setSelectedName(value));
+      dispatch(menuSiteAction.setSelectedName(value))
     }
 
     if (name === 'url') {
-      dispatch(menuSiteAction.setSelectedUrl(value));
+      dispatch(menuSiteAction.setSelectedUrl(value))
     }
   }
 
   const onSaveClick = async () => {
-    await onSaveFtn();
-  };
+    await onSaveFtn()
+  }
 
   const onCloseClick = () => {
-    onCloseFtn();
-  };
+    onCloseFtn()
+  }
 
   /*
   useEffect(() => {

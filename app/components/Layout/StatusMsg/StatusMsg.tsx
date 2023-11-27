@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import Alert from '@mui/material/Alert';
-import styles from './StatusMsg.module.scss';
+import { useAppSelector } from '@/app/hooks'
+import Alert from '@mui/material/Alert'
+import styles from './StatusMsg.module.scss'
 
 const StatusMsg = () => {
-  const main = useSelector(state => state.main);
+  const main = useAppSelector(state => state.main)
 
   if (main.statusMsg == null) {
     return (null);

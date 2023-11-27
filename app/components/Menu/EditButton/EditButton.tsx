@@ -1,21 +1,21 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { mainAction } from '../../../store/main-slice';
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { mainAction } from '@/app/store/main-slice'
 import {
   Tooltip,
   IconButton
-} from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import EditOffIcon from '@mui/icons-material/EditOff';
-import styles from './EditButton.module.scss';
+} from '@mui/material'
+import EditIcon from '@mui/icons-material/Edit'
+import EditOffIcon from '@mui/icons-material/EditOff'
+import styles from './EditButton.module.scss'
 
 const MenuButton = () => {
-  const dispatch = useDispatch();
-  const mainState = useSelector(state => state.main);
-  const isEditMode = mainState.isEditMode;
+  const dispatch = useAppDispatch()
+  const mainState = useAppSelector(state => state.main)
+  const isEditMode = mainState.isEditMode
 
   const buttonClick = () => {
-    let editMode = isEditMode === true ? false : true;
-    dispatch(mainAction.toggleEditMode(editMode));
+    let editMode = isEditMode === true ? false : true
+    dispatch(mainAction.toggleEditMode(editMode))
   }
 
   const editBtn = <EditIcon fontSize="inherit" />;

@@ -1,20 +1,20 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useDeleteCategoryMutation } from '@/app/services/categories';
-import { mainAction } from '@/app/store/main-slice';
-import { categoryAction } from '@/app/store/category-slice';
-import { menuCategoryAction } from '@/app/store/menu-category-slice';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import StatusMsg from '@/app/components/Layout/StatusMsg/StatusMsg';
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { useDeleteCategoryMutation } from '@/app/services/categories'
+import { mainAction } from '@/app/store/main-slice'
+import { categoryAction } from '@/app/store/category-slice'
+import { menuCategoryAction } from '@/app/store/menu-category-slice'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
+import StatusMsg from '@/app/components/Layout/StatusMsg/StatusMsg'
 
 const EnvDeleteDialog = () => {
-  const dispatch = useDispatch();
-  const envState = useSelector(state => state.category);
-  const menuCategory = useSelector(state => state.menuCategory);
+  const dispatch = useAppDispatch()
+  const envState = useAppSelector(state => state.category)
+  const menuCategory = useAppSelector(state => state.menuCategory)
   const envName = menuCategory.selected ? menuCategory.selected.name : '';
   const [deleteCategory, { isLoading }] = useDeleteCategoryMutation();
 

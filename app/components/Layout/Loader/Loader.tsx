@@ -1,9 +1,8 @@
-import { useSelector } from 'react-redux';
-import { Box, CircularProgress } from '@mui/material';
-
+import { useAppSelector } from '@/app/hooks'
+import { Box, CircularProgress } from '@mui/material'
 
 const Loader = () => {
-  const mainState = useSelector(state => state.main);
+  const mainState = useAppSelector(state => state.main);
 
   return (
     <Box sx={{ display: mainState.isLoading == true ? 'flex' : 'none', justifyContent: 'center', minHeight: '600px', alignItems: 'center' }}>

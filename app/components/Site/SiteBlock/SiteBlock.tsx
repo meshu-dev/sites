@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import {
   Button,
   Card,
@@ -7,25 +7,25 @@ import {
   CardActions,
   CardMedia,
   Typography
-} from '@mui/material';
-import { mainAction } from '@/app/store/main-slice';
-import { menuSiteAction } from '@/app/store/menu-site-slice';
-import styles from './SiteBlock.module.scss';
+} from '@mui/material'
+import { mainAction } from '@/app/store/main-slice'
+import { menuSiteAction } from '@/app/store/menu-site-slice'
+import styles from './SiteBlock.module.scss'
 
 const SiteBlock = ({ site }) => {
-  const dispatch = useDispatch();
-  const mainState = useSelector(state => state.main);
+  const dispatch = useAppDispatch();
+  const mainState = useAppSelector(state => state.main)
 
   const onEdit = () => {
-    dispatch(mainAction.clearStatusMsg());
-    dispatch(menuSiteAction.setSelected(site));
+    dispatch(mainAction.clearStatusMsg())
+    dispatch(menuSiteAction.setSelected(site))
 
-    dispatch(menuSiteAction.openEdit());
+    dispatch(menuSiteAction.openEdit())
   };
 
   const onDelete = () => {
-    dispatch(menuSiteAction.setSelected(site));
-    dispatch(menuSiteAction.openDelete());
+    dispatch(menuSiteAction.setSelected(site))
+    dispatch(menuSiteAction.openDelete())
   };
 
   return (

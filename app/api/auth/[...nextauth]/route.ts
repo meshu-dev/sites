@@ -1,13 +1,17 @@
-import NextAuth from 'next-auth'
+import NextAuth, { NextAuthOptions } from 'next-auth'
+//import { JWT } from 'next-auth/jwt'
+//import NextAuth, { NextAuthOptions, Session, JWT, AdapterUser } from '../../../types/next-auth'
 import GithubProvider from 'next-auth/providers/github'
+import { Adapter } from 'next-auth/adapters'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { PrismaClient } from '@prisma/client'
 
+
 const prisma = new PrismaClient()
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID || '',
@@ -40,7 +44,8 @@ export const authOptions = {
       }
       return token
     },
-    async session({ session, token, user }: any) {
+    /*
+    async session({ session, token, user }) {
       // Send properties to the client, like an access_token from a provider.
       //session.accessToken = token.accessToken
 
@@ -55,7 +60,7 @@ export const authOptions = {
           email: user.email
         }
       }
-    }
+    } */
   },
   secret: process.env.NEXTAUTH_SECRET
 }

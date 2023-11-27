@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '@/app/hooks'
 import EnvSelectorDropdown from './EnvSelectorDropdown'
 import { useGetCategoriesQuery } from '@/app/services/categories'
 import { mainAction } from '@/app/store/main-slice'
 import { categoryAction } from '@/app/store/category-slice'
 
 const EnvSelector = () => {
-  const envState = useSelector(state => state.category);
-  const dispatch = useDispatch();
+  const envState = useAppSelector(state => state.category);
+  const dispatch = useAppDispatch();
   const { data: categories = [], isFetching } = useGetCategoriesQuery();
 
   const onOptionChange = (event) => {

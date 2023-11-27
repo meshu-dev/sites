@@ -1,6 +1,6 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useDeleteSiteMutation, clearCategorySites } from '../../../../services/sites';
-import { menuSiteAction } from '../../../../store/menu-site-slice';
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { useDeleteSiteMutation, clearCategorySites } from '@/app/services/sites'
+import { menuSiteAction } from '@/app/store/menu-site-slice'
 import {
   Button,
   Dialog,
@@ -8,23 +8,23 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText
-} from '@mui/material';
-import styles from './SiteDeleteDialog.module.scss';
+} from '@mui/material'
+import styles from './SiteDeleteDialog.module.scss'
 
 const SiteDeleteDialog = () => {
-  const dispatch = useDispatch();
-  const menuSite = useSelector(state => state.menuSite);
-  const environment = useSelector(state => state.environment);
-  const site = menuSite.selected ? menuSite.selected : null;
-  const [deleteSite, { isLoading }] = useDeleteSiteMutation();
+  const dispatch = useAppDispatch()
+  const menuSite = useAppSelector(state => state.menuSite)
+  const environment = useAppSelector(state => state.environment)
+  const site = menuSite.selected ? menuSite.selected : null
+  const [deleteSite, { isLoading }] = useDeleteSiteMutation()
 
   const onSelection = async (doDelete) => {
     if (doDelete === true) {
-      await deleteSite(site.id);
-      dispatch(clearCategorySites(environment.selected.id));
+      await deleteSite(site.id)
+      dispatch(clearCategorySites(environment.selected.id))
     }
-    dispatch(menuSiteAction.closeDelete());
-    dispatch(menuSiteAction.setSelected(null));
+    dispatch(menuSiteAction.closeDelete())
+    dispatch(menuSiteAction.setSelected(null))
   };
 
   return (

@@ -1,5 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+export interface CategoryState {
+  selected: object | null
+}
+
+const initialState: CategoryState = {
+  selected: null
+}
+
 export const categorySlice = createSlice({
   name: 'category',
   initialState: {

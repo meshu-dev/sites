@@ -1,26 +1,26 @@
 import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { useGetCategoriesQuery, useGetCategorySitesQuery } from '@/app/services/categories'
 import { mainAction } from '@/app/store/main-slice'
 import styles from './SiteList.module.scss'
 import SiteBlock from '../SiteBlock/SiteBlock'
 
 const SiteList = () => {
-  const mainState = useSelector(state => state.main)
-  const envState = useSelector(state => state.category)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
+  const mainState = useAppSelector(state => state.main)
+  const envState = useAppSelector(state => state.category)
   const envId = envState.selected ? envState.selected.id : 0
   let { data: categories = [] } = useGetCategoriesQuery()
   let { data: categorySites = [] } = useGetCategorySitesQuery(envId, { skip: !envId })
 
   useEffect(() => {
     if (mainState.isLoading === true) {
-      dispatch(mainAction.finishLoading());
+      dispatch(mainAction.finishLoading())
     }
-  }, [dispatch, mainState, categorySites]);
+  }, [dispatch, mainState, categorySites])
 
   if (mainState.isLoading === false) {
-    let siteBlocks = [];
+    let siteBlocks = []
 
     if (categorySites.length > 0) {
       siteBlocks = categorySites.map(
@@ -44,7 +44,7 @@ const SiteList = () => {
       <div id={ styles['site-list'] }>
         { siteBlocks }
       </div>
-    );
+    )
   }
   return (null)
 }

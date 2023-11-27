@@ -1,18 +1,18 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useGetCategoriesQuery } from '@/app/services/categories';
-import { mainAction } from '@/app/store/main-slice';
-import { menuCategoryAction } from '@/app/store/menu-category-slice';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import EnvRow from '../EnvRow/EnvRow';
+import { useAppSelector, useAppDispatch } from '@/app/hooks'
+import { useGetCategoriesQuery } from '@/app/services/categories'
+import { mainAction } from '@/app/store/main-slice'
+import { menuCategoryAction } from '@/app/store/menu-category-slice'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import EnvRow from '../EnvRow/EnvRow'
 //import EnvDialogAction from '../EnvDialogAction';
 
 const EnvListDialog = () => {
-  const dispatch = useDispatch();
-  const menuCategory = useSelector(state => state.menuCategory);
+  const dispatch = useAppDispatch();
+  const menuCategory = useAppSelector(state => state.menuCategory);
   const { data: categories = [] } = useGetCategoriesQuery();
   //const action = EnvDialogAction;
 

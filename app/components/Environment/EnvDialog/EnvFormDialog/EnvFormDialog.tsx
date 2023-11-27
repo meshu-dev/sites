@@ -1,18 +1,18 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
-import StatusMsg from '@/app/components/Layout/StatusMsg/StatusMsg';
+import { useState, useEffect } from 'react'
+import { useAppSelector } from '@/app/hooks'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import TextField from '@mui/material/TextField'
+import StatusMsg from '@/app/components/Layout/StatusMsg/StatusMsg'
 //import { mainAction } from '@/store/main-slice';
-import styles from './EnvFormDialog.module.scss';
+import styles from './EnvFormDialog.module.scss'
 
 const EnvFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
   //const dispatch = useDispatch();
-  const menuCategory = useSelector(state => state.menuCategory);
+  const menuCategory = useAppSelector(state => state.menuCategory);
   const [envName, setEnvName] = useState('');
 
   const isLoading = false;

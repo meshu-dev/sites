@@ -1,5 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { useGetIconsQuery } from '@/services/icons';
+import { createSlice } from '@reduxjs/toolkit'
 
 export const menuSiteSlice = createSlice({
   name: 'menuSite',

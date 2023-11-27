@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
 
   if (userId) {
     const prisma = new PrismaClient()
-    const categories = await prisma.category.findMany({ where: { userId } })
+    const categories = await prisma.category.findMany({ where: { userId: String(userId) } })
     
     response.data = categories
 
@@ -41,10 +41,11 @@ export async function POST(request: NextRequest) {
 
   if (userId) {
     const prisma: PrismaClient = new PrismaClient()
-    const body: RequestParams  = await request.json();
+    const body: RequestParams  = await request.json()
+    const userIdStr            = String(userId)
   
     const categoryCount: number = await prisma.category.count({
-      where: { userId }
+      where: { userId: userIdStr }
     })
 
     console.log('Add Environment 2', {
@@ -55,7 +56,7 @@ export async function POST(request: NextRequest) {
 
     const category = await prisma.category.create({
       data: {
-        userId,
+        userId: userIdStr,
         name:   body.name,
         order:  categoryCount
       }
