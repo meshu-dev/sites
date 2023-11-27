@@ -1,4 +1,5 @@
-import api, { validateReponse } from './api';
+import api, { validateReponse } from './api'
+import { ApiResponse } from '@/app/types'
 
 export const iconsApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -10,7 +11,7 @@ export const iconsApi = api.injectEndpoints({
         }
       },
       providesTags: [{ type: 'Icons', id: 'LIST' }],
-      transformResponse: (response) => response.data
+      transformResponse: (response: ApiResponse) => response.data
     })
   })
 });

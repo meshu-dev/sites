@@ -10,48 +10,51 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import StatusMsg from '@/app/components/Layout/StatusMsg/StatusMsg'
+import { ApiResponse } from '@/app/types'
 
 const EnvDeleteDialog = () => {
   const dispatch = useAppDispatch()
   const envState = useAppSelector(state => state.category)
   const menuCategory = useAppSelector(state => state.menuCategory)
-  const envName = menuCategory.selected ? menuCategory.selected.name : '';
-  const [deleteCategory, { isLoading }] = useDeleteCategoryMutation();
+  const envName = menuCategory.selected ? menuCategory.selected.name : ''
+  const [deleteCategory, { isLoading }] = useDeleteCategoryMutation()
 
-  const onSelection = async (doDelete) => {
+  const onSelection = async (doDelete: boolean) => {
     if (doDelete === true && menuCategory.selected) {
-      const categoryId: number = menuCategory.selected.id;
-      const response = await deleteCategory(categoryId);
-    
-      const hasError = (response['data'] && response['data']['error']) ? true : false;
+      const categoryId: number | undefined = menuCategory.selected.id
 
-      if (hasError === true) {
-        setStatusMsg(response);
-        return;
-      }
-
-      if (categoryId == envState.selected.id) {
-        dispatch(categoryAction.setSelected(null));
+      if (categoryId) {
+        const response: ApiResponse = await deleteCategory(categoryId) as ApiResponse
+        const hasError = (response.data && response.data.error) ? true : false
+  
+        if (hasError === true) {
+          setStatusMsg(response);
+          return;
+        }
+  
+        if (categoryId == envState.selected?.id) {
+          dispatch(categoryAction.setSelected(null));
+        }
       }
     }
 
-    dispatch(menuCategoryAction.closeDelete());
-    dispatch(menuCategoryAction.setSelected(null));
-    dispatch(menuCategoryAction.openList());
-  };
+    dispatch(menuCategoryAction.closeDelete())
+    dispatch(menuCategoryAction.setSelected(null))
+    dispatch(menuCategoryAction.openList())
+  }
 
-  const setStatusMsg = (response) => {
-    if (response['data'] && response['data']['error']) {
-      const errorMsg = response['data']['error'];
+  const setStatusMsg = (response: ApiResponse) => {
+    if (response.data && response.data.error) {
+      const errorMsg = response.data.error
 
       const params = {
         type: 'error',
         messages: [errorMsg]
-      };
+      }
 
-      dispatch(mainAction.setStatusMsg(params));
+      dispatch(mainAction.setStatusMsg(params))
     }
-  };
+  }
 
   return (
     <div>
@@ -80,7 +83,7 @@ const EnvDeleteDialog = () => {
         </DialogActions>
       </Dialog>
     </div>
-  );
-};
+  )
+}
 
-export default EnvDeleteDialog;
+export default EnvDeleteDialog

@@ -1,7 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
+import { Category } from '@/app/types'
 
 export interface CategoryState {
-  selected: object | null
+  selected: Category | null
 }
 
 const initialState: CategoryState = {
@@ -10,16 +11,14 @@ const initialState: CategoryState = {
 
 export const categorySlice = createSlice({
   name: 'category',
-  initialState: {
-    selected: null
-  },
+  initialState,
   reducers: {
     setSelected: (state, action) => {
-      state.selected = action.payload;
+      state.selected = action.payload
     }
   }
 });
 
-export const categoryAction = categorySlice.actions;
+export const categoryAction = categorySlice.actions
 
-export default categorySlice.reducer;
+export default categorySlice.reducer

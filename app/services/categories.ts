@@ -1,9 +1,5 @@
-import api, { validateReponse } from './api';
-
-export interface Category {
-  id? :number
-  name: string
-}
+import api, { validateReponse } from './api'
+import { ApiResponse, Category } from '@/app/types'
 
 export const categoriesApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -15,7 +11,7 @@ export const categoriesApi = api.injectEndpoints({
         }
       },
       providesTags: [{ type: 'Categories', id: 'LIST' }],
-      transformResponse: (response) => response.data
+      transformResponse: (response: ApiResponse) => response.data
     }),
     getCategorySites: build.query({
       query(categoryId) {
@@ -27,7 +23,7 @@ export const categoriesApi = api.injectEndpoints({
       providesTags: (_categories, _err, categoryId) => [
         { type: 'CategorySites', id: categoryId }
       ],
-      transformResponse: (response) => response.data
+      transformResponse: (response: ApiResponse) => response.data
     }),
     addCategory: build.mutation<Category, Partial<Category>>({
       query(body) {
@@ -62,7 +58,7 @@ export const categoriesApi = api.injectEndpoints({
         { type: 'Categories', id: category?.id }
       ]
     }),
-    deleteCategory: build.mutation<number, Partial<number>>({
+    deleteCategory: build.mutation<ApiResponse, Partial<number>>({
       query(id) {
         return {
           url: `/categories/${id}`,
@@ -70,9 +66,9 @@ export const categoriesApi = api.injectEndpoints({
           validateStatus: validateReponse
         }
       },
-      invalidatesTags: (category) => [
+      invalidatesTags: (_response, _err, id) => [
         { type: 'Categories', id: 'LIST' },
-        { type: 'Categories', id: category?.id }
+        { type: 'Categories', id }
       ]
     })
   })

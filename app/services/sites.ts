@@ -1,11 +1,5 @@
-import api, { validateReponse } from './api';
-
-export interface Site {
-  id? :number,
-  iconId :number,
-  name: string
-  url: string
-}
+import api, { validateReponse } from './api'
+import { ApiResponse, Site } from '@/app/types'
 
 export const sitesApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -17,7 +11,7 @@ export const sitesApi = api.injectEndpoints({
         }
       },
       providesTags: [{ type: 'Sites', id: 'LIST' }],
-      transformResponse: (response) => response.data
+      transformResponse: (response: ApiResponse) => response.data
     }),
     addSite: build.mutation<Site, Partial<Site>>({
       query(body) {
@@ -59,9 +53,9 @@ export const sitesApi = api.injectEndpoints({
           validateStatus: validateReponse
         }
       },
-      invalidatesTags: (site) => [
+      invalidatesTags: (_response, _err, id) => [
         { type: 'Sites', id: 'LIST' },
-        { type: 'Sites', id: site?.id }
+        { type: 'Sites', id }
       ]
     })
   })

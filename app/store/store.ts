@@ -14,9 +14,9 @@ const store = configureStore({
     menuSite: menuSiteReducer
   },
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(api.middleware);
+    return getDefaultMiddleware().concat(api.middleware)
   }
-});
+})
 
 export default store
 

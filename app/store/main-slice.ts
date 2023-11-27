@@ -1,35 +1,44 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
+
+export interface MainState {
+  isLoading:  boolean,
+  isLoggedIn: boolean,
+  isEditMode: boolean,
+  statusMsg:  string | null
+}
+
+const initialState: MainState = {
+  isLoading:  true,
+  isLoggedIn: false,
+  isEditMode: false,
+  statusMsg:  null
+}
 
 export const mainSlice = createSlice({
   name: 'main',
-  initialState: {
-    isLoading: true,
-    isLoggedIn: false,
-    isEditMode: false,
-    statusMsg: null,
-  },
+  initialState,
   reducers: {
     startLoading: (state) => {
-      state.isLoading = true;
+      state.isLoading = true
     },
     finishLoading: (state) => {
-      state.isLoading = false;
+      state.isLoading = false
     },
     setIsLoggedIn: (state, action) => {
-      state.isLoggedIn = action.payload;
+      state.isLoggedIn = action.payload
     },
     toggleEditMode: (state) => {
-      state.isEditMode = state.isEditMode ? false : true;
+      state.isEditMode = state.isEditMode ? false : true
     },
     setStatusMsg: (state, action) => {
-      state.statusMsg = action.payload;
+      state.statusMsg = action.payload
     },
     clearStatusMsg: (state) => {
-      state.statusMsg = null;
+      state.statusMsg = null
     }
   }
 });
 
-export const mainAction = mainSlice.actions;
+export const mainAction = mainSlice.actions
 
-export default mainSlice.reducer;
+export default mainSlice.reducer

@@ -93,7 +93,7 @@ export async function DELETE(
   }
 
   return NextResponse.json(
-    { sucesss: category ? true : false },
+    { success: category ? true : false },
     { status: 200 }
   )
 }
