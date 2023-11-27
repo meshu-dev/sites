@@ -14,26 +14,28 @@ const SiteAddDialog = () => {
   let { data: icons = [] } = useGetIconsQuery()
 
   const onSaveClick = async () => {
-    dispatch(mainAction.clearStatusMsg());
+    if (menuSite.selected) {
+      dispatch(mainAction.clearStatusMsg());
 
-    const params = {
-      categoryId: category.selected.id,
-      name: menuSite.selected.name,
-      url: menuSite.selected.url,
-      iconId: menuSite.selected.icon.id
+      const params = {
+        categoryId: category.selected?.id,
+        name: menuSite.selected.name,
+        url: menuSite.selected.url,
+        iconId: menuSite.selected.icon?.id
+      }
+  
+      const response = await addSite(params)
+  
+      setStatusMsg(response);
+  
+      if (response['data']['errors'] == null) {
+        dispatch(clearCategorySites(category.selected.id))
+        
+        dispatch(menuSiteAction.closeAdd())
+        dispatch(menuSiteAction.setSelected(null))
+      }
     }
-
-    const response = await addSite(params)
-
-    setStatusMsg(response);
-
-    if (response['data']['errors'] == null) {
-      dispatch(clearCategorySites(category.selected.id))
-      
-      dispatch(menuSiteAction.closeAdd())
-      dispatch(menuSiteAction.setSelected(null))
-    }
-  };
+  }
 
   const onCloseClick = () => {
     dispatch(menuSiteAction.closeAdd())

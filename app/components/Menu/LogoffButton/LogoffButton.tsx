@@ -22,4 +22,4 @@ const LogoffButton = () => {
   );
 }
 
-export default LogoffButton;
+export default LogoffButton

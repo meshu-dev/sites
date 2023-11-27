@@ -11,8 +11,13 @@ import {
 import { mainAction } from '@/app/store/main-slice'
 import { menuSiteAction } from '@/app/store/menu-site-slice'
 import styles from './SiteBlock.module.scss'
+import { Site } from '@/app/types'
 
-const SiteBlock = ({ site }) => {
+type Props = {
+  site: Site
+}
+
+const SiteBlock = ({ site }: Props) => {
   const dispatch = useAppDispatch();
   const mainState = useAppSelector(state => state.main)
 
@@ -35,8 +40,8 @@ const SiteBlock = ({ site }) => {
           <CardMedia
             className={ styles['site-block-img'] }
             component="img"
-            image={ site.icon.url }
-            alt={ site.icon.name }
+            image={ site?.icon?.url }
+            alt={ site?.icon?.name }
           />
           <CardContent className={ styles['site-block-content'] }>
             <span>{ site['name'] }</span>
@@ -64,4 +69,4 @@ const SiteBlock = ({ site }) => {
   );
 }
 
-export default SiteBlock;
+export default SiteBlock

@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { FormEventHandler } from 'react';
 import { Box } from '@mui/system';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import ErrorPanel from '../ErrorPanel/ErrorPanel';
 import styles from './LoginForm.module.scss';
 
-const LoginForm = ({ email, password, handleInputChange, handleSubmit }) => {
+type Props = {
+  email: string,
+  password: string,
+  handleInputChange: (event: object) => void,
+  handleSubmit: (event: object) => void
+}
+
+const LoginForm = ({ email, password, handleInputChange, handleSubmit }: Props) => {
   return (
     <form id={ styles['login'] } onSubmit={ handleSubmit }>
       <ErrorPanel />

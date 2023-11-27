@@ -1,6 +1,6 @@
-import EditButton from '../EditButton/EditButton';
-import LogoffButton from '../LogoffButton/LogoffButton';
-import styles from './MenuButtons.module.scss';
+import EditButton from '../EditButton/EditButton'
+import LogoffButton from '../LogoffButton/LogoffButton'
+import styles from './MenuButtons.module.scss'
 
 const MenuButtons = () => {
   return (
@@ -11,4 +11,4 @@ const MenuButtons = () => {
   );
 }
 
-export default MenuButtons;
+export default MenuButtons

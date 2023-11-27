@@ -5,26 +5,27 @@ import { useGetIconsQuery } from '@/app/services/icons'
 import { menuSiteAction } from '@/app/store/menu-site-slice'
 import styles from './SiteIconSelector.module.scss'
 import Image from 'next/image'
+import { ButtonEvent, Icon } from '@/app/types'
 
-const SiteIconSelector = ({ selectedIconId }) => {
+const SiteIconSelector = (selectedIconId: number) => {
   const dispatch = useAppDispatch()
   const menuSite = useAppSelector(state => state.menuSite)
   let { data: icons = [] } = useGetIconsQuery()
 
-  const onIconClick = (iconId, event) => {
+  const onIconClick = (iconId: number, event: object) => {
     removeSelection(event)
     addSelection(event)
 
-    let selectedIcon = icons.find(icon => icon.id == iconId)
+    let selectedIcon = icons.find((icon: Icon) => icon.id == iconId)
     dispatch(menuSiteAction.setSelectedIcon(selectedIcon))
   }
 
-  const addSelection = (event) => {
+  const addSelection = (event: object) => {
     const iconItemEl = event.target.parentElement.parentElement
     iconItemEl.classList.add(styles['icon-selecteditem'])
   }
 
-  const removeSelection = (event) => {
+  const removeSelection = (event: object) => {
     const iconListEl = event.target.parentElement.parentElement.parentElement
     const iconItemListEl = iconListEl.children
 
@@ -40,7 +41,7 @@ const SiteIconSelector = ({ selectedIconId }) => {
       id={ styles['icon-list'] }
       cols={ 5 } rowHeight={ 80 }>
       {
-        icons.map((icon, index) => {
+        icons.map((icon, index: number) => {
           let classNames = styles['icon-item'];
 
           if (

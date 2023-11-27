@@ -1,9 +1,9 @@
 import api, { validateReponse } from './api'
-import { ApiResponse, Category } from '@/app/types'
+import { ApiResponse, Category, Site } from '@/app/types'
 
 export const categoriesApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getCategories: build.query({
+    getCategories: build.query<Category[], void>({
       query() {
         return {
           url: `/categories`,
@@ -11,19 +11,19 @@ export const categoriesApi = api.injectEndpoints({
         }
       },
       providesTags: [{ type: 'Categories', id: 'LIST' }],
-      transformResponse: (response: ApiResponse) => response.data
+      transformResponse: (response: ApiResponse) => response.data as Category[]
     }),
-    getCategorySites: build.query({
-      query(categoryId) {
+    getCategorySites: build.query<Site[], number>({
+      query(categoryId: number) {
         return {
           url: `/categories/${categoryId}/sites`,
           validateStatus: validateReponse
         }
       },
-      providesTags: (_categories, _err, categoryId) => [
+      providesTags: (_sites, _err, categoryId) => [
         { type: 'CategorySites', id: categoryId }
       ],
-      transformResponse: (response: ApiResponse) => response.data
+      transformResponse: (response: ApiResponse) => response.data as Site[]
     }),
     addCategory: build.mutation<Category, Partial<Category>>({
       query(body) {
@@ -80,4 +80,4 @@ export const {
   useAddCategoryMutation,
   useEditCategoryMutation,
   useDeleteCategoryMutation
-} = categoriesApi;
+} = categoriesApi

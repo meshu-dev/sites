@@ -3,38 +3,38 @@ import { useAddCategoryMutation } from '@/app/services/categories'
 import { mainAction } from '@/app/store/main-slice'
 import { menuCategoryAction } from '@/app/store/menu-category-slice'
 import EnvFormDialog from './EnvFormDialog'
-
-export interface Category {
-  name: string
-}
+import { ApiResponse } from '@/app/types'
 
 const EnvAddDialog = () => {
-  const dispatch = useAppDispatch();
-  const menuCategory = useAppSelector(state => state.menuCategory);
-  const [addCategory, { isLoading }] = useAddCategoryMutation();
+  const dispatch = useAppDispatch()
+  const menuCategory = useAppSelector(state => state.menuCategory)
+  const [addCategory, { isLoading }] = useAddCategoryMutation()
 
   const onSaveClick = async (categoryName: string) => {
-    dispatch(mainAction.clearStatusMsg());
+    dispatch(mainAction.clearStatusMsg())
 
-    const params = { name: categoryName };
+    const params = { name: categoryName }
 
-    console.log('client - addCategory', params);
+    console.log('client - addCategory', params)
 
-    const response = await addCategory(params);
+    const response: ApiResponse = await addCategory(params) as ApiResponse
 
-    console.log('SAVE', response);
+    console.log('SAVE', response)
 
-    setStatusMsg(response);
+    setStatusMsg(response)
 
-    if (response['data']['errors'] == null) {
-      onCloseClick();
+    if (response.data?.error == null) {
+      onCloseClick()
     }
   };
 
-  const setStatusMsg = (response) => {
+  const setStatusMsg = (response: ApiResponse) => {
+    /*
     if (response['data']['errors']) {
       const data = response['data']['errors'];
       let messages = [];
+
+      const environment: Environment = data as Environment
 
       if (data['name']) {
         messages.push(data['name']);
@@ -46,8 +46,12 @@ const EnvAddDialog = () => {
       };
 
       dispatch(mainAction.setStatusMsg(params));
-    }
-  };
+
+      dispatch(mainAction.setStatusMsg(''));
+    } */
+
+    dispatch(mainAction.setStatusMsg('Error occurred'))
+  }
 
   const onCloseClick = () => {
     dispatch(menuCategoryAction.closeAdd());

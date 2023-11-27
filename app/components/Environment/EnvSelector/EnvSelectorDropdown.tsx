@@ -2,11 +2,18 @@ import * as React from 'react';
 import { Box } from '@mui/system';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import styles from './EnvSelectorDropdown.module.scss';
+import { InputEvent, Category } from '@/app/types'
 
-const EnvSelectorDropdown = ({ selectedEnv, categories, onOptionChange }) => {
+interface Props {
+  selectedEnv: string,
+  categories: Category[],
+  onOptionChange: (event: SelectChangeEvent<string>, child: React.ReactNode) => void
+}
+
+const EnvSelectorDropdown = ({ selectedEnv, categories, onOptionChange }: Props) => {
   const menuItems = [];
 
   for (const category of categories) {

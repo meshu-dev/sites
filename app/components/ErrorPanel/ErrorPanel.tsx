@@ -3,6 +3,9 @@ import Alert from '@mui/material/Alert'
 
 class ErrorPanel extends Component {
   render() {
+    return(null)
+
+    /*
     const rows = [];
 
     if (this.props.messages) {
@@ -10,7 +13,7 @@ class ErrorPanel extends Component {
           rows.push(<Alert severity="error">{ message }</Alert>);
       }
     }
-    return (rows);
+    return (rows); */
   }
 }
 

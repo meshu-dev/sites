@@ -8,8 +8,8 @@ import WebIcon from '@mui/icons-material/Web';
 import StorageIcon from '@mui/icons-material/Storage';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-import { menuEnvironmentAction } from '../../store/menu-environment-slice';
-import { menuSiteAction } from '../../store/menu-site-slice';
+import { menuCategoryAction } from '@/app/store/menu-category-slice'
+import { menuSiteAction } from '@/app/store/menu-site-slice'
 
 const actions = [
   //{ key: 'settings', name: 'Settings', icon: <SettingsIcon />, action: '' },
@@ -18,19 +18,19 @@ const actions = [
 ];
 
 const Menu = () => {
-  const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch()
+  const [open, setOpen] = useState(false)
   
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
 
-  const buttonClick = (key) => {
+  const buttonClick = (key: string) => {
     if (key === 'environments') {
-      dispatch(menuEnvironmentAction.openList());
+      dispatch(menuCategoryAction.openList())
     } else if (key === 'sites') {
-      dispatch(menuSiteAction.toggleWriteMode());
+      dispatch(menuSiteAction.toggleWriteMode())
     }
-    setOpen(false);
+    setOpen(false)
   }
 
   return (
@@ -57,4 +57,4 @@ const Menu = () => {
   );
 }
 
-export default Menu;
+export default Menu

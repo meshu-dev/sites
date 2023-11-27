@@ -3,7 +3,7 @@ import { ApiResponse, Site } from '@/app/types'
 
 export const sitesApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getSites: build.query({
+    getSites: build.query<Site[], void>({
       query() {
         return {
           url: `/sites`,
@@ -11,7 +11,7 @@ export const sitesApi = api.injectEndpoints({
         }
       },
       providesTags: [{ type: 'Sites', id: 'LIST' }],
-      transformResponse: (response: ApiResponse) => response.data
+      transformResponse: (response: ApiResponse) => response.data as Site[]
     }),
     addSite: build.mutation<Site, Partial<Site>>({
       query(body) {

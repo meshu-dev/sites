@@ -14,8 +14,7 @@ const MenuButton = () => {
   const isEditMode = mainState.isEditMode
 
   const buttonClick = () => {
-    let editMode = isEditMode === true ? false : true
-    dispatch(mainAction.toggleEditMode(editMode))
+    dispatch(mainAction.toggleEditMode())
   }
 
   const editBtn = <EditIcon fontSize="inherit" />;
@@ -36,4 +35,4 @@ const MenuButton = () => {
   );
 }
 
-export default MenuButton;
+export default MenuButton

@@ -8,47 +8,47 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import EnvRow from '../EnvRow/EnvRow'
-//import EnvDialogAction from '../EnvDialogAction';
+import { Category } from '@/app/types'
 
 const EnvListDialog = () => {
   const dispatch = useAppDispatch();
-  const menuCategory = useAppSelector(state => state.menuCategory);
-  const { data: categories = [] } = useGetCategoriesQuery();
+  const menuCategory = useAppSelector(state => state.menuCategory)
+  const { data: categories = [] } = useGetCategoriesQuery()
   //const action = EnvDialogAction;
 
   const setEnv = (categoryId: number) => {
-    let selectedEnv = categories.filter(category => category.id == categoryId);
-    selectedEnv = selectedEnv[0] ? selectedEnv[0] : null;
+    const filteredCategories: Category[] = categories.filter((category: Category) => category.id == categoryId)
+    const foundCategory: Category | null =  filteredCategories[0] ? filteredCategories[0] : null
 
-    dispatch(menuCategoryAction.setSelected(selectedEnv));
+    dispatch(menuCategoryAction.setSelected(foundCategory))
   }
 
   const onAdd = () => {
     dispatch(mainAction.clearStatusMsg());
-    dispatch(menuCategoryAction.setSelected(null));
+    dispatch(menuCategoryAction.setSelected(null))
 
-    dispatch(menuCategoryAction.closeList());
-    dispatch(menuCategoryAction.openAdd());
+    dispatch(menuCategoryAction.closeList())
+    dispatch(menuCategoryAction.openAdd())
   };
 
   const onEdit = (categoryId: number) => {
-    dispatch(mainAction.clearStatusMsg());
+    dispatch(mainAction.clearStatusMsg())
     setEnv(categoryId);
 
-    dispatch(menuCategoryAction.closeList());
-    dispatch(menuCategoryAction.openEdit());
+    dispatch(menuCategoryAction.closeList())
+    dispatch(menuCategoryAction.openEdit())
   };
 
   const onDelete = (categoryId: number) => {
-    dispatch(mainAction.clearStatusMsg());
+    dispatch(mainAction.clearStatusMsg())
     setEnv(categoryId);
     
-    dispatch(menuCategoryAction.closeList());
-    dispatch(menuCategoryAction.openDelete());
+    dispatch(menuCategoryAction.closeList())
+    dispatch(menuCategoryAction.openDelete())
   };
 
   const onCloseClick = () => {
-    dispatch(menuCategoryAction.closeList());
+    dispatch(menuCategoryAction.closeList())
   };
 
   const envElements = [];
@@ -59,8 +59,8 @@ const EnvListDialog = () => {
         <EnvRow
           key={ category.id }
           category={ category }
-          onEditFtn={ () => onEdit(category.id) }
-          onDeleteFtn={ () => onDelete(category.id) } />
+          onEditFtn={ () => category.id ? onEdit(category.id) : null }
+          onDeleteFtn={ () => category.id ? onDelete(category.id) : null } />
       );
     }
   }

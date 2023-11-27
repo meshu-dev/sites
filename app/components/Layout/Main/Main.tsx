@@ -5,8 +5,9 @@ import EnvGroupDialog from '@/app/components/Environment/EnvDialog/EnvGroupDialo
 import SiteGroupDialog from '@/app/components/Site/SiteDialog/SiteGroupDialog'
 import Loader from '@/app/components/Layout/Loader/Loader'
 import styles from '@/app/components/Layout/Main/Main.module.scss'
+import { ReactElement, JSXElementConstructor } from 'react'
 
-const Main = (props) => {
+const Main = (props: { children: ReactElement<any, string | JSXElementConstructor<any>> }) => {
   const mainState = useAppSelector(state => state.main);
 
   return (

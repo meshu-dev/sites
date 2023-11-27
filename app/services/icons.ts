@@ -1,9 +1,9 @@
 import api, { validateReponse } from './api'
-import { ApiResponse } from '@/app/types'
+import { ApiResponse, Icon } from '@/app/types'
 
 export const iconsApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getIcons: build.query({
+    getIcons: build.query<Icon[], void>({
       query() {
         return {
           url: `/icons`,
@@ -11,7 +11,7 @@ export const iconsApi = api.injectEndpoints({
         }
       },
       providesTags: [{ type: 'Icons', id: 'LIST' }],
-      transformResponse: (response: ApiResponse) => response.data
+      transformResponse: (response: ApiResponse) => response.data as Icon[]
     })
   })
 });

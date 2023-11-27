@@ -7,35 +7,38 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import TextField from '@mui/material/TextField'
 import StatusMsg from '@/app/components/Layout/StatusMsg/StatusMsg'
-//import { mainAction } from '@/store/main-slice';
 import styles from './EnvFormDialog.module.scss'
+import { InputEvent } from '@/app/types'
 
-const EnvFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
-  //const dispatch = useDispatch();
-  const menuCategory = useAppSelector(state => state.menuCategory);
-  const [envName, setEnvName] = useState('');
+interface Props {
+  title: string,
+  onSaveFtn: (envName: string) => void,
+  onCloseFtn: () => void
+}
+
+const EnvFormDialog = ({ title, onSaveFtn, onCloseFtn }: Props) => {
+  const menuCategory = useAppSelector(state => state.menuCategory)
+  const [envName, setEnvName] = useState('')
 
   const isLoading = false;
 
-  const handleInputChange = event => {
-    const value = event.target.value;
-    setEnvName(value);
+  const handleInputChange = (event: InputEvent) => {
+    const value = event.target.value
+    setEnvName(value)
   }
 
   const onSaveClick = async () => {
-    await onSaveFtn(envName);
+    await onSaveFtn(envName)
   };
 
   const onCloseClick = () => {
-    onCloseFtn();
+    onCloseFtn()
   };
 
   useEffect(() => {
-    const name = menuCategory.selected ? menuCategory.selected.name : '';
+    const name = menuCategory.selected ? menuCategory.selected.name : ''
     setEnvName(name);
-  }, [menuCategory.selected]);
-
-  // dispatch(mainAction.clearStatusMsg());
+  }, [menuCategory.selected])
 
   return (
     <div>

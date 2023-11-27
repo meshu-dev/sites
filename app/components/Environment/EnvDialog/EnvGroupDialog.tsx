@@ -1,7 +1,7 @@
-import EnvListDialog from './EnvListDialog/EnvListDialog';
-import EnvAddDialog from './EnvFormDialog/EnvAddDialog';
-import EnvEditDialog from './EnvFormDialog/EnvEditDialog';
-import EnvDeleteDialog from './EnvDeleteDialog/EnvDeleteDialog';
+import EnvListDialog from './EnvListDialog/EnvListDialog'
+import EnvAddDialog from './EnvFormDialog/EnvAddDialog'
+import EnvEditDialog from './EnvFormDialog/EnvEditDialog'
+import EnvDeleteDialog from './EnvDeleteDialog/EnvDeleteDialog'
 
 const EnvGroupDialog = () => {
   return (
@@ -11,7 +11,7 @@ const EnvGroupDialog = () => {
       <EnvEditDialog />
       <EnvDeleteDialog />
     </div>
-  );
-};
+  )
+}
 
-export default EnvGroupDialog;
+export default EnvGroupDialog

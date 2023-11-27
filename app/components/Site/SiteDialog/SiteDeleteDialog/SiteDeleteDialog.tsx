@@ -14,14 +14,17 @@ import styles from './SiteDeleteDialog.module.scss'
 const SiteDeleteDialog = () => {
   const dispatch = useAppDispatch()
   const menuSite = useAppSelector(state => state.menuSite)
-  const environment = useAppSelector(state => state.environment)
+  const category = useAppSelector(state => state.category)
   const site = menuSite.selected ? menuSite.selected : null
   const [deleteSite, { isLoading }] = useDeleteSiteMutation()
 
-  const onSelection = async (doDelete) => {
-    if (doDelete === true) {
+  const onSelection = async (doDelete: boolean) => {
+    if (doDelete === true && site?.id) {
       await deleteSite(site.id)
-      dispatch(clearCategorySites(environment.selected.id))
+      
+      if (category?.selected?.id) {
+        dispatch(clearCategorySites(category.selected.id))
+      }
     }
     dispatch(menuSiteAction.closeDelete())
     dispatch(menuSiteAction.setSelected(null))
