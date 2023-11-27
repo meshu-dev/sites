@@ -1,16 +1,17 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useGetCategorySitesQuery } from '@/app/services/categories'
+import { useGetCategoriesQuery, useGetCategorySitesQuery } from '@/app/services/categories'
 import { mainAction } from '@/app/store/main-slice'
 import styles from './SiteList.module.scss'
 import SiteBlock from '../SiteBlock/SiteBlock'
 
 const SiteList = () => {
-  const mainState = useSelector(state => state.main);
-  const envState = useSelector(state => state.category);
-  const dispatch = useDispatch();
-  const envId = envState.selected ? envState.selected.id : 0;
-  let { data: categorySites = [] } = useGetCategorySitesQuery(envId, { skip: !envId });
+  const mainState = useSelector(state => state.main)
+  const envState = useSelector(state => state.category)
+  const dispatch = useDispatch()
+  const envId = envState.selected ? envState.selected.id : 0
+  let { data: categories = [] } = useGetCategoriesQuery()
+  let { data: categorySites = [] } = useGetCategorySitesQuery(envId, { skip: !envId })
 
   useEffect(() => {
     if (mainState.isLoading === true) {
@@ -34,7 +35,7 @@ const SiteList = () => {
         <div
           key={ 'site-block-none' }
           id={ styles['site-list-none'] }>
-            No sites available for this category
+            { categories > 0 ? 'No sites available for this category' : 'No categories added yet' }
         </div>
       );
     }
@@ -45,7 +46,7 @@ const SiteList = () => {
       </div>
     );
   }
-  return (null);
+  return (null)
 }
 
-export default SiteList; 
+export default SiteList
