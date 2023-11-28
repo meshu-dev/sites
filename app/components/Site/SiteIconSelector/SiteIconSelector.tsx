@@ -7,12 +7,16 @@ import styles from './SiteIconSelector.module.scss'
 import Image from 'next/image'
 import { ButtonEvent, Icon } from '@/app/types'
 
-const SiteIconSelector = (selectedIconId: number) => {
+type Props = {
+  selectedIconId: number
+}
+
+const SiteIconSelector = ({ selectedIconId }: Props) => {
   const dispatch = useAppDispatch()
   const menuSite = useAppSelector(state => state.menuSite)
   let { data: icons = [] } = useGetIconsQuery()
 
-  const onIconClick = (iconId: number, event: object) => {
+  const onIconClick = (iconId: number, event: ButtonEvent) => {
     removeSelection(event)
     addSelection(event)
 
@@ -20,17 +24,27 @@ const SiteIconSelector = (selectedIconId: number) => {
     dispatch(menuSiteAction.setSelectedIcon(selectedIcon))
   }
 
-  const addSelection = (event: object) => {
-    const iconItemEl = event.target.parentElement.parentElement
-    iconItemEl.classList.add(styles['icon-selecteditem'])
+  const addSelection = (event: ButtonEvent) => {
+    const target = event.target as HTMLElement
+    const iconItemEl = (target.parentElement as HTMLElement).parentElement
+
+    if (iconItemEl) {
+      iconItemEl.classList.add(styles['icon-selecteditem'])
+    }
   }
 
-  const removeSelection = (event: object) => {
-    const iconListEl = event.target.parentElement.parentElement.parentElement
-    const iconItemListEl = iconListEl.children
+  const removeSelection = (event: ButtonEvent) => {
+    const target = event.target as HTMLElement
+    const iconItemEl: HTMLElement = (target.parentElement as HTMLElement).parentElement as HTMLElement
+    const iconListEl = iconItemEl.parentElement
 
-    for (const iconItemEl of iconItemListEl) {
-      iconItemEl.classList.remove(styles['icon-selecteditem'])
+    if (iconListEl) {
+      const iconItemListEl: HTMLCollection = iconListEl.children as HTMLCollection
+
+      /*
+      for (const iconItemEl of iconItemListEl) {
+        iconItemEl.classList.remove(styles['icon-selecteditem'])
+      } */
     }
   }
 
@@ -54,7 +68,7 @@ const SiteIconSelector = (selectedIconId: number) => {
           return (<span
             key={ `icon-image-${icon.id}` }
             className={ classNames }
-            onClick={ (event) => onIconClick(icon.id, event) }>
+            onClick={ (event: ButtonEvent) => onIconClick(icon.id, event) }>
             <ImageListItem>
               <Image
                 src={ icon.url }

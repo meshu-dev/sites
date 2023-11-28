@@ -5,6 +5,7 @@ import { useAddSiteMutation, clearCategorySites } from '@/app/services/sites'
 import { useGetIconsQuery } from '@/app/services/icons'
 import { mainAction } from '@/app/store/main-slice'
 import { menuSiteAction } from '@/app/store/menu-site-slice'
+import { ApiResponse } from '@/app/types'
 
 const SiteAddDialog = () => {
   const dispatch = useAppDispatch()
@@ -24,12 +25,12 @@ const SiteAddDialog = () => {
         iconId: menuSite.selected.icon?.id
       }
   
-      const response = await addSite(params)
+      const response: ApiResponse = await addSite(params) as ApiResponse
   
       setStatusMsg(response);
   
-      if (response['data']['errors'] == null) {
-        dispatch(clearCategorySites(category.selected.id))
+      if (response?.data?.error == null && category?.selected?.id) {
+        dispatch(clearCategorySites(category?.selected?.id))
         
         dispatch(menuSiteAction.closeAdd())
         dispatch(menuSiteAction.setSelected(null))
@@ -42,7 +43,8 @@ const SiteAddDialog = () => {
     dispatch(menuSiteAction.setSelected(null))
   };
 
-  const setStatusMsg = (response) => {
+  const setStatusMsg = (response: ApiResponse) => {
+    /*
     if (response['data']['errors']) {
       const data = response['data']['errors']
       let messages = []
@@ -61,7 +63,9 @@ const SiteAddDialog = () => {
       }
 
       dispatch(mainAction.setStatusMsg(params))
-    }
+    } */
+
+    dispatch(mainAction.setStatusMsg('Bing!'))
   }
 
   useEffect(() => {

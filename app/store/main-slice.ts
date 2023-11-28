@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { MessageList } from '@/app/types' 
 
 export interface MainState {
   isLoading:  boolean,
   isLoggedIn: boolean,
   isEditMode: boolean,
-  statusMsg:  string | null
+  statusMsg:  MessageList | null
 }
 
 const initialState: MainState = {

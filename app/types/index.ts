@@ -1,3 +1,5 @@
+import { AlertColor } from '@mui/material'
+
 export type InputEvent = React.ChangeEvent<HTMLInputElement>
 export type ButtonEvent = React.MouseEvent<HTMLButtonElement>
 
@@ -6,6 +8,11 @@ export interface ApiResponse {
     error?: string
   },
   status?: number
+}
+
+export interface MessageList {
+  type: AlertColor,
+  messages: string[]
 }
 
 export interface Category {
