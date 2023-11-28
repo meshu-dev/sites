@@ -8,11 +8,12 @@ export const authApi = api.injectEndpoints({
         method: 'POST',
         body: credentials
       }),
+      /*
       extraOptions: {
         backoff: () => {
           retry.fail({ fake: 'error' })
         }
-      },
+      }, */
       transformResponse: (response) => response
     }),
   })

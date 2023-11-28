@@ -21,11 +21,12 @@ export interface Category {
 }
 
 export interface Site {
-  id?:     number,
-  iconId?: number,
-  icon?:   Icon
-  name:    string
-  url:     string
+  id?:         number,
+  categoryId?: number,
+  iconId?:     number,
+  icon?:       Icon
+  name:        string
+  url:         string
 }
 
 export interface Icon {

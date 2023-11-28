@@ -12,15 +12,22 @@ import SiteIconSelector from '@/app/components/Site/SiteIconSelector/SiteIconSel
 import { useGetIconsQuery } from '@/app/services/icons'
 import { menuSiteAction } from '@/app/store/menu-site-slice'
 import styles from './SiteFormDialog.module.scss'
+import { InputEvent } from '@/app/types'
 
-const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
+type Props = {
+  title: string,
+  onSaveFtn: () => void,
+  onCloseFtn: () => void
+}
+
+const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }: Props) => {
   const dispatch = useAppDispatch()
   //let { data: icons = [] } = useGetIconsQuery();
 
   const menuSite = useAppSelector(state => state.menuSite)
   const isLoading = false
 
-  const handleInputChange = event => {
+  const handleInputChange = (event: InputEvent) => {
     const name = event.target.name
     const value = event.target.value
 
@@ -69,7 +76,7 @@ const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
             className={ styles['site-dialog-textfield'] }
             label="Name"
             name="name"
-            value={ menuSite.selected.name }
+            value={ menuSite?.selected?.name }
             onChange={ handleInputChange }
             fullWidth
             required />
@@ -78,13 +85,13 @@ const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
             className={ styles['site-dialog-textfield'] }
             label="Url"
             name="url"
-            value={ menuSite.selected.url }
+            value={ menuSite?.selected?.url }
             onChange={ handleInputChange }
             fullWidth
             required />
           <div>Select icon:</div>
           <SiteIconSelector
-            selectedIconId={ menuSite.selected.icon.id } />
+            selectedIconId={ menuSite?.selected?.icon?.id || 0 } />
         </DialogContent>
         <DialogActions>
           <Button
@@ -99,7 +106,7 @@ const SiteFormDialog = ({ title, onSaveFtn, onCloseFtn }) => {
         </DialogActions>
       </Dialog>
     </div>
-  );
-};
+  )
+}
 
-export default SiteFormDialog;
+export default SiteFormDialog

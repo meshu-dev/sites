@@ -8,13 +8,15 @@ const IndexPage = () => {
   //const mainState = useSelector(state => state.main);
 
   return(
-    <Layout>
-      <EnvSelectorSection />
-      <SiteList />
-      <MenuButtons />
-    </Layout>
-  );
-  return (null);
+    <>
+      <Layout>
+        <EnvSelectorSection />
+        <SiteList />
+        <MenuButtons />
+      </Layout>
+    </>
+  )
+  return (null)
 }
 
 export default IndexPage

@@ -10,7 +10,7 @@ import StatusMsg from '@/app/components/Layout/StatusMsg/StatusMsg'
 import styles from './EnvFormDialog.module.scss'
 import { InputEvent } from '@/app/types'
 
-interface Props {
+type Props = {
   title: string,
   onSaveFtn: (envName: string) => void,
   onCloseFtn: () => void

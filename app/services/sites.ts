@@ -14,11 +14,16 @@ export const sitesApi = api.injectEndpoints({
       transformResponse: (response: ApiResponse) => response.data as Site[]
     }),
     addSite: build.mutation<Site, Partial<Site>>({
-      query(body) {
+      query(site) {
         return {
           url: `/sites`,
           method: 'POST',
-          body,
+          body: {
+            categoryId: site.categoryId,
+            iconId:     site.iconId,
+            name:       site.name,
+            url:        site.url
+          },
           validateStatus: validateReponse
         }
       },
@@ -28,14 +33,14 @@ export const sitesApi = api.injectEndpoints({
       ]
     }),
     editSite: build.mutation<Site, Partial<Site>>({
-      query(body) {
+      query(site) {
         return {
-          url: `/sites/${body.id}`,
+          url: `/sites/${site.id}`,
           method: 'PUT',
           body: {
-            iconId: body.iconId,
-            name: body.name,
-            url: body.url
+            iconId: site.iconId,
+            name:   site.name,
+            url:    site.url
           },
           validateStatus: validateReponse
         }
@@ -43,7 +48,8 @@ export const sitesApi = api.injectEndpoints({
       invalidatesTags: (site) => [
         { type: 'Sites', id: 'LIST' },
         { type: 'Sites', id: site?.id }
-      ]
+      ],
+      transformResponse: (response: ApiResponse) => response.data as Site
     }),
     deleteSite: build.mutation<number, Partial<number>>({
       query(id) {
