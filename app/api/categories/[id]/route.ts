@@ -57,7 +57,7 @@ export async function PUT(
       name: body.name
     }
 
-    const zodResult: ZodResult = validateCategory(data)
+    const zodResult: ZodResult = await validateCategory(data)
 
     if (zodResult.success) {
       response.data = await prisma.category.update({

@@ -75,6 +75,7 @@ const SiteIconSelector = ({ selectedIconId }: Props) => {
                 alt={ icon.name }
                 loading="lazy"
                 className={ styles['icon-image'] }
+                fill={ true }
               />
             </ImageListItem>
           </span>)

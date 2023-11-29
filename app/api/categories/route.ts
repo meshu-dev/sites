@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
       order:  categoryCount
     }
 
-    const zodResult: ZodResult = validateCategory(data)
+    const zodResult: ZodResult = await validateCategory(data)
 
     if (zodResult.success) {
       response = await prisma.category.create({ data })

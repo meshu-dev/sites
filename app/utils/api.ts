@@ -1,5 +1,6 @@
 import { ZodError, z } from 'zod'
 import { ZodResult } from '@/app/types'
+import { PrismaClient } from '@prisma/client'
 
 export const getValidationMessages = (zodError: ZodError<any>) => {
   let messageMap = new Map()
@@ -30,20 +31,34 @@ export const getValidationMessages = (zodError: ZodError<any>) => {
   return messages
 }
 
-export const validateCategory = (params: object): ZodResult => {
+export const validateCategory = async (params: object): Promise<ZodResult> => {
   const Category = z.object({
-    name: z.string().min(5)
+    name: z.string()
+           .min(5, { message: 'Name must be 5 or more characters long' })
+           /*
+           .refine(async (value) => {
+              // verify that ID exists in database
+
+              const prisma: PrismaClient = new PrismaClient()
+
+              const categories = await prisma.category.findMany({ where: { userId: String(userId) } })
+              await prisma.$disconnect()
+
+              console.log('DB Check!!', value)
+
+              return true
+            }) */
   })
 
-  return Category.safeParse(params)
+  return await Category.safeParseAsync(params)
 }
 
 export const validateSite = (params: object, isEdit: boolean = false): ZodResult => {
   const rules = {
     categoryId: isEdit ? z.never() : z.number(),
     iconId: z.number(),
-    name: z.string().min(5),
-    url: z.string().url()
+    name: z.string().min(5, { message: 'Name must be 5 or more characters long' }),
+    url: z.string().url({ message: 'Url is invalid' })
   }
   const Site = z.object(rules)
 

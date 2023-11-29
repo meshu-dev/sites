@@ -6,6 +6,7 @@ import { useGetIconsQuery } from '@/app/services/icons'
 import { mainAction } from '@/app/store/main-slice'
 import { menuSiteAction } from '@/app/store/menu-site-slice'
 import { ApiResponse } from '@/app/types'
+import { getValidationStatusMsg } from '@/app/utils/form'
 
 const SiteAddDialog = () => {
   const dispatch = useAppDispatch()
@@ -16,7 +17,7 @@ const SiteAddDialog = () => {
 
   const onSaveClick = async () => {
     if (menuSite.selected) {
-      dispatch(mainAction.clearStatusMsg());
+      dispatch(mainAction.clearStatusMsg())
 
       const params = {
         categoryId: category.selected?.id,
@@ -24,18 +25,16 @@ const SiteAddDialog = () => {
         url: menuSite.selected.url,
         iconId: menuSite.selected.icon?.id
       }
-  
       const response: ApiResponse = await addSite(params) as ApiResponse
 
-      console.log('API response', response)
-  
-      setStatusMsg(response);
-  
-      if (response?.data?.error == null && category?.selected?.id) {
-        dispatch(clearCategorySites(category?.selected?.id))
+      if (response.data) {
+        const categoryId = Number(category?.selected?.id)
+        dispatch(clearCategorySites(categoryId))
         
         dispatch(menuSiteAction.closeAdd())
         dispatch(menuSiteAction.setSelected(null))
+      } else {
+        setStatusMsg(response)
       }
     }
   }
@@ -43,36 +42,18 @@ const SiteAddDialog = () => {
   const onCloseClick = () => {
     dispatch(menuSiteAction.closeAdd())
     dispatch(menuSiteAction.setSelected(null))
-  };
+  }
 
   const setStatusMsg = (response: ApiResponse) => {
-    /*
-    if (response['data']['errors']) {
-      const data = response['data']['errors']
-      let messages = []
+    const statusMsg = getValidationStatusMsg(response)
 
-      if (data['name']) {
-        messages.push(data['name'])
-      }
-
-      if (data['url']) {
-        messages.push(data['url'])
-      }
-
-      const params = {
-        type: 'error',
-        messages: messages
-      }
-
-      dispatch(mainAction.setStatusMsg(params))
-    } */
-
-    dispatch(mainAction.setStatusMsg('Bing!'))
+    if (statusMsg) {
+      dispatch(mainAction.setStatusMsg(statusMsg))
+    }
   }
 
   useEffect(() => {
     if (menuSite.selected == null && icons.length > 0) {
-      // console.log('A2', icons);
       dispatch(menuSiteAction.setSelectedAsNew(icons[0]))
     }
   }, [dispatch, icons, menuSite])
@@ -83,9 +64,9 @@ const SiteAddDialog = () => {
         title={ 'Add Site' }
         onSaveFtn={ onSaveClick }
         onCloseFtn={ onCloseClick } />
-    );
+    )
   }
-  return (null);
-};
+  return (null)
+}
 
-export default SiteAddDialog;
+export default SiteAddDialog

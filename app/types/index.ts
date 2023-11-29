@@ -8,6 +8,9 @@ export interface ApiResponse {
   data?: {
     error?: string
   },
+  error?: {
+    data: any
+  }
   status?: number
 }
 

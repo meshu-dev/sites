@@ -4,6 +4,7 @@ import { mainAction } from '@/app/store/main-slice'
 import { menuCategoryAction } from '@/app/store/menu-category-slice'
 import EnvFormDialog from './EnvFormDialog'
 import { ApiResponse } from '@/app/types'
+import { getValidationStatusMsg } from '@/app/utils/form'
 
 const EnvEditDialog = () => {
   const dispatch = useAppDispatch()
@@ -16,38 +17,23 @@ const EnvEditDialog = () => {
     let params = {
       id: menuCategory.selected?.id,
       name: envName
-    };
+    }
     const response: ApiResponse = await editCategory(params) as ApiResponse
 
-    console.log('response', response)
-
-    setStatusMsg(response)
-
-    if (response.data?.error == null) {
+    if (response.data) {
       dispatch(menuCategoryAction.closeEdit())
       dispatch(menuCategoryAction.openList())
+    } else {
+      setStatusMsg(response)
     }
   }
 
   const setStatusMsg = (response: ApiResponse) => {
-    /*
-    if (response['data']['errors']) {
-      const data = response['data']['errors'];
-      let messages = [];
+    const statusMsg = getValidationStatusMsg(response)
 
-      if (data['name']) {
-        messages.push(data['name']);
-      }
-
-      const params = {
-        type: 'error',
-        messages: messages
-      };
-
-      dispatch(mainAction.setStatusMsg(params))
-    } */
-
-    dispatch(mainAction.setStatusMsg('Error occurred'))
+    if (statusMsg) {
+      dispatch(mainAction.setStatusMsg(statusMsg))
+    }
   }
 
   const onCloseClick = () => {

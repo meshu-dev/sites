@@ -11,6 +11,7 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import StatusMsg from '@/app/components/Layout/StatusMsg/StatusMsg'
 import { ApiResponse } from '@/app/types'
+import { getValidationStatusMsg } from '@/app/utils/form'
 
 const EnvDeleteDialog = () => {
   const dispatch = useAppDispatch()
@@ -25,15 +26,13 @@ const EnvDeleteDialog = () => {
 
       if (categoryId) {
         const response: ApiResponse = await deleteCategory(categoryId) as ApiResponse
-        const hasError = (response.data && response.data.error) ? true : false
   
-        if (hasError === true) {
-          setStatusMsg(response);
-          return;
-        }
-  
-        if (categoryId == envState.selected?.id) {
-          dispatch(categoryAction.setSelected(null));
+        if (response.data) {
+          if (categoryId == envState.selected?.id) {
+            dispatch(categoryAction.setSelected(null))
+          } 
+        } else {
+          setStatusMsg(response)
         }
       }
     }
@@ -44,15 +43,10 @@ const EnvDeleteDialog = () => {
   }
 
   const setStatusMsg = (response: ApiResponse) => {
-    if (response.data && response.data.error) {
-      const errorMsg = response.data.error
+    const statusMsg = getValidationStatusMsg(response)
 
-      const params = {
-        type: 'error',
-        messages: [errorMsg]
-      }
-
-      dispatch(mainAction.setStatusMsg(params))
+    if (statusMsg) {
+      dispatch(mainAction.setStatusMsg(statusMsg))
     }
   }
 

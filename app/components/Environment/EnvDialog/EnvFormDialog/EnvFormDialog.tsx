@@ -20,7 +20,7 @@ const EnvFormDialog = ({ title, onSaveFtn, onCloseFtn }: Props) => {
   const menuCategory = useAppSelector(state => state.menuCategory)
   const [envName, setEnvName] = useState('')
 
-  const isLoading = false;
+  const isLoading = false
 
   const handleInputChange = (event: InputEvent) => {
     const value = event.target.value
@@ -37,7 +37,7 @@ const EnvFormDialog = ({ title, onSaveFtn, onCloseFtn }: Props) => {
 
   useEffect(() => {
     const name = menuCategory.selected ? menuCategory.selected.name : ''
-    setEnvName(name);
+    setEnvName(name)
   }, [menuCategory.selected])
 
   return (

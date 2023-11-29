@@ -4,6 +4,7 @@ import { mainAction } from '@/app/store/main-slice'
 import { menuCategoryAction } from '@/app/store/menu-category-slice'
 import EnvFormDialog from './EnvFormDialog'
 import { ApiResponse } from '@/app/types'
+import { getValidationStatusMsg } from '@/app/utils/form'
 
 const EnvAddDialog = () => {
   const dispatch = useAppDispatch()
@@ -14,60 +15,38 @@ const EnvAddDialog = () => {
     dispatch(mainAction.clearStatusMsg())
 
     const params = { name: categoryName }
-
-    console.log('client - addCategory', params)
-
     const response: ApiResponse = await addCategory(params) as ApiResponse
 
-    console.log('SAVE', response)
-
-    setStatusMsg(response)
-
-    if (response.data?.error == null) {
+    if (response.data) {
       onCloseClick()
+    } else {
+      setStatusMsg(response)
     }
-  };
+  }
 
   const setStatusMsg = (response: ApiResponse) => {
-    /*
-    if (response['data']['errors']) {
-      const data = response['data']['errors'];
-      let messages = [];
+    const statusMsg = getValidationStatusMsg(response)
 
-      const environment: Environment = data as Environment
-
-      if (data['name']) {
-        messages.push(data['name']);
-      }
-
-      const params = {
-        type: 'error',
-        messages: messages
-      };
-
-      dispatch(mainAction.setStatusMsg(params));
-
-      dispatch(mainAction.setStatusMsg(''));
-    } */
-
-    dispatch(mainAction.setStatusMsg('Error occurred'))
+    if (statusMsg) {
+      dispatch(mainAction.setStatusMsg(statusMsg))
+    }
   }
 
   const onCloseClick = () => {
-    dispatch(menuCategoryAction.closeAdd());
-    dispatch(menuCategoryAction.openList());
-  };
+    dispatch(menuCategoryAction.closeAdd())
+    dispatch(menuCategoryAction.openList())
+  }
 
   const addForm = (<EnvFormDialog
                       title={ 'Add Category' }
                       onSaveFtn={ onSaveClick }
-                      onCloseFtn={ onCloseClick } />);
+                      onCloseFtn={ onCloseClick } />)
 
   return (
     <div>
       { menuCategory.add ? addForm : null }
     </div>
-  );
-};
+  )
+}
 
-export default EnvAddDialog;
+export default EnvAddDialog

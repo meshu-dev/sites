@@ -20,6 +20,8 @@ const EnvSelectorSection = () => {
   }
 
   const showAddSite = () => {
+    console.log('ADD SITE!!!')
+
     dispatch(mainAction.clearStatusMsg())
     dispatch(menuSiteAction.setSelected(null))
 
