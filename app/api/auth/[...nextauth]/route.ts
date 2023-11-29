@@ -1,11 +1,11 @@
-import NextAuth, { NextAuthOptions } from 'next-auth'
+import NextAuth, { NextAuthOptions, Account, DefaultSession, User, Session  } from 'next-auth'
 //import { JWT } from 'next-auth/jwt'
 //import NextAuth, { NextAuthOptions, Session, JWT, AdapterUser } from '../../../types/next-auth'
 import GithubProvider from 'next-auth/providers/github'
 import { Adapter } from 'next-auth/adapters'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { PrismaClient } from '@prisma/client'
-
+import { JWT } from "next-auth/jwt"
 
 const prisma = new PrismaClient()
 
@@ -44,23 +44,23 @@ export const authOptions: NextAuthOptions = {
       }
       return token
     },
-    /*
-    async session({ session, token, user }) {
+    async session({ session, token, user }: {session: Session, token: JWT, user: User}): Promise<Session> {
       // Send properties to the client, like an access_token from a provider.
       //session.accessToken = token.accessToken
 
-      //console.log('Session', session);
-      //console.log('Session Token', token);
-      //console.log('Session User', user);
+      //console.log('Session', session)
+      //console.log('Session Token', token)
+      //console.log('Session User', user)
       
       return {
         user: {
           id: user.id,
           name: user.name,
           email: user.email
-        }
+        },
+        expires: session.expires
       }
-    } */
+    }
   },
   secret: process.env.NEXTAUTH_SECRET
 }

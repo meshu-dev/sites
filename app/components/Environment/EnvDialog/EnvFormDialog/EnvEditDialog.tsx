@@ -27,7 +27,7 @@ const EnvEditDialog = () => {
       dispatch(menuCategoryAction.closeEdit())
       dispatch(menuCategoryAction.openList())
     }
-  };
+  }
 
   const setStatusMsg = (response: ApiResponse) => {
     /*
@@ -54,18 +54,18 @@ const EnvEditDialog = () => {
     dispatch(menuCategoryAction.closeEdit())
     dispatch(menuCategoryAction.setSelected(null))
     dispatch(menuCategoryAction.openList())
-  };
+  }
 
   const editForm = (<EnvFormDialog
                       title={ 'Edit Category' }
                       onSaveFtn={ onSaveClick }
-                      onCloseFtn={ onCloseClick } />);
+                      onCloseFtn={ onCloseClick } />)
 
   return (
     <div>
       { menuCategory.edit ? editForm : null }
     </div>
-  );
-};
+  )
+}
 
 export default EnvEditDialog;

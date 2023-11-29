@@ -1,4 +1,5 @@
 import { AlertColor } from '@mui/material'
+import { ZodError } from 'zod'
 
 export type InputEvent = React.ChangeEvent<HTMLInputElement>
 export type ButtonEvent = React.MouseEvent<HTMLButtonElement>
@@ -34,3 +35,6 @@ export interface Icon {
   name:   string
   url:    string
 }
+
+export type ValidationError = ZodError
+export type ZodResult = { success: true; data: any; } | { success: false; error: ZodError }

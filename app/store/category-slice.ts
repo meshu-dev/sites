@@ -17,7 +17,7 @@ export const categorySlice = createSlice({
       state.selected = action.payload
     }
   }
-});
+})
 
 export const categoryAction = categorySlice.actions
 

@@ -23,7 +23,7 @@ const SiteList = () => {
   if (mainState.isLoading === false) {
     let siteBlocks = []
 
-    if (categorySites.length > 0) {
+    if (categorySites?.length > 0) {
       siteBlocks = categorySites.map(
         (site: Site) => {
           return <SiteBlock
@@ -36,9 +36,9 @@ const SiteList = () => {
         <div
           key={ 'site-block-none' }
           id={ styles['site-list-none'] }>
-            { categories.length > 0 ? 'No sites available for this category' : 'No categories added yet' }
+            { categories?.length > 0 ? 'No sites available for this category' : 'No categories added yet' }
         </div>
-      );
+      )
     }
 
     return (

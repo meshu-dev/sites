@@ -26,6 +26,8 @@ const SiteAddDialog = () => {
       }
   
       const response: ApiResponse = await addSite(params) as ApiResponse
+
+      console.log('API response', response)
   
       setStatusMsg(response);
   

@@ -49,7 +49,7 @@ export const menuCategorySlice = createSlice({
       state.delete = false
     }
   }
-});
+})
 
 export const menuCategoryAction = menuCategorySlice.actions
 

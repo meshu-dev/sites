@@ -16,6 +16,8 @@ export const validateReponse = (response: Response) => {
   if (response && response.status === 401) {
     window.location.href = '/login'
     return false
+  } else if (response.status !== 200) {
+    return false
   }
   return true
 }

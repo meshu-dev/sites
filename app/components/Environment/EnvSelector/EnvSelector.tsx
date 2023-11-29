@@ -26,12 +26,12 @@ const EnvSelector = () => {
   };
 
   useEffect(() => {
-    if (envState.selected == null) {
+    if (envState.selected == null && categories) {
       dispatch(categoryAction.setSelected(categories[0]))
     }
   }, [dispatch, envState, categories])
   
-  if (categories.length > 0) {
+  if (categories?.length > 0) {
     return (
       <EnvSelectorDropdown
         selectedEnv={ envState.selected?.id ? String(envState.selected.id) : '' }

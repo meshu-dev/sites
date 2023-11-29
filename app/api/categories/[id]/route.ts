@@ -3,6 +3,8 @@ import type { NextRequest } from 'next/server'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { getServerSession } from 'next-auth/next'
 import { PrismaClient } from '@prisma/client'
+import { validateCategory, getValidationMessages } from '@/app/utils/api'
+import { ZodResult } from '@/app/types'
 
 interface RequestParams {
   name: string
@@ -41,7 +43,8 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { id: number } }
 ) {
-  let response: any = { data: null }
+  let response: any  = { data: null }
+  let status: number = 200
 
   const session = await getServerSession(authOptions)
   const userId  = session?.user?.id
@@ -50,23 +53,33 @@ export async function PUT(
     const prisma              = new PrismaClient()
     const body: RequestParams = await request.json()
     
-    const category = await prisma.category.update({
-      where: {
-        id: Number(params.id),
-        userId
-      },
-      data: {
-        name:   body.name
-      }
-    })
-    response.data = category
+    const data = {
+      name: body.name
+    }
 
-    await prisma.$disconnect()
+    const zodResult: ZodResult = validateCategory(data)
+
+    if (zodResult.success) {
+      response.data = await prisma.category.update({
+        where: {
+          id: Number(params.id),
+          userId
+        },
+        data
+      })
+      await prisma.$disconnect()
+    } else {
+      response.data = getValidationMessages(zodResult.error)
+      status        = 422
+    }
+  } else {
+    response.data = { message: 'There was a server error. Please try again' }
+    status        = 500
   }
 
   return NextResponse.json(
     response,
-    { status: 200 }
+    { status }
   )
 }
   

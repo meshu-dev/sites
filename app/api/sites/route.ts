@@ -3,6 +3,8 @@ import type { NextRequest } from 'next/server'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { getServerSession } from 'next-auth/next'
 import { PrismaClient } from '@prisma/client'
+import { validateSite, getValidationMessages } from '@/app/utils/api'
+import { ZodResult } from '@/app/types'
 
 interface RequestParams {
   userId:     string,
@@ -33,33 +35,40 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  let response: any = { data: null }
+  let response: any  = { data: null }
+  let status: number = 200
 
   const session = await getServerSession(authOptions)
-  const userId  = session?.user?.id
+  const userId: string = String(session?.user?.id)
 
   if (userId) {
     const prisma: PrismaClient = new PrismaClient()
-    const body: RequestParams  = await request.json();
-  
-    const site = await prisma.site.create({
-      data: {
-        userId:     userId,
-        categoryId: body.categoryId,
-        iconId:     body.iconId,
-        name:       body.name,
-        url:        body.url
-      }
-    })
-    response.data = site
+    const body: RequestParams  = await request.json()
 
-    await prisma.$disconnect()
+    const data = {
+      userId:     userId,
+      categoryId: body.categoryId,
+      iconId:     body.iconId,
+      name:       body.name,
+      url:        body.url
+    }
+
+    const zodResult: ZodResult = validateSite(data)
+
+    if (zodResult.success) {
+      response.data = await prisma.site.create({ data })
+      await prisma.$disconnect()
+    } else {
+      response.data = getValidationMessages(zodResult.error)
+      status        = 422
+    }
+  } else {
+    response.data = { message: 'There was a server error. Please try again' }
+    status        = 500
   }
 
   return NextResponse.json(
     response,
-    {
-      status: 200
-    }
+    { status }
   )
 }

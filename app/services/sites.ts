@@ -30,7 +30,8 @@ export const sitesApi = api.injectEndpoints({
       invalidatesTags: (site) => [
         { type: 'Sites', id: 'LIST' },
         { type: 'Sites', id: site?.id }
-      ]
+      ],
+      transformResponse: (response: ApiResponse) => response.data as Site
     }),
     editSite: build.mutation<Site, Partial<Site>>({
       query(site) {
