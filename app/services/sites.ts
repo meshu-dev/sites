@@ -31,7 +31,7 @@ export const sitesApi = api.injectEndpoints({
         { type: 'Sites', id: 'LIST' },
         { type: 'Sites', id: site?.id }
       ],
-      transformResponse: (response: ApiResponse) => response.data as Site
+      transformResponse: (response: ApiResponse | any) => response
     }),
     editSite: build.mutation<Site, Partial<Site>>({
       query(site) {
@@ -50,7 +50,7 @@ export const sitesApi = api.injectEndpoints({
         { type: 'Sites', id: 'LIST' },
         { type: 'Sites', id: site?.id }
       ],
-      transformResponse: (response: ApiResponse) => response.data as Site
+      transformResponse: (response: ApiResponse | any) => response
     }),
     deleteSite: build.mutation<number, Partial<number>>({
       query(id) {

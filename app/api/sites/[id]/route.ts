@@ -47,7 +47,7 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { id: number } }
 ) {
-  let response: any  = { data: null }
+  let response: any  = null
   let status: number = 200
 
   const session = await getServerSession(authOptions)
@@ -66,7 +66,7 @@ export async function PUT(
     const zodResult: ZodResult = validateSite(data, true)
 
     if (zodResult.success) {
-      response.data = await prisma.site.update({
+      response = await prisma.site.update({
         where: {
           id: Number(params.id),
           userId
@@ -75,12 +75,12 @@ export async function PUT(
       })
       await prisma.$disconnect()
     } else {
-      response.data = getValidationMessages(zodResult.error)
-      status        = 422
+      response = getValidationMessages(zodResult.error)
+      status   = 422
     }
   } else {
-    response.data = { message: 'There was a server error. Please try again' }
-    status        = 500
+    response = { message: 'There was a server error. Please try again' }
+    status   = 500
   }
 
   return NextResponse.json(

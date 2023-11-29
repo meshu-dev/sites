@@ -27,6 +27,8 @@ const SiteAddDialog = () => {
       }
       const response: ApiResponse = await addSite(params) as ApiResponse
 
+      console.log('ADD!!!', response)
+
       if (response.data) {
         const categoryId = Number(category?.selected?.id)
         dispatch(clearCategorySites(categoryId))

@@ -38,12 +38,7 @@ export const categoriesApi = api.injectEndpoints({
         { type: 'Categories', id: 'LIST' },
         { type: 'Categories', id: category?.id }
       ],
-      transformResponse: (response: ApiResponse | any) => {
-
-        console.log('RES', response)
-
-        return response
-      }
+      transformResponse: (response: ApiResponse | any) => response
     }),
     editCategory: build.mutation<Category, Partial<Category>>({
       query(body) {
@@ -62,7 +57,8 @@ export const categoriesApi = api.injectEndpoints({
       invalidatesTags: (category) => [
         { type: 'Categories', id: 'LIST' },
         { type: 'Categories', id: category?.id }
-      ]
+      ],
+      transformResponse: (response: ApiResponse | any) => response
     }),
     deleteCategory: build.mutation<ApiResponse, Partial<number>>({
       query(id) {

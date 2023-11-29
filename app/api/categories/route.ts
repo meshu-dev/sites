@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  let response: any  = { data: null }
+  let response: any  = null
   let status: number = 200
 
   const session        = await getServerSession(authOptions)

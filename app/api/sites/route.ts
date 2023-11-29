@@ -35,7 +35,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  let response: any  = { data: null }
+  let response: any  = null
   let status: number = 200
 
   const session = await getServerSession(authOptions)
@@ -56,15 +56,15 @@ export async function POST(request: NextRequest) {
     const zodResult: ZodResult = validateSite(data)
 
     if (zodResult.success) {
-      response.data = await prisma.site.create({ data })
+      response = await prisma.site.create({ data })
       await prisma.$disconnect()
     } else {
-      response.data = getValidationMessages(zodResult.error)
-      status        = 422
+      response = getValidationMessages(zodResult.error)
+      status   = 422
     }
   } else {
-    response.data = { message: 'There was a server error. Please try again' }
-    status        = 500
+    response = { message: 'There was a server error. Please try again' }
+    status   = 500
   }
 
   return NextResponse.json(
