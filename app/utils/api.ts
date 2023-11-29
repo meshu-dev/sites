@@ -53,9 +53,8 @@ export const validateCategory = async (params: object): Promise<ZodResult> => {
   return await Category.safeParseAsync(params)
 }
 
-export const validateSite = (params: object, isEdit: boolean = false): ZodResult => {
+export const validateSite = (params: object): ZodResult => {
   const rules = {
-    categoryId: isEdit ? z.never() : z.number(),
     iconId: z.number(),
     name: z.string().min(5, { message: 'Name must be 5 or more characters long' }),
     url: z.string().url({ message: 'Url is invalid' })

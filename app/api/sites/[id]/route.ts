@@ -63,7 +63,7 @@ export async function PUT(
       url:    body.url
     }
 
-    const zodResult: ZodResult = validateSite(data, true)
+    const zodResult: ZodResult = validateSite(data)
 
     if (zodResult.success) {
       response = await prisma.site.update({
